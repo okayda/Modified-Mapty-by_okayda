@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="/icon.png" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="fontawesome-free-5.15.1-web/css/all.min.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+
+    <script type="module" defer src="script.js"></script>
+    <title>mapty // Map your workouts</title>
+  </head>
+
+  <body>
+    <div class="overlay"></div>
+    <div class="overlay-edit-form"></div>
+    <div class="overlay-side-bar"></div>
+
+    <div class="error-overlay">
+      <div class="error-box-container">
+        <div class="error-sign-container">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="error-message-container">
+          <h1>Not Valid</h1>
+          <p class="error-message">Inputs have to be positive numbers!</p>
+        </div>
+        <button class="fine-btn">
+          <span>OK</span>
+        </button>
+      </div>
+    </div>
+
+    <form class="edit-form">
+      <input type="radio" name="tab" id="running" checked="checked" />
+
+      <input type="radio" name="tab" id="cycling" />
+
+      <div class="pages">
+        <div class="page">
+          <div class="input">
+            <div class="title">Distance</div>
+            <input class="rDistance" type="number" placeholder="🏃‍♂️" />
+          </div>
+
+          <div class="input">
+            <div class="title">Duration</div>
+            <input class="rDuration" type="number" placeholder="⏱" />
+          </div>
+
+          <div class="input">
+            <div class="title">Cadence</div>
+            <input class="rCadence" type="number" placeholder="🦶🏼" />
+          </div>
+
+          <div class="input">
+            <h2 class="custom-schedule-running">Custom-Schedule-running</h2>
+          </div>
+        </div>
+        <div class="page">
+          <div class="input">
+            <div class="title">Distance</div>
+            <input class="cDistance" type="number" placeholder="🚲" />
+          </div>
+
+          <div class="input">
+            <div class="title">Duration</div>
+            <input class="cDuration" type="number" placeholder="⏱" />
+          </div>
+
+          <div class="input">
+            <div class="title">Elev Gain</div>
+            <input class="cElevation" type="number" placeholder="⛰" />
+          </div>
+
+          <div class="input">
+            <h2 class="custom-schedule-cycling">Custom-Schedule-Cycling</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <label class="btn" for="running">
+          <div class="text">Running</div>
+        </label>
+
+        <label class="btn" for="cycling">
+          <div class="text">Cycling</div>
+        </label>
+      </div>
+
+      <button class="form__btn"></button>
+    </form>
+
+    <div class="workouts-sidebar">
+      <div class="parent-exercises-container">
+        <div class="exercises-nav-bar">
+            <i class="fa fa-bars menu-btn"></i>
+          <div class="search-container">
+            <div class="search-icon-container">
+              <i class="fas fa-search search-icon"></i>
+            </div>
+            <div class="search-input-container">
+              <input type="text" placeholder="Search" id="mysearch" />
+            </div>
+          </div>
+
+          <div class="option-nav-container">
+            <input type="radio" name="select" id="option-1" checked />
+            <input type="radio" name="select" id="option-2" />
+            <input type="radio" name="select" id="option-3" />
+
+            <label for="option-1" class="option option-1">
+              <div class="dot"></div>
+              <span>Day</span>
+            </label>
+            <label for="option-2" class="option option-2">
+              <div class="dot"></div>
+              <span>Month</span>
+            </label>
+            <label for="option-3" class="option option-3">
+              <div class="dot"></div>
+              <span>Year</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="workouts-container">
+          <!--all exercise content will insert here -->
+        </div>
+      </div>
+    </div>
+
+    <nav class="side-bar">
+      <div class="close-btn-container">
+        <img src="icon.png" class="logo" alt="Logo">
+        <h2 class="logo-title">Mapty</h2>
+        <i class="fas fa-times close-btn"></i>
+      </div>
+
+      <ul class="nav-items">
+
+        <li class="nav-item">
+          
+          <a class="nav-link-title"><img src="svg-icons/hearth.png" class="hearth-exercsie" alt="">Exercise<img src="svg-icons/up-arrow.png" class="fas fa-angle-right drop-icon up-arrow" alt=""></a>
+
+          <div class="dropdown-link exercise-dropdown">
+
+            <div class="no-nested">
+            <a class="nav-link">Delete specific exercises</a>
+          </div>
+
+            <a class="nested-link-title exercise-btn nested-dropdown-icon">Display exercises<i class="fas fa-angle-right nested-drop-icon "></i></a>
+
+            <a class="nested-link-title running-btn nested-dropdown-icon">Sort Running<i class="fas fa-angle-right nested-drop-icon"></i></a>
+
+            <a class="nested-link-title cycling-btn nested-dropdown-icon">Sort Cycling<i class="fas fa-angle-right nested-drop-icon"></i></a>
+          </div>
+
+        </li>
+
+        <li class="nav-item">
+
+          <a class="nav-link-title"><img src="svg-icons/completed-task.png" class="completed-task" alt="">Task<img src="svg-icons/up-arrow.png" class="fas fa-angle-right drop-icon up-arrow" alt=""></a>
+
+          <div class="dropdown-link">
+            <p class="nav-link ">Completed task</p>
+            <p class="nav-link ">Removed task</p>
+
+          </div>
+        </li>
+
+        <li class="nav-item">
+          
+          <a class="nav-link-title"><i class="fas fa-cloud-moon"></i>Theme<img src="svg-icons/up-arrow.png" class="fas fa-angle-right drop-icon up-arrow" alt=""></a>
+
+          <div class="dropdown-link">
+            <a class="nav-link active-link">Dark</a>
+            <a class="nav-link">Light</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+
+          <a class="nav-link-title"><img src="svg-icons/info.png" class="info-about" alt="">About</a>
+
+          <div class="dropdown-link">
+            <p class="nav-link">Nothing</p>
+        </li>
+      </ul>
+      </div>
+
+
+
+    </nav>
+
+    <form class="set-form hidden">
+      <div class="form__row">
+        <label class="form__label">Type</label>
+        <select class="form__input form__input--type">
+          <option value="running">Running</option>
+          <option value="cycling">Cycling</option>
+        </select>
+      </div>
+      <div class="form__row">
+        <label class="form__label">Distance</label>
+        <input class="form__input form__input--distance" placeholder="km" />
+      </div>
+      <div class="form__row">
+        <label class="form__label">Duration</label>
+        <input class="form__input form__input--duration" placeholder="min" />
+      </div>
+      <div class="form__row">
+        <label class="form__label">Cadence</label>
+        <input
+          class="form__input form__input--cadence"
+          placeholder="step/min"
+        />
+      </div>
+      <div class="form__row form__row--hidden">
+        <label class="form__label">Elev Gain</label>
+        <input
+          class="form__input form__input--elevation"
+          placeholder="meters"
+        />
+      </div>
+
+      <span class="custom__schedule">Custom Schedule</span>
+
+      <button class="form__btn">OK</button>
+    </form>
+
+    <div class="timestamp-container">
+      <h2 class="title">Custom Date & Time</h2>
+      <div class="content-container">
+        <div class="date-picker">
+          <div class="selected-date"></div>
+          <div class="dates">
+            <div class="month">
+              <div class="arrows prev-mth notShowArrow">&lt;</div>
+              <div class="mth"></div>
+              <div class="arrows next-mth">&gt;</div>
+            </div>
+
+            <div class="days"></div>
+          </div>
+        </div>
+
+        <div class="time-picker">
+          <div class="selected-time">
+            <span class="hours-set">00</span>:<span class="minutes-set">00</span
+            >&nbsp;<span class="meridiem-set">--</span>
+          </div>
+
+          <div class="meridiem">
+            <button class="btn-AM">AM</button>
+            <button class="btn-PM">PM</button>
+          </div>
+
+          <div class="time-inputs">
+            <div class="custom-select select-hours" style="width: 200px">
+              <select></select>
+            </div>
+
+            <div class="custom-select select-minutes" style="width: 200px">
+              <select></select>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <button class="cancel">Cancel</button>
+            <button class="submit">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ***********************
+***********************
+***********************
+***********************
+*********************** -->
+
+<div class="container-nested-option">
+
+<div class="container-row-nav-exercise">
+  <ul class="nested-unorder-list">
+    <li class="nested-list">
+      <label>
+        <input type="checkbox" />
+        <span>
+          🏃‍♂️ Running
+        </span>
+      </label>
+    <li class="nested-list">
+      <label>
+        <input type="checkbox" checked />
+        <span>
+          🚴‍♀️ Cycling
+        </span>
+      </label>
+    </li>
+  </ul>
+</div>
+
+<div class="container-row-nav-running">
+  <ul class="nested-unorder-list">
+    <li class="nested-list">
+      <input type="radio" name="Select-running" id="option-1-running" />
+      <label for="option-1-running" class="option-1-running">
+        <div class="dot"></div>
+        <div class="text">Sort KM 🏃‍♂️</div>
+      </label>
+    </li>
+    <li class="nested-list">
+  <input type="radio" name="Select-running" id="option-2-running" />
+  <label for="option-2-running" class="option-2-running">
+    <div class="dot"></div>
+    <div class="text">Sort Min ⏱</div>
+  </label>
+    </li>
+    <li class="nested-list">
+      <input type="radio" name="Select-running" id="option-3-running" />
+      <label for="option-3-running" class="option-3-running">
+        <div class="dot"></div>
+        <div class="text">Sort KM/H ⚡️</div>
+      </label>
+    </li>
+    <li class="nested-list">
+      <input type="radio" name="Select-running" id="option-4-running" />
+      <label for="option-4-running" class="option-4-running">
+        <div class="dot"></div>
+        <div class="text">Sort SPM 🦶🏼</div>
+      </label>
+    </li>
+  </ul>
+</div>
+
+<div class="container-row-nav-cycling">
+  <ul class="nested-unorder-list">
+    <li class="nested-list">
+      <input type="radio" name="Select-clycling" id="option-1-cycling" />
+      <label for="option-1-cycling" class="option-1-cycling">
+        <div class="dot"></div>
+        <div class="text">Sort KM 🚴‍♀️</div>
+      </label>
+    </li>
+    <li class="nested-list">
+  <input type="radio" name="Select-clycling" id="option-2-cycling" />
+  <label for="option-2-cycling" class="option-2-cycling">
+    <div class="dot"></div>
+    <div class="text">Sort Min ⏱</div>
+  </label>
+    </li>
+    <li class="nested-list">
+      <input type="radio" name="Select-clycling" id="option-3-cycling" />
+      <label for="option-3-cycling" class="option-3-cycling">
+        <div class="dot"></div>
+        <div class="text">Sort MIN/KM ⚡️</div>
+      </label>
+    </li>
+    <li class="nested-list">
+      <input type="radio" name="Select-clycling" id="option-4-cycling" />
+      <label for="option-4-cycling" class="option-4-cycling">
+        <div class="dot"></div>
+        <div class="text">Sort M ⛰</div>
+      </label>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+    <div id="map"></div>
+  </body>
+</html>
