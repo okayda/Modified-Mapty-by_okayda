@@ -930,7 +930,9 @@ class App {
                     
                         <div class="workout__details">
                             <span class="workout__icon icon_info">${
-                              workout.type === 'running' ? '🏃‍♂️' : '🚲'
+                              workout.type === 'running'
+                                ? '<img src="workout-icons/running.png" class="workout-img"/>'
+                                : '<img src="workout-icons/cycling.png" class="workout-img"/>'
                             }</span>
                             <span class="workout__value text_info">${this._ellipsisIsDropdown(
                               isDropDown,
@@ -940,7 +942,7 @@ class App {
                             <span class="workout__unit">km</span>
                         </div>
                         <div class="workout__details">
-                            <span class="workout__icon">⏱</span>
+                            <span class="workout__icon"><img src="workout-icons/clock.png" class="workout-img"/></span>
                             <span class="workout__value text_info">${this._ellipsisIsDropdown(
                               isDropDown,
                               workout.longJourney,
@@ -953,12 +955,12 @@ class App {
     if (workout.type === 'running')
       html += `
         <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
+            <span class="workout__icon"><img src="workout-icons/speed.png" class="workout-img"/></span>
             <span class="workout__value">test</span>
             <span class="workout__unit">km/h</span>
         </div>
         <div class="workout__details">
-            <span class="workout__icon icon_info">🦶🏼</span>
+            <span class="workout__icon icon_info"><img src="workout-icons/foot.png" class="workout-img"/></span>
             <span class="workout__value text_info">${this._ellipsisIsDropdown(
               isDropDown,
               workout.longJourney,
@@ -986,12 +988,12 @@ class App {
     if (workout.type === 'cycling')
       html += `
         <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
+            <span class="workout__icon"><img src="workout-icons/speed.png" class="workout-img"/></span>
             <span class="workout__value">test</span>
             <span class="workout__unit">km/h</span>
         </div>
         <div class="workout__details">
-            <span class="workout__icon icon_info">⛰</span>
+            <span class="workout__icon icon_info"><img src="workout-icons/route.png" class="workout-img"/></span>
             <span class="workout__value text_info">${this._ellipsisIsDropdown(
               isDropDown,
               workout.longJourney,
