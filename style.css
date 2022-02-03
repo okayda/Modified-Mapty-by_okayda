@@ -39,6 +39,15 @@ a:visited {
   color: var(--color-brand--1);
 }
 
+/* styles for Geolocation Map */
+#map {
+  flex: 1;
+  height: 100%;
+  background-color: var(--color-light--1);
+  z-index: 500;
+}
+/* ************************************************* */
+
 /* Back drop 1 */
 .overlay {
   position: fixed;
@@ -103,6 +112,7 @@ a:visited {
 .overlay-side-bar.active {
   left: 0;
 }
+/* ************************************************* */
 
 /* Error Alert */
 .error-box-container {
@@ -158,16 +168,11 @@ a:visited {
 
 .active {
   opacity: 1;
-  z-index: 11000;
+  z-index: 1000;
 }
+/* ************************************************* */
 
-@media only screen and (max-wdith: 400px) {
-  .popup-box-container {
-    width: 300px;
-  }
-}
-
-/* SIDEBAR */
+/* workout sidebar */
 .workouts-sidebar {
   background-color: #2f4353;
   background-image: linear-gradient(315deg, #313b44 0%, #83807d 74%);
@@ -317,30 +322,6 @@ a:visited {
   border-bottom: 1px dashed #bebebe;
 }
 
-/* .exercise-info-container .workout__details {
-  margin: 0.6rem 0;
-  display: flex;
-  align-items: baseline;
-}
-
-.workout__details .workout__icon {
-  font-size: 1.8rem;
-  margin-right: 0.2rem;
-  height: 0.28rem;
-}
-
-.workout__details .workout__value {
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
-}
-
-.workout__details .workout__unit {
-  font-size: 1.1rem;
-  color: var(--color-light--1);
-  text-transform: uppercase;
-  font-weight: 800;
-} */
-
 .exercise-container .workout__details {
   margin: 0.6rem 0;
   display: flex;
@@ -403,15 +384,7 @@ a:visited {
 }
 /* ************************************************* */
 
-/* Geolocation Map */
-#map {
-  flex: 1;
-  height: 100%;
-  background-color: var(--color-light--1);
-  z-index: 500;
-}
-
-/* Popup width is defined in JS using options */
+/* Popup styles is defined in JS using options */
 .leaflet-popup .leaflet-popup-content-wrapper {
   background-color: var(--color-dark--1);
   color: var(--color-light--2);
@@ -436,7 +409,7 @@ a:visited {
 }
 /* ************************************************* */
 
-/* JavaScript syntax */
+/* JavaScript will determine what workout user select and will use this*/
 .exercise--running {
   border-left: 5px solid var(--color-brand--2);
 }
@@ -446,7 +419,7 @@ a:visited {
 }
 /* ************************************************* */
 
-/* for JavaScript functionality */
+/* JavaScript workout arrow animation (row to column)*/
 .togPlusAni {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -473,20 +446,9 @@ a:visited {
 .arrowDefaultColor {
   color: #fff;
 }
+/* ************************************************* */
 
-.togContent {
-  opacity: 1;
-  padding: 15px;
-  height: 60px;
-}
-
-.makeColumn {
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-/* for Javascript render method */
-
-/* GRID VALUE */
+/* JavaScript workout row to column animation */
 .longJourneyGridTrue {
   grid-template-columns: auto !important;
 }
@@ -536,7 +498,9 @@ a:visited {
 .isDropDownPaddingFalse {
   padding: 15px !important;
 }
+/* ************************************************* */
 
+/* styles for creating form in workout */
 .set-form {
   background-color: #2f4353;
   background-image: linear-gradient(315deg, #313b44 0%, #83807d 74%);
@@ -553,7 +517,7 @@ a:visited {
   transition: all 0.4s, transform 1ms;
   position: absolute;
   right: 0;
-  z-index: 500;
+  z-index: 600;
 }
 
 .set-form.hidden {
@@ -616,15 +580,9 @@ a:visited {
 .form__btn {
   display: none;
 }
+/* ************************************************* */
 
-.show {
-  display: block;
-}
-
-.rDistance:focus {
-  outline: none;
-}
-
+/* styles for editing form in existed workout */
 .edit-form {
   background-color: #2f4353;
   background-image: linear-gradient(315deg, #313b44 0%, #83807d 74%);
@@ -736,8 +694,6 @@ a:visited {
   cursor: pointer;
 }
 
-/* Edit form for each input animation  */
-
 .edit-form #cycling:checked ~ .pages {
   transform: translateX(-100%);
 }
@@ -755,17 +711,9 @@ a:visited {
   font-weight: bold;
   color: #000;
 }
+/* ************************************************* */
 
-/* ****************** */
-
-.rotateArrow {
-  -webkit-transform: rotate(150deg);
-  -moz-transform: rotate(150deg);
-  -o-transform: rotate(150eg);
-  transform: rotate(180deg);
-  color: #fff;
-}
-
+/* JavaScript classlist add & remove workout for arrow icon */
 .notShowIcon {
   display: none !important;
 }
@@ -773,9 +721,9 @@ a:visited {
 .showIcon {
   display: inline-block !important;
 }
+/* ************************************************* */
 
-/* exercise Date */
-
+/* styles for custom date & time */
 .timestamp-container {
   position: absolute;
   z-index: 10000;
@@ -797,7 +745,7 @@ a:visited {
   font-size: 1.8rem;
 }
 
-.content-container {
+.timestamp-container .content-container {
   display: flex;
   background-color: #2f4353;
   background-image: linear-gradient(315deg, #313b44 0%, #83807d 74%);
@@ -805,7 +753,7 @@ a:visited {
   border-bottom-right-radius: 10px;
 }
 
-.date-picker {
+.content-container .date-picker {
   width: 50%;
 }
 
@@ -873,101 +821,6 @@ a:visited {
   cursor: auto;
 }
 
-.pass-date {
-  background-color: var(--color-dark--2);
-  border-radius: 5px;
-  pointer-events: none;
-  color: #fff;
-}
-
-.selected {
-  background-color: #27ae60;
-}
-
-.time-picker {
-  width: 50%;
-}
-
-.time-picker .selected-time {
-  display: flex;
-  justify-content: center;
-
-  color: #fff;
-  font-size: 24px;
-}
-
-.time-picker .meridiem {
-  display: flex;
-  font-size: 1.8rem;
-  justify-content: center;
-  gap: 0.8rem;
-  align-items: center;
-  padding: 1.55rem 0 !important;
-}
-
-.time-picker .meridiem button {
-  padding: 0.2rem 0.4rem;
-  background-color: #27ae60;
-  font-size: 2rem;
-  border: 1px solid #27ae60;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.active-meridiem {
-  color: #fff;
-  border: 1px solid #27ae60 !important;
-  background-color: transparent !important;
-}
-
-.time-picker .buttons {
-  display: flex;
-  justify-content: center;
-  gap: 0.8rem;
-}
-
-.time-picker .buttons .submit {
-  background-color: #27ae60;
-}
-
-.time-picker .buttons .cancel {
-  background-color: orangered;
-}
-
-.time-picker .buttons button {
-  font-size: 1.6rem;
-  color: #fff;
-  padding: 0.6rem 0.8rem;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.time-picker .time-inputs {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem 1rem 2rem;
-}
-
-.time-picker .time-inputs .custom-select {
-  margin-bottom: 1.6rem;
-}
-
-.date-picker .selected-date,
-.time-picker .selected-time {
-  margin-top: 1rem;
-}
-
-.date-picker .dates .month,
-.time-picker .meridiem {
-  margin: 0 6rem 0;
-  padding: 1rem;
-  border-bottom: 2px solid rgb(212, 212, 212);
-  color: #fff;
-}
-
 .date-picker .dates .days {
   margin: 1rem;
   font-size: 1.3rem;
@@ -979,15 +832,30 @@ a:visited {
   margin-bottom: 8px;
 }
 
-.custom-select {
-  position: relative;
-  font-family: Arial;
-
-  display: inline-block;
+.pass-date {
+  background-color: var(--color-dark--2);
+  border-radius: 5px;
+  pointer-events: none;
+  color: #fff;
 }
 
-.custom-select select {
-  display: none;
+.selected {
+  background-color: #27ae60;
+}
+
+/* ************************************************* */
+/* ************************************************* */
+
+.content-container .time-picker {
+  width: 50%;
+}
+
+.time-picker .selected-time {
+  display: flex;
+  justify-content: center;
+
+  color: #fff;
+  font-size: 24px;
 }
 
 .select-selected {
@@ -1094,8 +962,91 @@ a:visited {
   );
 }
 
-/* below of this code is radio design2  */
+.time-picker .meridiem {
+  display: flex;
+  font-size: 1.8rem;
+  justify-content: center;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 1.55rem 0 !important;
+}
 
+.time-picker .meridiem button {
+  padding: 0.2rem 0.4rem;
+  background-color: #27ae60;
+  font-size: 2rem;
+  border: 1px solid #27ae60;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.active-meridiem {
+  color: #fff;
+  border: 1px solid #27ae60 !important;
+  background-color: transparent !important;
+}
+
+.time-picker .buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.time-picker .buttons .submit {
+  background-color: #27ae60;
+}
+
+.time-picker .buttons .cancel {
+  background-color: orangered;
+}
+
+.time-picker .buttons button {
+  font-size: 1.6rem;
+  color: #fff;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.time-picker .time-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 1rem 2rem;
+}
+
+.time-picker .time-inputs .custom-select {
+  margin-bottom: 1.6rem;
+}
+
+.date-picker .selected-date,
+.time-picker .selected-time {
+  margin-top: 1rem;
+}
+
+.date-picker .dates .month,
+.time-picker .meridiem {
+  margin: 0 6rem 0;
+  padding: 1rem;
+  border-bottom: 2px solid rgb(212, 212, 212);
+  color: #fff;
+}
+
+.custom-select {
+  position: relative;
+  font-family: Arial;
+
+  display: inline-block;
+}
+
+.custom-select select {
+  display: none;
+}
+/* ************************************************* */
+
+/* styles for radio button in workout sidebar  */
 .option-nav-container {
   display: flex;
   align-items: center;
@@ -1168,19 +1119,9 @@ input[type='radio'] {
 #option-3:checked:checked ~ .option-3 span {
   color: #fff;
 }
+/* ************************************************* */
 
-/* end of radio button */
-
-/* test style  */
-
-/* ***************************************
-***************************************
-***************************************
-***************************************
-***************************************
-***************************************
-*************************************** */
-
+/* styles for sidebar not for workout sidebar */
 .side-bar {
   background: #2d3439;
   backdrop-filter: blur(15px);
@@ -1326,10 +1267,9 @@ input[type='radio'] {
 .side-bar .no-nested {
   border-bottom: 1px dashed #bebebe;
 }
-/* ******************** */
+/* *************** */
 
-/* below this is for row nav style */
-/* below this is for checkbox */
+/* position of all portrait nested link */
 .container-nested-option {
   position: absolute;
   left: -60%;
@@ -1339,7 +1279,9 @@ input[type='radio'] {
 .container-nested-option.active {
   left: 0;
 }
+/* *************** */
 
+/* styles for nested link inside of sidebar link */
 .container-row-nav-exercise label {
   margin-bottom: 0.4rem;
   cursor: pointer;
@@ -1378,8 +1320,7 @@ input[type='radio'] {
   border: 2px solid yellowgreen;
 }
 
-/* ************** */
-
+/* styles for position in nested portait link */
 .container-row-nav-exercise,
 .container-row-nav-running,
 .container-row-nav-cycling {
@@ -1388,7 +1329,9 @@ input[type='radio'] {
   top: 89px;
   opacity: 1;
 }
+/* *************** */
 
+/* animation styles for nested portrait link */
 .container-row-nav-running .nested-unorder-list,
 .container-row-nav-exercise .nested-unorder-list,
 .container-row-nav-cycling .nested-unorder-list {
@@ -1453,9 +1396,9 @@ input[type='radio'] {
   transition: transform 150ms cubic-bezier(0, 0.5, 0.5, 1.1) 200ms,
     opacity 100ms ease-out 200ms;
 }
+/* *************** */
 
-/* bellow for the radio button style */
-
+/* styles for radio button in nested portrait link */
 .container-row-nav-running label,
 .container-row-nav-cycling label {
   display: flex;
@@ -1578,11 +1521,11 @@ input[type='radio'] {
 .container-row-nav-cycling input[type='radio'] {
   display: none;
 }
+/* *************** */
+/* ************************************************* */
 
-/* arrow icons animation*/
-
+/* styles arrow icons animation in sidebar not workout sidebar*/
 /* Only for animation not exist in HTML file */
-
 .drop-icon-animation {
   transform: rotateZ(180deg);
 }
@@ -1591,3 +1534,4 @@ input[type='radio'] {
   transform: rotateZ(-180deg);
   color: yellowgreen;
 }
+/* ************************************************* */
