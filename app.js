@@ -1,14 +1,12 @@
 'use strict';
 
-import { initSideBar } from './sidebar.js';
-
 import { dataObj as queryName } from './query_name.js';
 
-console.log(queryName);
+import { initSideBar } from './sidebar.js';
 
-const userSelectedDate = {
-  selectedDOM: null,
-};
+import { initTheme } from './theme.js';
+
+console.log(queryName);
 
 let manualSearchEnabled = false;
 
@@ -138,6 +136,8 @@ class App {
     this._getPosition();
 
     initSideBar();
+
+    initTheme();
 
     // here Custom Schedule Form
     this._getCustomSchedule();
@@ -672,6 +672,11 @@ class App {
     // L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     //   maxZoom: 20,
     //   subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+    // }).addTo(this.#map);
+
+    // L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    //   attribution:
+    //     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     // }).addTo(this.#map);
 
     this.#map.on('click', this._showForm.bind(this));

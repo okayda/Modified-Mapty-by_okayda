@@ -36,7 +36,7 @@ body {
 /* GENERAL */
 a:link,
 a:visited {
-  color: var(--color-brand--1);
+  color: dodgerblue;
 }
 
 /* styles for Geolocation Map */
@@ -174,10 +174,24 @@ a:visited {
 
 /* workout sidebar */
 .workouts-sidebar {
+  /* Dark theme */
   background-color: #2f4353;
   background-image: linear-gradient(315deg, #313b44 0%, #83807d 74%);
   display: flex;
   flex-direction: column;
+  flex-basis: 110px;
+}
+
+.workouts-sidebar .workout-sidebar-footer {
+  margin: 0 10px;
+  margin-top: 1.4rem;
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 1.4rem;
+  background-color: var(--color-dark--2);
+  border-radius: 5px;
+  border-left: 5px solid var(--color-brand--1);
+  border-right: 5px solid var(--color-brand--2);
 }
 
 .parent-exercises-container .exercises-nav-bar {
@@ -194,6 +208,7 @@ a:visited {
 
 .exercises-nav-bar .menu-btn {
   font-size: 2.9rem;
+  color: #fff;
 }
 
 .exercises-nav-bar .menu-btn:hover {
@@ -268,7 +283,7 @@ a:visited {
 
 .workouts-sidebar .workouts-container {
   list-style: none;
-  height: 77vh;
+  height: 78vh;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -286,8 +301,13 @@ a:visited {
 }
 
 .workouts-container .exercise-container {
+  /* Dark theme */
   background-color: var(--color-dark--2);
-  color: white;
+  color: #fff;
+
+  /* Light theme */
+  /* background-color: #fff; */
+  /* color: #000; */
   padding: 1rem 1.2rem;
   margin: 0 1rem 1.75rem 1rem;
   border-radius: 5px;
@@ -300,7 +320,9 @@ a:visited {
 .exercise-container .timestamp-workout-container {
   font-size: 1.5rem;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.15);
+  /* background-color: rgba(0, 0, 0, 0.15); */
+  background-color: rgba(165, 165, 165, 0.15);
+
   border-radius: 5px;
   margin-top: 0.8rem;
 }
@@ -326,9 +348,15 @@ a:visited {
   margin: 0.6rem 0;
 }
 
-.workout__details .workout-img {
+/* .workout__details .workout-img {
   width: 22px;
   height: 22px;
+  vertical-align: calc(-6px);
+} */
+
+.workout-img {
+  width: 18px;
+  height: 18px;
   vertical-align: calc(-6px);
 }
 
@@ -449,6 +477,7 @@ a:visited {
 
 .arrowDefaultColor {
   color: #fff;
+  /* color: #000; */
 }
 /* ************************************************* */
 
@@ -588,8 +617,13 @@ a:visited {
 
 /* styles for editing form in existed workout */
 .edit-form {
-  background-color: #2f4353;
-  background-image: linear-gradient(315deg, #313b44 0%, #83807d 74%);
+  /* Dark theme */
+  /* background-color: #2f4353;
+  background-image: linear-gradient(315deg, #313b44 0%, #83807d 74%); */
+
+  /* Light theme */
+  background-color: #ffffff;
+  background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
 
   border-radius: 5px;
   display: flex;
@@ -662,12 +696,65 @@ a:visited {
   border-radius: 4px;
   width: 100%;
   height: 40px;
-  line-height: 40px;
+
   font-size: 1.4rem;
-  padding: 0 0.6rem;
   color: #000;
   outline: none;
 }
+
+/* running-workout input icons */
+.edit-form .pages .page .rDistance {
+  background-image: url('workout-icons/running.png');
+}
+
+.edit-form .pages .page .rDuration {
+  background-image: url('workout-icons/clock.png');
+}
+
+.edit-form .pages .page .rCadence {
+  background-image: url('workout-icons/foot.png');
+}
+/* *************** */
+
+/* cycling-workout input icons */
+.edit-form .pages .page .cDistance {
+  background-image: url('workout-icons/cycling.png');
+}
+
+.edit-form .pages .page .cDuration {
+  background-image: url('workout-icons/clock.png');
+}
+
+.edit-form .pages .page .cElevation {
+  background-image: url('workout-icons/route.png');
+}
+/* *************** */
+
+/* their icons similar properties  */
+.edit-form .pages .page .rDistance,
+.edit-form .pages .page .rDuration,
+.edit-form .pages .page .rCadence,
+.edit-form .pages .page .cDistance,
+.edit-form .pages .page .cDuration,
+.edit-form .pages .page .cElevation {
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 26px;
+  text-indent: 20px;
+  transition: 0.3s;
+  padding: 0 0.8rem;
+}
+
+.edit-form .pages .page .rDistance:focus,
+.edit-form .pages .page .rDuration:focus,
+.edit-form .pages .page .rCadence:focus,
+.edit-form .pages .page .cDistance:focus,
+.edit-form .pages .page .cDuration:focus,
+.edit-form .pages .page .cElevation:focus {
+  background-image: none;
+  text-indent: 0px;
+}
+/* *************** */
 
 .edit-form .pages .page input[type='submit'] {
   background: rgba(0, 0, 0, 0.5);
@@ -1137,7 +1224,7 @@ input[type='radio'] {
   overflow-y: auto;
   transition: 0.6s ease;
   transition-property: left;
-  z-index: 300;
+  z-index: 400;
 }
 
 .side-bar.active {
@@ -1191,8 +1278,8 @@ input[type='radio'] {
 }
 
 .side-bar .nav-link-title {
-  background: #2d3439;
   color: #fff;
+
   cursor: pointer;
   padding: 1rem;
   width: 100%;
@@ -1206,18 +1293,13 @@ input[type='radio'] {
 }
 
 .side-bar .nav-link-title:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .side-bar .nav-link-title .drop-icon {
   transition: all 0.4s ease;
   position: absolute;
   right: 25px;
-}
-
-.side-bar .nav-link-title .up-arrow {
-  width: 13px;
-  height: 13px;
 }
 
 .side-bar .nested-drop-icon {
@@ -1227,8 +1309,7 @@ input[type='radio'] {
 }
 
 .side-bar .dropdown-link {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background-color: rgb(255, 255, 255, 0.2);
   text-align: center;
   max-height: 0;
   overflow: hidden;
@@ -1238,7 +1319,6 @@ input[type='radio'] {
 }
 
 .side-bar .nested-link-title {
-  color: #fff;
   cursor: pointer;
   padding: 1rem;
   width: 100%;
@@ -1259,10 +1339,11 @@ input[type='radio'] {
 
 /* Task & Theme dropdown link */
 .side-bar .active-link {
-  border-right: 4px solid royalblue;
+  border-right: 4px solid royalblue !important;
 }
 
 .side-bar .nav-link {
+  border-right: 4px solid transparent;
   display: block;
   padding: 1rem 0;
   cursor: pointer;
@@ -1277,7 +1358,7 @@ input[type='radio'] {
 .container-nested-option {
   position: absolute;
   left: -60%;
-  z-index: 100;
+  z-index: 300;
 }
 
 .container-nested-option.active {
@@ -1406,7 +1487,6 @@ input[type='radio'] {
 .container-row-nav-running label,
 .container-row-nav-cycling label {
   display: flex;
-  height: 53px;
   width: 100%;
   align-items: center;
   border: 2px solid #d4d4d4;
@@ -1414,6 +1494,9 @@ input[type='radio'] {
   border-radius: 5px;
   margin: 0.6rem 0;
   padding-left: 1.2rem;
+  /* height: 45px; */
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   cursor: default;
   transition: all 0.3s ease;
 }
@@ -1433,8 +1516,8 @@ input[type='radio'] {
 
 .container-row-nav-running label .dot,
 .container-row-nav-cycling label .dot {
-  height: 20px;
-  width: 20px;
+  height: 14px;
+  width: 14px;
   background: #d9d9d9;
   border-radius: 50%;
   position: relative;
@@ -1459,8 +1542,8 @@ input[type='radio'] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(2);
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   transition: all ease;
 }
@@ -1504,10 +1587,10 @@ input[type='radio'] {
 .container-row-nav-running label .text,
 .container-row-nav-cycling label .text {
   color: #fff;
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.45rem;
   padding-left: 0.6rem;
   transition: color 0.3s ease;
+  margin-top: 0.1rem;
 }
 
 .container-row-nav-running #option-1-running:checked ~ .option-1-running .text,
@@ -1531,7 +1614,7 @@ input[type='radio'] {
 /* styles arrow icons animation in sidebar not workout sidebar*/
 /* Only for animation not exist in HTML file */
 .drop-icon-animation {
-  transform: rotateZ(180deg);
+  transform: rotateZ(90deg);
 }
 
 .nested-drop-icon-animation {

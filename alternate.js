@@ -17,15 +17,9 @@ export const obj = {
 
       this.previousPanel.splice(0, 1);
 
-      this.backArrow(this.previousDrop[0]);
+      // this.backArrow(this.previousDrop[0]);
 
       this.previousDrop.splice(0, 1);
     }
-  },
-
-  backArrow(targetDom) {
-    targetDom
-      .querySelector(".drop-icon")
-      .classList.toggle("drop-icon-animation");
   },
 };

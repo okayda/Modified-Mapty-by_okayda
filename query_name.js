@@ -66,4 +66,21 @@ export const dataObj = {
   edit_rCadence: '.rCadence',
   edit_rDistance: '.rDistance',
   edit_cElevation: '.cElevation',
+
+  // Side-bar
+  menuOpen: '.menu-btn',
+  menuClose: '.close-btn',
+  slideBar: '.side-bar',
+  nestedLinkContainer: '.container-nested-option',
+  overlaySide: '.overlay-side-bar',
+
+  exerciseContainer: '.container-row-nav-exercise',
+  runningContainer: '.container-row-nav-running',
+  cyclingContainer: '.container-row-nav-cycling',
+
+  exerDrop: '.exercise-dropdown',
+  nestedIcon: '.nested-drop-icon',
+
+  optionSelector: '.nested-unorder-list > .nested-list',
+  /* *************** */
 };

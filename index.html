@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" type="image/png" href="/icon.png" />
+    <link rel="shortcut icon" type="image/png" href="icon.png" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
@@ -28,7 +28,8 @@
       crossorigin=""
     ></script>
 
-    <script type="module" defer src="script.js"></script>
+
+    <script type="module" src="app.js"></script>
     <title>mapty // Map your workouts</title>
   </head>
 
@@ -61,41 +62,42 @@
         <div class="page">
           <div class="input">
             <div class="title">Distance</div>
-            <input class="rDistance" type="number" placeholder="🏃‍♂️" />
+            <input class="rDistance" type="number"/>
           </div>
 
           <div class="input">
             <div class="title">Duration</div>
-            <input class="rDuration" type="number" placeholder="⏱" />
+            <input class="rDuration" type="number"/>
           </div>
 
           <div class="input">
             <div class="title">Cadence</div>
-            <input class="rCadence" type="number" placeholder="🦶🏼" />
+            <input class="rCadence" type="number"/>
           </div>
 
           <div class="input">
-            <h2 class="custom-schedule-running">Custom-Schedule-running</h2>
+            <h2 class="custom-schedule-running">TIMESTAMP <img src="svg-icons/schedule.png" class="workout-img" alt="" /></h2>
+            
           </div>
         </div>
         <div class="page">
           <div class="input">
             <div class="title">Distance</div>
-            <input class="cDistance" type="number" placeholder="🚲" />
+            <input class="cDistance" type="number"/>
           </div>
 
           <div class="input">
             <div class="title">Duration</div>
-            <input class="cDuration" type="number" placeholder="⏱" />
+            <input class="cDuration" type="number"/>
           </div>
 
           <div class="input">
             <div class="title">Elev Gain</div>
-            <input class="cElevation" type="number" placeholder="⛰" />
+            <input class="cElevation" type="number"/>
           </div>
 
           <div class="input">
-            <h2 class="custom-schedule-cycling">Custom-Schedule-Cycling</h2>
+            <h2 class="custom-schedule-cycling">TIMESTAMP <img src="svg-icons/schedule.png" class="workout-img" alt="" /></h2>
           </div>
         </div>
       </div>
@@ -150,6 +152,11 @@
           <!--all exercise content will insert here -->
         </div>
       </div>
+      <footer class="workout-sidebar-footer">
+        <p>
+          © Copyright by <a href="#">Jonas Schmedtmann</a>. Use for learning or your portfolio. Don't use to teach. Don't claim as your own.
+        </p>
+      </footer>
     </div>
 
     <nav class="side-bar">
@@ -163,7 +170,8 @@
 
         <li class="nav-item">
           
-          <a class="nav-link-title"><img src="svg-icons/hearth.png" class="hearth-exercsie" alt="">Exercise<img src="svg-icons/up-arrow.png" class="fas fa-angle-right drop-icon up-arrow" alt=""></a>
+          <!-- <a class="nav-link-title"><img src="svg-icons/hearth.png" class="hearth-exercsie" alt="">Exercise<i class="fas fa-angle-up"></i><img src="svg-icons/up-arrow.png" class="fas fa-angle-right drop-icon up-arrow" alt=""></a> -->
+          <a class="nav-link-title"><img src="svg-icons/hearth.png" class="hearth-exercsie" alt="">Exercise<i class="fas fa-angle-right drop-icon up-arrow"></i></a>
 
           <div class="dropdown-link exercise-dropdown">
 
@@ -182,7 +190,7 @@
 
         <li class="nav-item">
 
-          <a class="nav-link-title"><img src="svg-icons/completed-task.png" class="completed-task" alt="">Task<img src="svg-icons/up-arrow.png" class="fas fa-angle-right drop-icon up-arrow" alt=""></a>
+          <a class="nav-link-title"><img src="svg-icons/completed-task.png" class="completed-task" alt="">Task<i class="fas fa-angle-right drop-icon up-arrow"></i></a>
 
           <div class="dropdown-link">
             <p class="nav-link ">Completed task</p>
@@ -193,11 +201,11 @@
 
         <li class="nav-item">
           
-          <a class="nav-link-title"><i class="fas fa-cloud-moon"></i>Theme<img src="svg-icons/up-arrow.png" class="fas fa-angle-right drop-icon up-arrow" alt=""></a>
+          <a class="nav-link-title"><i class="fas fa-cloud-moon"></i>Theme<i class="fas fa-angle-right drop-icon up-arrow"></i></a>
 
-          <div class="dropdown-link">
-            <a class="nav-link active-link">Dark</a>
-            <a class="nav-link">Light</a>
+          <div class="dropdown-link theme">
+            <a class="dark nav-link active-link">Dark</a>
+            <a class="light nav-link">Light</a>
           </div>
         </li>
 
@@ -310,14 +318,14 @@
       <label>
         <input type="checkbox" />
         <span>
-          🏃‍♂️ Running
+          <img src="workout-icons/running.png" class="workout-img"/> Running
         </span>
       </label>
     <li class="nested-list">
       <label>
         <input type="checkbox" checked />
         <span>
-          🚴‍♀️ Cycling
+          <img src="workout-icons/cycling.png" class="workout-img"/> Cycling
         </span>
       </label>
     </li>
@@ -330,28 +338,28 @@
       <input type="radio" name="Select-running" id="option-1-running" />
       <label for="option-1-running" class="option-1-running">
         <div class="dot"></div>
-        <div class="text">Sort KM 🏃‍♂️</div>
+        <div class="text">Sort KM <img src="workout-icons/running.png" class="workout-img"/></div>
       </label>
     </li>
     <li class="nested-list">
   <input type="radio" name="Select-running" id="option-2-running" />
   <label for="option-2-running" class="option-2-running">
     <div class="dot"></div>
-    <div class="text">Sort Min ⏱</div>
+    <div class="text">Sort Min <img src="workout-icons/clock.png" class="workout-img"/></div>
   </label>
     </li>
     <li class="nested-list">
       <input type="radio" name="Select-running" id="option-3-running" />
       <label for="option-3-running" class="option-3-running">
         <div class="dot"></div>
-        <div class="text">Sort KM/H ⚡️</div>
+        <div class="text">Sort KM/H <img src="workout-icons/speed.png" class="workout-img"/></div>
       </label>
     </li>
     <li class="nested-list">
       <input type="radio" name="Select-running" id="option-4-running" />
       <label for="option-4-running" class="option-4-running">
         <div class="dot"></div>
-        <div class="text">Sort SPM 🦶🏼</div>
+        <div class="text">Sort SPM <img src="workout-icons/foot.png" class="workout-img"/></div>
       </label>
     </li>
   </ul>
@@ -363,28 +371,28 @@
       <input type="radio" name="Select-clycling" id="option-1-cycling" />
       <label for="option-1-cycling" class="option-1-cycling">
         <div class="dot"></div>
-        <div class="text">Sort KM 🚴‍♀️</div>
+        <div class="text">Sort KM <img src="workout-icons/cycling.png" class="workout-img"/></div>
       </label>
     </li>
     <li class="nested-list">
   <input type="radio" name="Select-clycling" id="option-2-cycling" />
   <label for="option-2-cycling" class="option-2-cycling">
     <div class="dot"></div>
-    <div class="text">Sort Min ⏱</div>
+    <div class="text">Sort Min <img src="workout-icons/clock.png" class="workout-img"/></div>
   </label>
     </li>
     <li class="nested-list">
       <input type="radio" name="Select-clycling" id="option-3-cycling" />
       <label for="option-3-cycling" class="option-3-cycling">
         <div class="dot"></div>
-        <div class="text">Sort MIN/KM ⚡️</div>
+        <div class="text">Sort MIN/KM <img src="workout-icons/speed.png" class="workout-img"/></div>
       </label>
     </li>
     <li class="nested-list">
       <input type="radio" name="Select-clycling" id="option-4-cycling" />
       <label for="option-4-cycling" class="option-4-cycling">
         <div class="dot"></div>
-        <div class="text">Sort M ⛰</div>
+        <div class="text">Sort M <img src="workout-icons/route.png" class="workout-img"/></div>
       </label>
     </li>
   </ul>

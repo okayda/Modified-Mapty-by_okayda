@@ -1,30 +1,10 @@
 import { obj as dropAlter } from './alternate.js';
 import { obj as dropNested } from './nestedAlternate.js';
+import { dataObj as queryName } from './query_name.js';
 
 export const initSideBar = function () {
-  document.querySelector('.menu-btn').addEventListener('click', function () {
-    document.querySelector('.side-bar').classList.add('active');
-
-    document.querySelector('.container-nested-option').classList.add('active');
-
-    document.querySelector('.overlay-side-bar').classList.add('active');
-  });
-
-  document.querySelector('.close-btn').addEventListener('click', function () {
-    document.querySelector('.side-bar').classList.remove('active');
-
-    document
-      .querySelector('.container-nested-option')
-      .classList.remove('active');
-
-    document.querySelector('.overlay-side-bar').classList.remove('active');
-  });
-
-  //   document
-  //     .querySelector('.overlay-side-bar')
-  //     .addEventListener('click', function () {
-  //       document.querySelector('.overlay-side-bar').style.display = 'none';
-  //     });
+  OpenMenuHandler();
+  CloseMenuHandler();
 
   let showRadioRunning = true;
   let showRadioCycling = true;
@@ -39,7 +19,7 @@ export const initSideBar = function () {
           `;
   };
 
-  const hideAllExerciseNested = function () {
+  const hiedAllExerciseNested = function () {
     showCheckbox = true;
     showRadioRunning = true;
     showRadioCycling = true;
@@ -75,21 +55,19 @@ export const initSideBar = function () {
     }
   });
 
-  const exerciseDropdown = document.querySelector('.exercise-dropdown');
+  const exerciseDropdown = document.querySelector(queryName.exerDrop);
 
   const nestedArrowAnimation = function (e) {
     const target = e.target;
     if (target.classList.contains('nested-link-title'))
       target
-        .querySelector('.nested-drop-icon')
+        .querySelector(queryName.nestedIcon)
         .classList.toggle('nested-drop-icon-animation');
   };
 
-  const exerciseSelector = '.container-row-nav-exercise';
-  const runningSelector = '.container-row-nav-running';
-  const cyclingSelector = '.container-row-nav-cycling';
-
-  console.log(document.querySelector('.container-row-nav-exercise'));
+  const exerciseSelector = queryName.exerciseContainer;
+  const runningSelector = queryName.runningContainer;
+  const cyclingSelector = queryName.cyclingContainer;
 
   const exerciseDOM_zIndex = function (val1, val2, val3) {
     document.querySelector(exerciseSelector).style.zIndex = val1;
@@ -98,6 +76,8 @@ export const initSideBar = function () {
   };
 
   const displayExercise = function () {
+    hiedAllExerciseNested();
+
     if (dropNested.showCheckbox) {
       dropNested.displayingAnimation(...dropNested.animationProp.exerciseShow);
 
@@ -118,6 +98,8 @@ export const initSideBar = function () {
 
   const sortRunning = function () {
     if (dropNested.showRadioRunning) {
+      hiedAllExerciseNested();
+
       dropNested.displayingAnimation(...dropNested.animationProp.runningShow);
 
       exerciseDOM_zIndex('-1', '100', '-1');
@@ -137,6 +119,8 @@ export const initSideBar = function () {
 
   const sortCycling = function () {
     if (dropNested.showRadioCycling) {
+      hiedAllExerciseNested();
+
       dropNested.displayingAnimation(...dropNested.animationProp.cyclingShow);
 
       exerciseDOM_zIndex('-1', '-1', '100');
@@ -165,3 +149,27 @@ export const initSideBar = function () {
     else if (itContains(e, 'cycling-btn')) sortCycling();
   });
 };
+
+function OpenMenuHandler() {
+  document
+    .querySelector(queryName.menuOpen)
+    .addEventListener('click', function () {
+      document.querySelector(queryName.slideBar).classList.add('active');
+      document
+        .querySelector(queryName.nestedLinkContainer)
+        .classList.add('active');
+      document.querySelector(queryName.overlaySide).classList.add('active');
+    });
+}
+
+function CloseMenuHandler() {
+  document
+    .querySelector(queryName.menuClose)
+    .addEventListener('click', function () {
+      document.querySelector(queryName.slideBar).classList.remove('active');
+      document
+        .querySelector(queryName.nestedLinkContainer)
+        .classList.remove('active');
+      document.querySelector(queryName.overlaySide).classList.remove('active');
+    });
+}
