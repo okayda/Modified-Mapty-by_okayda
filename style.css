@@ -62,6 +62,9 @@ a:visited {
   cursor: pointer;
   display: none;
 }
+.overlay.active {
+  display: block;
+}
 
 /* Back drop 2 */
 .overlay-edit-form {
@@ -92,6 +95,11 @@ a:visited {
   height: 100vh;
   user-select: none;
   opacity: 0;
+}
+
+.error-overlay.active {
+  opacity: 1;
+  z-index: 1000;
 }
 
 /* Back drop 4 */
@@ -624,9 +632,8 @@ a:visited {
   /* Light theme */
   background-color: #ffffff;
   background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
-
+  display: none;
   border-radius: 5px;
-  display: flex;
   flex-direction: column;
   overflow: hidden;
   position: absolute;
@@ -634,10 +641,13 @@ a:visited {
   top: 6%;
   transform: translateX(-50%);
   z-index: 1000;
-  display: none;
   animation: hi 0.5s;
   -webkit-transform: translateZ(0px);
   -webkit-transform: translateX(-50%);
+}
+
+.edit-form.active {
+  display: block;
 }
 
 @keyframes hi {
@@ -824,6 +834,10 @@ a:visited {
   display: none;
   width: 50%;
   margin: 0 auto;
+}
+
+.timestamp-container.active {
+  display: block;
 }
 
 .timestamp-container .title {
