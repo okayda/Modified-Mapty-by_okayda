@@ -7,12 +7,12 @@ export const objectOverlays = {
 
     editForm_enabled: false,
     timestamp_enabled: false,
-    setFrom_enabled: false,
+    setForm_enabled: false,
     error_alert_enabled: false,
   },
 
   edit_form_init() {
-    this.editForm_enabled = true;
+    this.overlay_state.editForm_enabled = true;
     document.querySelector('.overlay').classList.add('active');
     document.querySelector('.edit-form').classList.add('active');
   },
@@ -23,8 +23,7 @@ export const objectOverlays = {
   },
 
   previousDisplay() {
-    if (!this.overlay_state.setFrom_enabled) {
-      console.log('kaycee');
+    if (!this.overlay_state.setForm_enabled) {
       this.overlay_state.timestamp_enabled = false;
       document.querySelector('.edit-form').classList.add('active');
       document
@@ -36,13 +35,11 @@ export const objectOverlays = {
         document.querySelector(`.rDistance`).focus();
       }, 400);
     } else {
-      this.overlay_state.setFrom_enabled = false;
+      this.overlay_state.setForm_enabled = false;
       document.querySelector('.overlay').classList.remove('active');
       document
         .querySelector(queryName.tidar_container)
         .classList.remove('active');
-
-      console.log('set');
     }
   },
 
@@ -58,13 +55,12 @@ export const objectOverlays = {
           this.previousDisplay();
           this.reset_exercise_timestamp_type();
         } else {
-          this.overlay_state.setFrom_enabled = false;
+          this.overlay_state.setForm_enabled = false;
           document.querySelector('.overlay').classList.remove('active');
           document
             .querySelector(queryName.tidar_container)
             .classList.remove('active');
         }
-        console.log(this.overlay_state);
       }.bind(this)
     );
   },

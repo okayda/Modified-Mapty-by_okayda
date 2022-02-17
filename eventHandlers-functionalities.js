@@ -29,7 +29,7 @@ export default function event_handlers_init() {
   document.querySelector(queryName.customSched).addEventListener(
     'click',
     function () {
-      objectOverlays.overlay_state.setFrom_enabled = true;
+      objectOverlays.overlay_state.setForm_enabled = true;
       document.querySelector('.overlay').classList.add('active');
       document.querySelector(queryName.tidar_container).classList.add('active');
     }.bind(this)

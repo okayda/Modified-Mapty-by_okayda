@@ -96,15 +96,17 @@ export const renderMethods = {
     }
 
     let html = `
-        <div class="exercise-container exercise--${workout.type}" data-id="${
-      workout.id
-    }">
+        <div class="exercise-container exercise--${
+          workout.exerciseType
+        }" data-id="${workout.id}">
                     <h2 class="workout__title">
-                    ${workout.exerciseType}
+                    <span class="title">
+                    ${workout.title}
+                    </span>
                         <div class="icon_container">
-                            <span class="arrow_up "><i class="fas fa-arrow-down up ${displayArrow(
+                            <span class="arrow_up "><i class="fas fa-arrow-down up ${this.displayArrow(
                               workout.longJourney
-                            )} ${specificArrowRotation(
+                            )} ${this.specificArrowRotation(
       isDropDown,
       workout.longJourney
     )}"></i></span>
@@ -115,32 +117,32 @@ export const renderMethods = {
                     </h2>   
 
     <div class="exercise-info-container ${
-      conditionStyleAdd(
+      this.conditionStyleAdd(
         isDropDown,
         workout.longJourney,
-        addStyleContainer().addGridClass
+        this.addStyleContainer().addGridClass
       ) +
       ' ' +
-      conditionStyleAdd(
+      this.conditionStyleAdd(
         isDropDown,
         workout.longJourney,
-        addStyleContainer().addHeightClass
+        this.addStyleContainer().addHeightClass
       ) +
       ' ' +
-      conditionStyleAdd(
+      this.conditionStyleAdd(
         isDropDown,
         workout.longJourney,
-        addStyleContainer().addPaddingClass
+        this.addStyleContainer().addPaddingClass
       )
     }">
                     
                         <div class="workout__details">
                             <span class="workout__icon icon_info">${
-                              workout.type === 'running'
+                              workout.exerciseType === 'running'
                                 ? '<img src="workout-icons/running.png" class="workout-img"/>'
                                 : '<img src="workout-icons/cycling.png" class="workout-img"/>'
                             }</span>
-                            <span class="workout__value text_info">${ellipsisIsDropdown(
+                            <span class="workout__value text_info">${this.ellipsisIsDropdown(
                               isDropDown,
                               workout.longJourney,
                               workout.distance
@@ -149,7 +151,7 @@ export const renderMethods = {
                         </div>
                         <div class="workout__details">
                             <span class="workout__icon"><img src="workout-icons/clock.png" class="workout-img"/></span>
-                            <span class="workout__value text_info">${ellipsisIsDropdown(
+                            <span class="workout__value text_info">${this.ellipsisIsDropdown(
                               isDropDown,
                               workout.longJourney,
                               workout.duration
@@ -158,19 +160,21 @@ export const renderMethods = {
                         </div>
         `;
 
-    if (workout.type === 'running')
+    if (workout.exerciseType === 'running')
       html += `
         <div class="workout__details">
             <span class="workout__icon"><img src="workout-icons/speed.png" class="workout-img"/></span>
-            <span class="workout__value">test</span>
+            <span class="workout__value text_info">${
+              workout.pace_or_speed
+            }</span>
             <span class="workout__unit">km/h</span>
         </div>
         <div class="workout__details">
             <span class="workout__icon icon_info"><img src="workout-icons/foot.png" class="workout-img"/></span>
-            <span class="workout__value text_info">${ellipsisIsDropdown(
+            <span class="workout__value text_info">${this.ellipsisIsDropdown(
               isDropDown,
               workout.longJourney,
-              workout.cadence
+              workout.cadence_or_elevation
             )}</span>
             <span class="workout__unit">spm</span>
             
@@ -180,24 +184,26 @@ export const renderMethods = {
         
      <p class="timestamp-workout-container">
             <span class="timestamp-workout-text">
-     ${workout.month} \\ ${workout.dayNumber} \\ ${workout.year}
+    ${workout.dateSchedule}
       </span>
-      <span class="time">12:00 PM</span>
+      <span class="time">${workout.timeSchedule}</span>
       </p>
     `;
-    if (workout.type === 'cycling')
+    if (workout.exerciseType === 'cycling')
       html += `
         <div class="workout__details">
             <span class="workout__icon"><img src="workout-icons/speed.png" class="workout-img"/></span>
-            <span class="workout__value">test</span>
+            <span class="workout__value text_info">${
+              workout.pace_or_speed
+            }</span>
             <span class="workout__unit">km/h</span>
         </div>
         <div class="workout__details">
             <span class="workout__icon icon_info"><img src="workout-icons/route.png" class="workout-img"/></span>
-            <span class="workout__value text_info">${ellipsisIsDropdown(
+            <span class="workout__value text_info">${this.ellipsisIsDropdown(
               isDropDown,
               workout.longJourney,
-              workout.elevationGain
+              workout.cadence_or_elevation
             )}</span>
             <span class="workout__unit">m</span>
         </div>
@@ -206,11 +212,12 @@ export const renderMethods = {
 
      <p class="timestamp-workout-container">
      <span class="timestamp-workout-text">
-${workout.month} \\ ${workout.dayNumber} \\ ${workout.year}
+     ${workout.timeSchedule}
 </span>
-<span class="time">12:00 PM</span>
+<span class="time">00:00 NN</span>
 </p>
     `;
     containerWorkouts.insertAdjacentHTML('afterbegin', html);
   },
+  // ${workout.month} \\ ${workout.dayNumber} \\ ${workout.year}
 };
