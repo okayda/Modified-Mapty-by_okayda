@@ -49,34 +49,42 @@ export const renderMethods = {
     return returnStyle;
   },
 
-  displayArrow: isLongJourney => (isLongJourney ? 'showIcon' : 'notShowIcon'),
+  show_or_not_arrow: (isLongJourney, isDropDown) => {
+    console.log(isDropDown);
+    let str;
+    if (isLongJourney) {
+      str = 'display-arrow-icon';
+      if (isDropDown === false) str += ' arrow-up-rotate';
+    } else {
+      str = 'not-display-arrow-icon';
+    }
+
+    return str;
+  },
 
   checkIsLongJourney(...num) {
     return num.filter(num => num > 9999).length;
   },
 
-  specificArrowRotation(isDropDown, isLongJourney) {
-    let returnVal;
-
-    switch (true) {
-      case isDropDown === null && isLongJourney:
-        returnVal = 'togPlusAni click_icon_color';
-        break;
-      case isDropDown:
-        returnVal = 'togPlusAni click_icon_color';
-        break;
-      default:
-        returnVal = 'togPlusAni togPlus arrowDefaultColor';
-    }
-    return returnVal;
+  state_of_color_arrow(isDropDown) {
+    if (isDropDown) return 'arrow-active';
+    else return 'arrow-deactive';
   },
 
-  ellipsisIsDropdown(isDropDown, isLongJourney, exerciseText) {
-    if (!isLongJourney || isDropDown === null) return exerciseText;
+  make_ellipsis(text) {
+    return text.toString().slice(0, 1) + '...';
+  },
 
-    return isDropDown
-      ? exerciseText
-      : exerciseText.toString().slice(0, 1) + '...';
+  is_needed_to_be_ellipsis(isDropDown, isLongJourney, exerciseText) {
+    if (isDropDown && isLongJourney) return exerciseText;
+
+    if (!isLongJourney) return exerciseText;
+
+    if (isDropDown === false && isLongJourney) {
+      if (exerciseText > 999) return this.make_ellipsis(exerciseText);
+
+      return exerciseText;
+    }
   },
 
   iconObject() {
@@ -87,7 +95,7 @@ export const renderMethods = {
     };
   },
 
-  renderWorkout(workout, isDropDown = null) {
+  renderWorkout(workout) {
     if (Object.keys(CustomData).length > 0) {
       const scheduleArr = CustomData.date.replace(/ /g, '').split('/');
       workout.month = scheduleArr[0];
@@ -104,33 +112,33 @@ export const renderMethods = {
                     ${workout.title}
                     </span>
                         <div class="icon_container">
-                            <span class="arrow_up "><i class="fas fa-arrow-down up ${this.displayArrow(
-                              workout.longJourney
-                            )} ${this.specificArrowRotation(
-      isDropDown,
-      workout.longJourney
+                            <span class="arrow_up "><i id="arrow-icon" class="fas fa-arrow-down arrow-rotate-animation ${this.show_or_not_arrow(
+                              workout.longJourney,
+                              workout.isDropDown
+                            )} ${this.state_of_color_arrow(
+      workout.isDropDown
     )}"></i></span>
-                            <span class="tarmap"><i class="fas fa-map-marker-alt"></i></span>
-                            <span class="edit"><i class="far fa-edit"></i></span>
-                            <span class="exe"><i class="fas fa-times delete-workout"></i></span>
+                            <span class="tarmap"><i id="marker-icon" class="fas fa-map-marker-alt"></i></span>
+                            <span class="edit"><i id="edit-icon" class="far fa-edit"></i></span>
+                            <span class="exe"><i id="remove-icon" class="fas fa-times delete-workout"></i></span>
                         </div>
                     </h2>   
 
     <div class="exercise-info-container ${
       this.conditionStyleAdd(
-        isDropDown,
+        workout.isDropDown,
         workout.longJourney,
         this.addStyleContainer().addGridClass
       ) +
       ' ' +
       this.conditionStyleAdd(
-        isDropDown,
+        workout.isDropDown,
         workout.longJourney,
         this.addStyleContainer().addHeightClass
       ) +
       ' ' +
       this.conditionStyleAdd(
-        isDropDown,
+        workout.isDropDown,
         workout.longJourney,
         this.addStyleContainer().addPaddingClass
       )
@@ -142,8 +150,8 @@ export const renderMethods = {
                                 ? '<img src="workout-icons/running.png" class="workout-img"/>'
                                 : '<img src="workout-icons/cycling.png" class="workout-img"/>'
                             }</span>
-                            <span class="workout__value text_info">${this.ellipsisIsDropdown(
-                              isDropDown,
+                            <span class="workout__value text_info">${this.is_needed_to_be_ellipsis(
+                              workout.isDropDown,
                               workout.longJourney,
                               workout.distance
                             )}</span>
@@ -151,8 +159,8 @@ export const renderMethods = {
                         </div>
                         <div class="workout__details">
                             <span class="workout__icon"><img src="workout-icons/clock.png" class="workout-img"/></span>
-                            <span class="workout__value text_info">${this.ellipsisIsDropdown(
-                              isDropDown,
+                            <span class="workout__value text_info">${this.is_needed_to_be_ellipsis(
+                              workout.isDropDown,
                               workout.longJourney,
                               workout.duration
                             )}</span>
@@ -171,8 +179,8 @@ export const renderMethods = {
         </div>
         <div class="workout__details">
             <span class="workout__icon icon_info"><img src="workout-icons/foot.png" class="workout-img"/></span>
-            <span class="workout__value text_info">${this.ellipsisIsDropdown(
-              isDropDown,
+            <span class="workout__value text_info">${this.is_needed_to_be_ellipsis(
+              workout.isDropDown,
               workout.longJourney,
               workout.cadence_or_elevation
             )}</span>
@@ -200,8 +208,8 @@ export const renderMethods = {
         </div>
         <div class="workout__details">
             <span class="workout__icon icon_info"><img src="workout-icons/route.png" class="workout-img"/></span>
-            <span class="workout__value text_info">${this.ellipsisIsDropdown(
-              isDropDown,
+            <span class="workout__value text_info">${this.is_needed_to_be_ellipsis(
+              workout.isDropDown,
               workout.longJourney,
               workout.cadence_or_elevation
             )}</span>

@@ -12,8 +12,6 @@ import { objectOverlays } from './overlays-functionalities.js';
 
 import event_handlers_init from './eventHandlers-functionalities.js';
 
-import { changeWorkoutInfo } from './edit_form_functionalities.js';
-
 import { renderMethods } from './render_markup.js';
 
 import { initDebugHandlers } from './debug.js';
@@ -142,19 +140,17 @@ class Excercise_Details extends Workout {
 
     this._setDescription();
 
-    this.specific_prop_for_type_exercise(cadence_or_elevation);
+    this.specific_prop_for_type_exercise();
 
     this.getExerciseDetails();
   }
 
-  specific_prop_for_type_exercise(unknow_exercise_prop) {
+  specific_prop_for_type_exercise() {
     // True --> Running
     // False --> Cycling
-    if (this.exerciseType === 'running') {
+    if (this.exerciseType === 'running')
       this.pace_or_speed = Math.round(this.duration / this.distance);
-    } else {
-      this.pace_or_speed = Math.round(this.distance / (this.duration / 60));
-    }
+    else this.pace_or_speed = Math.round(this.distance / (this.duration / 60));
   }
 
   getExerciseDetails() {
@@ -193,7 +189,7 @@ class App {
     // form.addEventListener('submit', this._newWorkout.bind(this));
     form.addEventListener('submit', this._check_and_add_workout.bind(this));
 
-    this._eventDelegationIcons();
+    this._workouts_container_event_delegation();
 
     inputType.addEventListener('change', this._toggleElevationField);
 
@@ -210,25 +206,6 @@ class App {
         }
       );
   }
-
-  _errorAlert(msg) {
-    const popupBox = document.querySelector(queryName.errOverlay);
-    const errorMessage = document.querySelector(queryName.errMessage);
-    const okBtn = document.querySelector(queryName.errBtn);
-
-    errorMessage.textContent = msg;
-
-    popupBox.classList.add('active');
-
-    okBtn.addEventListener('click', () => {
-      popupBox.classList.remove('active');
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   _loadMap(position) {
     const { latitude } = position.coords;
@@ -257,6 +234,20 @@ class App {
     infoData.workouts.forEach(work => this._renderWorkoutMarker(work));
   }
 
+  _errorAlert(msg) {
+    const popupBox = document.querySelector(queryName.errOverlay);
+    const errorMessage = document.querySelector(queryName.errMessage);
+    const okBtn = document.querySelector(queryName.errBtn);
+
+    errorMessage.textContent = msg;
+
+    popupBox.classList.add('active');
+
+    okBtn.addEventListener('click', () => {
+      popupBox.classList.remove('active');
+    });
+  }
+
   _showForm(mapE) {
     this.#mapEvent = mapE;
     form.classList.remove('hidden');
@@ -274,89 +265,6 @@ class App {
     form.classList.add('hidden');
 
     setTimeout(() => (form.style.display = 'grid'), 1000);
-  }
-
-  _toggleElevationField() {
-    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-  }
-
-  _check_and_add_workout(e) {
-    const type = inputType.value === 'running' ? 'running' : 'cycling';
-    const distance = +inputDistance.value;
-    const duration = +inputDuration.value;
-
-    //for Running
-    const cadence = +inputCadence.value;
-    //for Cycling
-    const elevation = +inputElevation.value;
-    const exerciseTypeProp = type === 'running' ? cadence : elevation;
-
-    const validInputs = arr => arr.every(inp => Number.isFinite(inp));
-
-    const allPositive = arr => arr.every(inp => inp > 0);
-
-    const workoutValue = (exerciseType, arrVal) => {
-      return exerciseType ? new Running(...arrVal) : new Cycling(...arrVal);
-    };
-
-    const clearErrorInput = function (otherInput, initial) {
-      document.querySelector(queryName.inputFormDistance).blur();
-      document.querySelector(queryName.inputDuration).blur();
-      document.querySelector(queryName.inputFormCadence).blur();
-
-      if (!Number.isFinite(distance) || distance <= 0)
-        document.querySelector(queryName.inputFormDistance).value = '';
-
-      if (!Number.isFinite(duration) || duration <= 0)
-        document.querySelector(queryName.inputDuration).value = '';
-
-      if (!Number.isFinite(otherInput) || otherInput <= 0)
-        document.querySelector(`.form__input--${initial}`).value = '';
-    };
-
-    e.preventDefault();
-
-    const { lat, lng } = this.#mapEvent.latlng;
-    const arr_val_inputs = [distance, duration, exerciseTypeProp];
-    let workout;
-
-    if (!validInputs(arr_val_inputs) || !allPositive(arr_val_inputs)) {
-      clearErrorInput(
-        exerciseTypeProp,
-        type === 'running' ? 'cadence' : 'elevation'
-      );
-      return this._errorAlert('Inputs have to be positive numbers!');
-    }
-
-    const isLongJourney =
-      renderMethods.checkIsLongJourney(distance, duration, exerciseTypeProp) > 0
-        ? true
-        : false;
-
-    const arrVal = [
-      [lat, lng],
-      distance,
-      duration,
-      exerciseTypeProp,
-      isLongJourney,
-      type,
-      isLongJourney,
-    ];
-    const workValueCondition = type === 'running' ? true : false;
-
-    // workout = workoutValue(workValueCondition, arrVal);
-    workout = new Excercise_Details(...arrVal);
-
-    infoData.workouts.push(workout);
-
-    this._renderWorkoutMarker(workout);
-
-    renderMethods.renderWorkout(workout);
-
-    this._hideForm();
-
-    infoData.setLocalStorage();
   }
 
   _renderWorkoutMarker(workout) {
@@ -407,6 +315,11 @@ class App {
     );
   }
 
+  _toggleElevationField() {
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+  }
+
   _burgerMenu() {
     document
       .querySelector(queryName.burgerIcon)
@@ -415,7 +328,88 @@ class App {
       });
   }
 
-  _alternateArrow(target, targetName) {
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  _check_and_add_workout(e) {
+    const type = inputType.value === 'running' ? 'running' : 'cycling';
+    const distance = +inputDistance.value;
+    const duration = +inputDuration.value;
+
+    //for Running
+    const cadence = +inputCadence.value;
+    //for Cycling
+    const elevation = +inputElevation.value;
+
+    const exerciseTypeProp = type === 'running' ? cadence : elevation;
+
+    const validInputs = arr => arr.every(inp => Number.isFinite(inp));
+
+    const allPositive = arr => arr.every(inp => inp > 0);
+
+    const clearErrorInput = function (otherInput, initial) {
+      document.querySelector(queryName.inputFormDistance).blur();
+      document.querySelector(queryName.inputDuration).blur();
+      document.querySelector(queryName.inputFormCadence).blur();
+
+      if (!Number.isFinite(distance) || distance <= 0)
+        document.querySelector(queryName.inputFormDistance).value = '';
+
+      if (!Number.isFinite(duration) || duration <= 0)
+        document.querySelector(queryName.inputDuration).value = '';
+
+      if (!Number.isFinite(otherInput) || otherInput <= 0)
+        document.querySelector(`.form__input--${initial}`).value = '';
+    };
+
+    e.preventDefault();
+
+    const { lat, lng } = this.#mapEvent.latlng;
+    const arr_val_inputs = [distance, duration, exerciseTypeProp];
+    let workout;
+
+    if (!validInputs(arr_val_inputs) || !allPositive(arr_val_inputs)) {
+      clearErrorInput(
+        exerciseTypeProp,
+        type === 'running' ? 'cadence' : 'elevation'
+      );
+      return this._errorAlert('Inputs have to be positive numbers!');
+    }
+
+    const isLongJourney =
+      renderMethods.checkIsLongJourney(distance, duration, exerciseTypeProp) > 0
+        ? true
+        : false;
+
+    const arrVal = [
+      [lat, lng],
+      distance,
+      duration,
+      exerciseTypeProp,
+      isLongJourney,
+      type,
+      isLongJourney,
+    ];
+
+    workout = new Excercise_Details(...arrVal);
+
+    infoData.workouts.push(workout);
+
+    this._renderWorkoutMarker(workout);
+
+    renderMethods.renderWorkout(workout);
+
+    this._hideForm();
+
+    infoData.setLocalStorage();
+  }
+
+  // *******************************************************
+  // *******************************************************
+
+  _arrow_alternate_icon(target) {
+    if (target.id !== 'arrow-icon') return;
+
     const checkHaveEllips = function (value) {
       return value.filter(val => val.textContent.slice(1, 4) === '...').length;
     };
@@ -447,39 +441,26 @@ class App {
           renderMethods.addStyleContainer().addPaddingClass
         )
       );
-    }.bind(this);
+    };
 
-    if (targetName === 'fa-arrow-down') {
-      target.classList.add('togPlusAni');
-      target.classList.toggle('togPlus');
-      target.classList.toggle('click_icon_color');
+    target.classList.toggle('arrow-up-rotate');
+    target.classList.toggle('arrow-active');
+    target.classList.toggle('arrow-deactive');
 
-      const exerciseTextNodes = target
-        .closest(queryName.workItself)
-        .querySelectorAll('.text_info');
-      const exerciseTargetId = target.closest(queryName.workItself).dataset.id;
+    const exerciseTextNodes = target
+      .closest(queryName.workItself)
+      .querySelectorAll('.text_info');
+    const exerciseTargetId = target.closest(queryName.workItself).dataset.id;
 
-      infoData.workouts.forEach(eachExercise => {
-        if (eachExercise.id === exerciseTargetId) {
-          if (checkHaveEllips(Array.from(exerciseTextNodes)) === 0) {
-            exerciseTextNodes.forEach(
-              item => (item.textContent = item.textContent.slice(0, 1) + '...')
-            );
+    infoData.workouts.forEach(eachExercise => {
+      if (eachExercise.id === exerciseTargetId) {
+        if (checkHaveEllips(Array.from(exerciseTextNodes)) === 0) {
+          exerciseTextNodes.forEach(item => {
+            if (item.textContent > 999)
+              item.textContent = renderMethods.make_ellipsis(item.textContent);
+          });
 
-            eachExercise.isDropDown = false;
-
-            infoData.setLocalStorage();
-
-            targetExerciseAddStyle(eachExercise.isDropDown);
-
-            return;
-          }
-
-          exerciseTextNodes.forEach(
-            (item, i) => (item.textContent = eachExercise.ExerciseDetails[i])
-          );
-
-          eachExercise.isDropDown = true;
+          eachExercise.isDropDown = false;
 
           infoData.setLocalStorage();
 
@@ -487,83 +468,79 @@ class App {
 
           return;
         }
-      });
-    }
+
+        exerciseTextNodes.forEach(
+          (item, i) => (item.textContent = eachExercise.ExerciseDetails[i])
+        );
+
+        eachExercise.isDropDown = true;
+
+        infoData.setLocalStorage();
+
+        targetExerciseAddStyle(eachExercise.isDropDown);
+
+        return;
+      }
+    });
   }
 
-  // *******************************************************
-  // *******************************************************
-  // *******************************************************
-  // *******************************************************
-  // *******************************************************
+  _edit_form_icon(target) {
+    if (target.id !== 'edit-icon') return;
 
-  _target_text_Edit_form(target) {
-    infoData.specificEvents.push(
-      target.closest(queryName.workItself).dataset.id,
-      target.closest(queryName.workItself).querySelectorAll('.text_info'),
-      target.closest(queryName.workItself).querySelectorAll('.icon_info'),
-      target.closest('.workout__title').querySelector('.title')
-    );
-    editForm.setAttribute(
-      'data-id',
-      target.closest(queryName.workItself).dataset.id
-    );
-  }
-
-  _editForm(target, targetName) {
-    if (targetName === 'fa-edit') {
-      this._target_text_Edit_form(target);
-      objectOverlays.edit_form_init();
-    }
-  }
-
-  _gotoMapmarker(target, targetName) {
-    if (targetName === 'fa-map-marker-alt') {
-      this._moveToPopUp(target);
-      target.classList.toggle('click_icon_color');
-    }
-  }
-
-  _removeErrorAlert(target) {
-    if (target.className.split(' ')[0] === 'error-overlay') {
-      document.querySelector('.error-overlay').classList.remove('active');
-    }
-  }
-
-  _workout_icons_functionalities(e) {
-    const target = e.target;
-    const targetName = target.className.split(' ')[1];
-
-    this._removeErrorAlert(target);
-    this._alternateArrow(target, targetName);
-    this._editForm(target, targetName);
-
-    this._gotoMapmarker(target, targetName);
-  }
-
-  _eventDelegationIcons() {
-    document
-      .querySelector('body')
-      .addEventListener(
-        'click',
-        this._workout_icons_functionalities.bind(this)
+    const target_text_Edit_form = function (target) {
+      infoData.specificEvents.push(
+        target.closest(queryName.workItself).dataset.id,
+        target.closest(queryName.workItself).querySelectorAll('.text_info'),
+        target.closest(queryName.workItself).querySelectorAll('.icon_info'),
+        target.closest(queryName.workItself).querySelector('.title')
       );
+      editForm.setAttribute(
+        'data-id',
+        target.closest(queryName.workItself).dataset.id
+      );
+    };
 
-    editForm.addEventListener(
-      'submit',
-      function (e) {
-        e.preventDefault();
+    target_text_Edit_form(target);
 
-        changeWorkoutInfo();
-
-        console.log('the module for edit forms has been executed');
-      }.bind(this)
-    );
+    objectOverlays.show_edit_form();
   }
 
-  _getExerciseData() {
-    return infoData.workouts;
+  _map_marker_icon(target) {
+    if (target.id !== 'marker-icon') return;
+
+    this._moveToPopUp(target);
+    target.classList.toggle('click_icon_color');
+  }
+
+  _remove_error_alert(target) {
+    if (target.className.split(' ')[0] !== 'error-overlay') return;
+
+    document.querySelector('.error-overlay').classList.remove('active');
+  }
+
+  _workout_icons_init(e) {
+    const target = e.target;
+    if (target.className === 'workouts-container') return;
+
+    console.log(target);
+
+    this._remove_error_alert(target);
+
+    this._arrow_alternate_icon(target);
+
+    this._map_marker_icon(target);
+
+    this._edit_form_icon(target);
+  }
+
+  // only for workout icons functionalities
+  _workouts_container_event_delegation() {
+    document
+      .querySelector('.workouts-container')
+      .addEventListener('click', this._workout_icons_init.bind(this));
   }
 }
-
 const app = new App();
+
+const data = JSON.parse(localStorage.getItem('workouts'));
+console.log(data);

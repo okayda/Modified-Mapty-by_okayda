@@ -5,7 +5,7 @@ import { dataObj as queryName } from './query_name.js';
 
 const editForm = document.querySelector(queryName.editForm);
 
-export const changeWorkoutInfo = function () {
+export const edit_workout_info_including_data_workout = function () {
   const reset_specificEvent_and_dataset = function () {
     editForm.removeAttribute('data-id');
     infoData.specificEvents = [];
@@ -17,7 +17,7 @@ export const changeWorkoutInfo = function () {
 
     let cadence_or_elevation;
 
-    if (exerciseType === 'r')
+    if (str === 'r')
       cadence_or_elevation = document.querySelector(queryName.edit_rCadence);
     else
       cadence_or_elevation = document.querySelector(queryName.edit_cElevation);
@@ -144,6 +144,8 @@ export const changeWorkoutInfo = function () {
           ? true
           : false;
 
+      itemWorkout.isDropDown = itemWorkout.longJourney;
+
       exerciseTitle.textContent = itemWorkout.title;
 
       exerciseIcon.forEach(
@@ -156,16 +158,32 @@ export const changeWorkoutInfo = function () {
         (item, i) => (item.textContent = itemWorkout.ExerciseDetails[i])
       );
 
-      if (!itemWorkout.longJourney) {
+      if (itemWorkout.longJourney === false) {
         addStyleExcercise(itemWorkout.longJourney);
-        targetExerciseHTML()[1].className = 'fas fa-arrow-down notShowIcon';
-        itemWorkout.isDropDown = false;
+        targetExerciseHTML()[1].className =
+          'fas fa-arrow-down arrow-rotate-animation not-display-arrow-icon arrow-deactive';
       } else {
         addStyleExcercise(itemWorkout.longJourney);
         targetExerciseHTML()[1].className =
-          'fas fa-arrow-down up togPlusAni click_icon_color showIcon';
-        itemWorkout.isDropDown = true;
+          'fas fa-arrow-down arrow-rotate-animation display-arrow-icon arrow-active';
       }
+
+      // if (!itemWorkout.longJourney) {
+      //   addStyleExcercise(itemWorkout.longJourney);
+      //   targetExerciseHTML()[1].className =
+      //     'fas fa-arrow-down not-display-arrow-icon';
+      //   itemWorkout.isDropDown = false;
+
+      //   console.log(targetExerciseHTML());
+      //   console.log(targetExerciseHTML()[0]);
+      //   console.log(targetExerciseHTML()[1]);
+      // } else {
+      //   addStyleExcercise(itemWorkout.longJourney);
+      //   targetExerciseHTML()[1].className =
+      //     'fas fa-arrow-down togPlusAni click_icon_color display-arrow-icon';
+      //   itemWorkout.isDropDown = true;
+
+      // }
 
       targetExerciseHTML()[0].closest(
         queryName.workItself

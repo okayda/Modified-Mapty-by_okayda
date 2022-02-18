@@ -459,36 +459,6 @@ a:visited {
 }
 /* ************************************************* */
 
-/* JavaScript workout arrow animation (row to column)*/
-.togPlusAni {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-  -webkit-transition: 0.3s ease;
-  -moz-transition: 0.3s ease;
-  -o-transition: 0.3s ease;
-  transition: 0.3s ease;
-}
-
-.togPlus {
-  -webkit-transform: rotate(150deg);
-  -moz-transform: rotate(150deg);
-  -o-transform: rotate(150eg);
-  transform: rotate(180deg);
-}
-
-.click_icon_color {
-  color: #00c46a !important;
-}
-
-.arrowDefaultColor {
-  color: #fff;
-  /* color: #000; */
-}
-/* ************************************************* */
-
 /* JavaScript workout row to column animation */
 .longJourneyGridTrue {
   grid-template-columns: auto !important;
@@ -815,13 +785,13 @@ a:visited {
 /* ************************************************* */
 
 /* JavaScript classlist add & remove workout for arrow icon */
-.notShowIcon {
+/* .not-display-arrow-icon {
   display: none !important;
 }
 
-.showIcon {
+.display-arrow-icon {
   display: inline-block !important;
-}
+} */
 /* ************************************************* */
 
 /* styles for custom date & time */
@@ -1635,6 +1605,46 @@ input[type='radio'] {
   transform: rotateZ(-180deg);
   color: yellowgreen;
 }
+
+/* JavaScript workout arrow animation (row to column)*/
+
+.display-arrow-icon {
+  display: inline-block;
+}
+
+.not-display-arrow-icon {
+  display: none !important;
+}
+
+.arrow-rotate-animation {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
+.arrow-up-rotate {
+  -webkit-transform: rotate(150deg);
+  -moz-transform: rotate(150deg);
+  -o-transform: rotate(150eg);
+  transform: rotate(180deg);
+}
+
+.arrow-active {
+  color: #00c46a;
+}
+
+.arrow-deactive {
+  color: #fff;
+}
+
+/* ************************************************* */
+
 /* ************************************************* */
 /* ************************************************* */
 /* ************************************************* */
@@ -1765,4 +1775,15 @@ input[type='radio'] {
 
 .buttons-container .yellow:hover {
   background-color: #ffde29;
+  background-color: var(--color-dark--2);
+}
+
+.buttons-container .cyan {
+  background-color: var(--color-dark--1);
+  box-shadow: 0px 5px 0px 0px rgb(11, 199, 199);
+}
+
+.buttons-container .cyan:hover {
+  background-color: cyan;
+  background-color: var(--color-dark--2);
 }

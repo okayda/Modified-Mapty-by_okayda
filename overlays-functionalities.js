@@ -11,7 +11,7 @@ export const objectOverlays = {
     error_alert_enabled: false,
   },
 
-  edit_form_init() {
+  show_edit_form() {
     this.overlay_state.editForm_enabled = true;
     document.querySelector('.overlay').classList.add('active');
     document.querySelector('.edit-form').classList.add('active');
