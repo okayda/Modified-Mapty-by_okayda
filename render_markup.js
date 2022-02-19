@@ -55,9 +55,7 @@ export const renderMethods = {
     if (isLongJourney) {
       str = 'display-arrow-icon';
       if (isDropDown === false) str += ' arrow-up-rotate';
-    } else {
-      str = 'not-display-arrow-icon';
-    }
+    } else str = 'not-display-arrow-icon';
 
     return str;
   },

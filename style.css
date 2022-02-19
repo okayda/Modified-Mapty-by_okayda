@@ -459,7 +459,22 @@ a:visited {
 }
 /* ************************************************* */
 
+.display-grid {
+  grid-template-columns: auto !important;
+  height: 190px !important;
+  padding: auto !important;
+}
+
+.not-display-grid {
+  grid-template-columns: 1fr 1fr 1fr 1fr !important;
+  height: 65px !important;
+  padding: 15px !important;
+}
+
+/* ************************************************* */
+
 /* JavaScript workout row to column animation */
+
 .longJourneyGridTrue {
   grid-template-columns: auto !important;
 }

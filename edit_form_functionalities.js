@@ -168,23 +168,6 @@ export const edit_workout_info_including_data_workout = function () {
           'fas fa-arrow-down arrow-rotate-animation display-arrow-icon arrow-active';
       }
 
-      // if (!itemWorkout.longJourney) {
-      //   addStyleExcercise(itemWorkout.longJourney);
-      //   targetExerciseHTML()[1].className =
-      //     'fas fa-arrow-down not-display-arrow-icon';
-      //   itemWorkout.isDropDown = false;
-
-      //   console.log(targetExerciseHTML());
-      //   console.log(targetExerciseHTML()[0]);
-      //   console.log(targetExerciseHTML()[1]);
-      // } else {
-      //   addStyleExcercise(itemWorkout.longJourney);
-      //   targetExerciseHTML()[1].className =
-      //     'fas fa-arrow-down togPlusAni click_icon_color display-arrow-icon';
-      //   itemWorkout.isDropDown = true;
-
-      // }
-
       targetExerciseHTML()[0].closest(
         queryName.workItself
       ).className = `exercise-container exercise--${itemWorkout.exerciseType}`;
