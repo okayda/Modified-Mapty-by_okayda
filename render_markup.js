@@ -7,50 +7,7 @@ import { CustomData } from './app.js';
 const containerWorkouts = document.querySelector(queryName.workouts);
 
 export const renderMethods = {
-  addStyleContainer() {
-    return {
-      // array order inside really matter
-      addGridClass: [
-        'isDropDownGridTrue',
-        'isDropDownGridFalse',
-        'longJourneyGridTrue',
-        'isDropDownGridFalse',
-      ],
-      addHeightClass: [
-        'isDropDownHeightTrue',
-        'isDropDownHeightFalse',
-        'longJourneyHeightTrue',
-        'longJourneyHeightFalse',
-      ],
-      addPaddingClass: [
-        'isDropDownPaddingTrue',
-        'isDropDownPaddingFalse',
-        'longJourneyPaddingTrue',
-        'longJourneyPaddingFalse',
-      ],
-    };
-  },
-
-  conditionStyleAdd(isDropDown, isLongJourney, styleAdd) {
-    let returnStyle;
-    switch (true) {
-      case isDropDown:
-        returnStyle = styleAdd[0];
-        break;
-      case isDropDown === false:
-        returnStyle = styleAdd[1];
-        break;
-      case isLongJourney:
-        returnStyle = styleAdd[2];
-        break;
-      default:
-        returnStyle = styleAdd[3];
-    }
-    return returnStyle;
-  },
-
   show_or_not_arrow: (isLongJourney, isDropDown) => {
-    console.log(isDropDown);
     let str;
     if (isLongJourney) {
       str = 'display-arrow-icon';
@@ -93,6 +50,14 @@ export const renderMethods = {
     };
   },
 
+  needed_to_be_grid_display(isDropDown, isLongJourney) {
+    if (isDropDown && isLongJourney) return 'display-grid';
+
+    if (!isLongJourney) return 'not-display-grid';
+
+    if (isDropDown === false && isLongJourney) return 'not-display-grid';
+  },
+
   renderWorkout(workout) {
     if (Object.keys(CustomData).length > 0) {
       const scheduleArr = CustomData.date.replace(/ /g, '').split('/');
@@ -122,25 +87,10 @@ export const renderMethods = {
                         </div>
                     </h2>   
 
-    <div class="exercise-info-container ${
-      this.conditionStyleAdd(
-        workout.isDropDown,
-        workout.longJourney,
-        this.addStyleContainer().addGridClass
-      ) +
-      ' ' +
-      this.conditionStyleAdd(
-        workout.isDropDown,
-        workout.longJourney,
-        this.addStyleContainer().addHeightClass
-      ) +
-      ' ' +
-      this.conditionStyleAdd(
-        workout.isDropDown,
-        workout.longJourney,
-        this.addStyleContainer().addPaddingClass
-      )
-    }">
+    <div class="exercise-info-container ${this.needed_to_be_grid_display(
+      workout.isDropDown,
+      workout.longJourney
+    )}">
                     
                         <div class="workout__details">
                             <span class="workout__icon icon_info">${

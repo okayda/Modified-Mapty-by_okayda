@@ -410,52 +410,34 @@ class App {
   _arrow_alternate_icon(target) {
     if (target.id !== 'arrow-icon') return;
 
-    const checkHaveEllips = function (value) {
+    const target_workout_container = target.closest(queryName.workItself);
+
+    const check_if_contains_ellipsis = function (value) {
       return value.filter(val => val.textContent.slice(1, 4) === '...').length;
     };
 
-    const targetExerciseAddStyle = function (isDropDown) {
-      const targetExercise = target
-        .closest(queryName.workItself)
-        .querySelector(queryName.workInfo);
+    const determine_if_is_row_or_column_and_add_style = function () {
+      const target_info_display = target_workout_container.querySelector(
+        queryName.workInfo
+      );
 
-      targetExercise.className = 'exercise-info-container';
-      targetExercise.classList.toggle(
-        renderMethods.conditionStyleAdd(
-          isDropDown,
-          null,
-          renderMethods.addStyleContainer().addGridClass
-        )
-      );
-      targetExercise.classList.toggle(
-        renderMethods.conditionStyleAdd(
-          isDropDown,
-          null,
-          renderMethods.addStyleContainer().addHeightClass
-        )
-      );
-      targetExercise.classList.toggle(
-        renderMethods.conditionStyleAdd(
-          isDropDown,
-          null,
-          renderMethods.addStyleContainer().addPaddingClass
-        )
-      );
+      target_info_display.classList.toggle('display-grid');
+      target_info_display.classList.toggle('not-display-grid');
     };
 
     target.classList.toggle('arrow-up-rotate');
     target.classList.toggle('arrow-active');
     target.classList.toggle('arrow-deactive');
 
-    const exerciseTextNodes = target
-      .closest(queryName.workItself)
-      .querySelectorAll('.text_info');
+    const exercise_text_nodes =
+      target_workout_container.querySelectorAll('.text_info');
+
     const exerciseTargetId = target.closest(queryName.workItself).dataset.id;
 
     infoData.workouts.forEach(eachExercise => {
       if (eachExercise.id === exerciseTargetId) {
-        if (checkHaveEllips(Array.from(exerciseTextNodes)) === 0) {
-          exerciseTextNodes.forEach(item => {
+        if (check_if_contains_ellipsis(Array.from(exercise_text_nodes)) === 0) {
+          exercise_text_nodes.forEach(item => {
             if (item.textContent > 999)
               item.textContent = renderMethods.make_ellipsis(item.textContent);
           });
@@ -464,12 +446,12 @@ class App {
 
           infoData.setLocalStorage();
 
-          targetExerciseAddStyle(eachExercise.isDropDown);
+          determine_if_is_row_or_column_and_add_style();
 
           return;
         }
 
-        exerciseTextNodes.forEach(
+        exercise_text_nodes.forEach(
           (item, i) => (item.textContent = eachExercise.ExerciseDetails[i])
         );
 
@@ -477,7 +459,7 @@ class App {
 
         infoData.setLocalStorage();
 
-        targetExerciseAddStyle(eachExercise.isDropDown);
+        determine_if_is_row_or_column_and_add_style();
 
         return;
       }
@@ -541,6 +523,3 @@ class App {
   }
 }
 const app = new App();
-
-const data = JSON.parse(localStorage.getItem('workouts'));
-console.log(data);

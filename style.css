@@ -457,8 +457,10 @@ a:visited {
 .exercise--cycling {
   border-left: 5px solid var(--color-brand--1);
 }
+
 /* ************************************************* */
 
+/*it will use this if it's row or column by JavaScript Syntax */
 .display-grid {
   grid-template-columns: auto !important;
   height: 190px !important;
@@ -471,59 +473,6 @@ a:visited {
   padding: 15px !important;
 }
 
-/* ************************************************* */
-
-/* JavaScript workout row to column animation */
-
-.longJourneyGridTrue {
-  grid-template-columns: auto !important;
-}
-
-.longJourneyGridFalse {
-  grid-template-columns: 1fr 1fr 1fr 1fr !important;
-}
-
-.isDropDownGridTrue {
-  grid-template-columns: auto !important;
-}
-
-.isDropDownGridFalse {
-  grid-template-columns: 1fr 1fr 1fr 1fr !important;
-}
-
-/* HEIGHT */
-.longJourneyHeightTrue {
-  height: 190px !important;
-}
-
-.longJourneyHeightFalse {
-  height: 65px !important;
-}
-
-.isDropDownHeightTrue {
-  height: 190px !important;
-}
-
-.isDropDownHeightFalse {
-  height: 65px !important;
-}
-
-/* PADDING */
-.longJourneyPaddingTrue {
-  padding: auto !important;
-}
-
-.longJourneyPaddingFalse {
-  padding: 15px !important;
-}
-
-.isDropDownPaddingTrue {
-  padding: auto !important;
-}
-
-.isDropDownPaddingFalse {
-  padding: 15px !important;
-}
 /* ************************************************* */
 
 /* styles for creating form in workout */

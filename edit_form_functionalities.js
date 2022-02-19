@@ -68,29 +68,13 @@ export const edit_workout_info_including_data_workout = function () {
     return getDOMArr;
   };
 
-  const addStyleExcercise = function (isLongJourney) {
-    targetExerciseHTML()[0].className = 'exercise-info-container';
+  const [target_workout_container, target_arrow_icon] = targetExerciseHTML();
 
-    targetExerciseHTML()[0].classList.toggle(
-      renderMethods.conditionStyleAdd(
-        null,
-        isLongJourney,
-        renderMethods.addStyleContainer().addGridClass
-      )
-    );
-    targetExerciseHTML()[0].classList.toggle(
-      renderMethods.conditionStyleAdd(
-        null,
-        isLongJourney,
-        renderMethods.addStyleContainer().addHeightClass
-      )
-    );
-    targetExerciseHTML()[0].classList.toggle(
-      renderMethods.conditionStyleAdd(
-        null,
-        isLongJourney,
-        renderMethods.addStyleContainer().addPaddingClass
-      )
+  const addStyleExcercise = function (isLongJourney) {
+    target_workout_container.className = 'exercise-info-container';
+
+    target_workout_container.classList.add(
+      isLongJourney ? 'display-grid' : 'not-display-grid'
     );
   };
 
@@ -160,15 +144,15 @@ export const edit_workout_info_including_data_workout = function () {
 
       if (itemWorkout.longJourney === false) {
         addStyleExcercise(itemWorkout.longJourney);
-        targetExerciseHTML()[1].className =
+        target_arrow_icon.className =
           'fas fa-arrow-down arrow-rotate-animation not-display-arrow-icon arrow-deactive';
       } else {
         addStyleExcercise(itemWorkout.longJourney);
-        targetExerciseHTML()[1].className =
+        target_arrow_icon.className =
           'fas fa-arrow-down arrow-rotate-animation display-arrow-icon arrow-active';
       }
 
-      targetExerciseHTML()[0].closest(
+      target_workout_container.closest(
         queryName.workItself
       ).className = `exercise-container exercise--${itemWorkout.exerciseType}`;
 
