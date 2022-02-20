@@ -11,9 +11,10 @@ export const dataObj = {
   overlay: '.overlay',
 
   //error message modal !!
+  error_container: '.error-container',
   errOverlay: '.error-overlay',
-  errMessage: '.error-message',
-  errBtn: '.fine-btn',
+  error_message: '.error-message',
+  errBtn: '.error-okay-btn',
 
   //timestamp modal !!
   //tidar = time + calendar

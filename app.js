@@ -2,6 +2,8 @@
 
 import { dataObj as queryName } from './query_name.js';
 
+import { document_obj } from './document_element.js';
+
 import { initSideBar } from './sidebar.js';
 
 import { initTheme } from './theme.js';
@@ -59,15 +61,6 @@ export const infoData = {
     localStorage.setItem('workouts', JSON.stringify(infoData.workouts));
   },
 };
-
-const form = document.querySelector(queryName.form);
-const inputType = document.querySelector(queryName.inputType);
-const inputDistance = document.querySelector(queryName.inputDistance);
-const inputDuration = document.querySelector(queryName.inputDuration);
-const inputCadence = document.querySelector(queryName.inputCadence);
-const inputElevation = document.querySelector(queryName.inputElevation);
-
-const editForm = document.querySelector(queryName.editForm);
 
 class Workout {
   date = new Date();
@@ -187,11 +180,17 @@ class App {
     this._getLocalStorage();
 
     // form.addEventListener('submit', this._newWorkout.bind(this));
-    form.addEventListener('submit', this._check_and_add_workout.bind(this));
+    document_obj.form.addEventListener(
+      'submit',
+      this._check_and_add_workout.bind(this)
+    );
 
     this._workouts_container_event_delegation();
 
-    inputType.addEventListener('change', this._toggleElevationField);
+    document_obj.inputType.addEventListener(
+      'change',
+      this._toggleElevationField
+    );
 
     // below this, is used for debugging purposes
     initDebugHandlers(infoData, CustomData);
@@ -234,37 +233,23 @@ class App {
     infoData.workouts.forEach(work => this._renderWorkoutMarker(work));
   }
 
-  _errorAlert(msg) {
-    const popupBox = document.querySelector(queryName.errOverlay);
-    const errorMessage = document.querySelector(queryName.errMessage);
-    const okBtn = document.querySelector(queryName.errBtn);
-
-    errorMessage.textContent = msg;
-
-    popupBox.classList.add('active');
-
-    okBtn.addEventListener('click', () => {
-      popupBox.classList.remove('active');
-    });
-  }
-
   _showForm(mapE) {
     this.#mapEvent = mapE;
-    form.classList.remove('hidden');
-    inputDistance.focus();
+    document_obj.form.classList.remove('hidden');
+    document_obj.inputDistance.focus();
   }
 
   _hideForm() {
-    inputDistance.value =
-      inputCadence.value =
-      inputDuration.value =
-      inputElevation.value =
+    document_obj.inputDistance.value =
+      document_obj.inputCadence.value =
+      document_obj.inputDuration.value =
+      document_obj.inputElevation.value =
         '';
 
-    form.style.display = 'none';
-    form.classList.add('hidden');
+    document_obj.form.style.display = 'none';
+    document_obj.form.classList.add('hidden');
 
-    setTimeout(() => (form.style.display = 'grid'), 1000);
+    setTimeout(() => (document_obj.form.style.display = 'grid'), 1000);
   }
 
   _renderWorkoutMarker(workout) {
@@ -310,14 +295,17 @@ class App {
     infoData.workouts = data;
 
     infoData.workouts.forEach(work =>
-      // this._renderWorkout(work, work.isDropDown)
       renderMethods.renderWorkout(work, work.isDropDown)
     );
   }
 
   _toggleElevationField() {
-    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+    document_obj.inputElevation
+      .closest('.form__row')
+      .classList.toggle('form__row--hidden');
+    document_obj.inputCadence
+      .closest('.form__row')
+      .classList.toggle('form__row--hidden');
   }
 
   _burgerMenu() {
@@ -328,18 +316,29 @@ class App {
       });
   }
 
+  _error_alert(msg) {
+    objectOverlays.overlay_state.error_alert_enabled = true;
+
+    document.querySelector(queryName.overlay).classList.add('active');
+
+    document.querySelector(queryName.error_container).classList.add('active');
+
+    document.querySelector(queryName.error_message).textContent = msg;
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   _check_and_add_workout(e) {
-    const type = inputType.value === 'running' ? 'running' : 'cycling';
-    const distance = +inputDistance.value;
-    const duration = +inputDuration.value;
+    const type =
+      document_obj.inputType.value === 'running' ? 'running' : 'cycling';
+    const distance = +document_obj.inputDistance.value;
+    const duration = +document_obj.inputDuration.value;
 
     //for Running
-    const cadence = +inputCadence.value;
+    const cadence = +document_obj.inputCadence.value;
     //for Cycling
-    const elevation = +inputElevation.value;
+    const elevation = +document_obj.inputElevation.value;
 
     const exerciseTypeProp = type === 'running' ? cadence : elevation;
 
@@ -373,11 +372,15 @@ class App {
         exerciseTypeProp,
         type === 'running' ? 'cadence' : 'elevation'
       );
-      return this._errorAlert('Inputs have to be positive numbers!');
+      return this._error_alert('Inputs have to be positive numbers!');
     }
 
     const isLongJourney =
-      renderMethods.checkIsLongJourney(distance, duration, exerciseTypeProp) > 0
+      renderMethods.check_is_long_journey(
+        distance,
+        duration,
+        exerciseTypeProp
+      ) > 0
         ? true
         : false;
 
@@ -416,18 +419,16 @@ class App {
       return value.filter(val => val.textContent.slice(1, 4) === '...').length;
     };
 
-    const determine_if_is_row_or_column_and_add_style = function () {
-      const target_info_display = target_workout_container.querySelector(
-        queryName.workInfo
-      );
-
-      target_info_display.classList.toggle('display-grid');
-      target_info_display.classList.toggle('not-display-grid');
-    };
+    const target_info_display = target_workout_container.querySelector(
+      queryName.workInfo
+    );
 
     target.classList.toggle('arrow-up-rotate');
     target.classList.toggle('arrow-active');
     target.classList.toggle('arrow-deactive');
+
+    target_info_display.classList.toggle('display-grid');
+    target_info_display.classList.toggle('not-display-grid');
 
     const exercise_text_nodes =
       target_workout_container.querySelectorAll('.text_info');
@@ -446,8 +447,6 @@ class App {
 
           infoData.setLocalStorage();
 
-          determine_if_is_row_or_column_and_add_style();
-
           return;
         }
 
@@ -459,32 +458,9 @@ class App {
 
         infoData.setLocalStorage();
 
-        determine_if_is_row_or_column_and_add_style();
-
         return;
       }
     });
-  }
-
-  _edit_form_icon(target) {
-    if (target.id !== 'edit-icon') return;
-
-    const target_text_Edit_form = function (target) {
-      infoData.specificEvents.push(
-        target.closest(queryName.workItself).dataset.id,
-        target.closest(queryName.workItself).querySelectorAll('.text_info'),
-        target.closest(queryName.workItself).querySelectorAll('.icon_info'),
-        target.closest(queryName.workItself).querySelector('.title')
-      );
-      editForm.setAttribute(
-        'data-id',
-        target.closest(queryName.workItself).dataset.id
-      );
-    };
-
-    target_text_Edit_form(target);
-
-    objectOverlays.show_edit_form();
   }
 
   _map_marker_icon(target) {
@@ -494,19 +470,26 @@ class App {
     target.classList.toggle('click_icon_color');
   }
 
-  _remove_error_alert(target) {
-    if (target.className.split(' ')[0] !== 'error-overlay') return;
+  _edit_form_icon(target) {
+    if (target.id !== 'edit-icon') return;
 
-    document.querySelector('.error-overlay').classList.remove('active');
+    infoData.specificEvents.push(
+      target.closest(queryName.workItself).dataset.id,
+      target.closest(queryName.workItself).querySelectorAll('.text_info'),
+      target.closest(queryName.workItself).querySelectorAll('.icon_info'),
+      target.closest(queryName.workItself).querySelector('.title')
+    );
+
+    document_obj.editForm.setAttribute(
+      'data-id',
+      target.closest(queryName.workItself).dataset.id
+    );
+
+    objectOverlays.show_edit_form();
   }
 
   _workout_icons_init(e) {
     const target = e.target;
-    if (target.className === 'workouts-container') return;
-
-    console.log(target);
-
-    this._remove_error_alert(target);
 
     this._arrow_alternate_icon(target);
 
@@ -518,7 +501,7 @@ class App {
   // only for workout icons functionalities
   _workouts_container_event_delegation() {
     document
-      .querySelector('.workouts-container')
+      .querySelector(queryName.workouts)
       .addEventListener('click', this._workout_icons_init.bind(this));
   }
 }

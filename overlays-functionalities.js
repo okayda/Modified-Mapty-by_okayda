@@ -13,8 +13,8 @@ export const objectOverlays = {
 
   show_edit_form() {
     this.overlay_state.editForm_enabled = true;
-    document.querySelector('.overlay').classList.add('active');
-    document.querySelector('.edit-form').classList.add('active');
+    document.querySelector(queryName.overlay).classList.add('active');
+    document.querySelector(queryName.editForm).classList.add('active');
   },
 
   reset_exercise_timestamp_type() {
@@ -25,18 +25,18 @@ export const objectOverlays = {
   previousDisplay() {
     if (!this.overlay_state.setForm_enabled) {
       this.overlay_state.timestamp_enabled = false;
-      document.querySelector('.edit-form').classList.add('active');
+      document.querySelector(queryName.editForm).classList.add('active');
       document
         .querySelector(queryName.tidar_container)
         .classList.remove('active');
       this.overlay_state.editForm_enabled = true;
 
       setTimeout(function () {
-        document.querySelector(`.rDistance`).focus();
+        document.querySelector(queryName.edit_rDistance).focus();
       }, 400);
     } else {
       this.overlay_state.setForm_enabled = false;
-      document.querySelector('.overlay').classList.remove('active');
+      document.querySelector(queryName.overlay).classList.remove('active');
       document
         .querySelector(queryName.tidar_container)
         .classList.remove('active');
@@ -49,13 +49,23 @@ export const objectOverlays = {
       function () {
         if (this.overlay_state.editForm_enabled) {
           this.overlay_state.editForm_enabled = false;
+
           document.querySelector('.overlay').classList.remove('active');
           document.querySelector('.edit-form').classList.remove('active');
         } else if (this.overlay_state.timestamp_enabled) {
           this.previousDisplay();
+
           this.reset_exercise_timestamp_type();
+        } else if (this.overlay_state.error_alert_enabled) {
+          this.overlay_state.error_alert_enabled = false;
+
+          document.querySelector(queryName.overlay).classList.remove('active');
+          document
+            .querySelector(queryName.error_container)
+            .classList.remove('active');
         } else {
           this.overlay_state.setForm_enabled = false;
+
           document.querySelector('.overlay').classList.remove('active');
           document
             .querySelector(queryName.tidar_container)

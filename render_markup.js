@@ -17,7 +17,7 @@ export const renderMethods = {
     return str;
   },
 
-  checkIsLongJourney(...num) {
+  check_is_long_journey(...num) {
     return num.filter(num => num > 9999).length;
   },
 
@@ -32,9 +32,7 @@ export const renderMethods = {
 
   is_needed_to_be_ellipsis(isDropDown, isLongJourney, exerciseText) {
     if (isDropDown && isLongJourney) return exerciseText;
-
     if (!isLongJourney) return exerciseText;
-
     if (isDropDown === false && isLongJourney) {
       if (exerciseText > 999) return this.make_ellipsis(exerciseText);
 
@@ -42,20 +40,18 @@ export const renderMethods = {
     }
   },
 
-  iconObject() {
+  is_needed_to_be_grid_display(isDropDown, isLongJourney) {
+    if (isDropDown && isLongJourney) return 'display-grid';
+    if (!isLongJourney) return 'not-display-grid';
+    if (isDropDown === false && isLongJourney) return 'not-display-grid';
+  },
+
+  icon_obj_container() {
     // Array orders really matter
     return {
       running: ['🏃‍♂️', '🦶🏼'],
       cycling: ['🚲', '⛰'],
     };
-  },
-
-  needed_to_be_grid_display(isDropDown, isLongJourney) {
-    if (isDropDown && isLongJourney) return 'display-grid';
-
-    if (!isLongJourney) return 'not-display-grid';
-
-    if (isDropDown === false && isLongJourney) return 'not-display-grid';
   },
 
   renderWorkout(workout) {
@@ -87,7 +83,7 @@ export const renderMethods = {
                         </div>
                     </h2>   
 
-    <div class="exercise-info-container ${this.needed_to_be_grid_display(
+    <div class="exercise-info-container ${this.is_needed_to_be_grid_display(
       workout.isDropDown,
       workout.longJourney
     )}">

@@ -1,13 +1,13 @@
 'use strict';
+import { dataObj as queryName } from './query_name.js';
+import { document_obj } from './document_element.js';
+
 import { infoData, CustomData } from '/app.js';
 import { renderMethods } from '/render_markup.js';
-import { dataObj as queryName } from './query_name.js';
-
-const editForm = document.querySelector(queryName.editForm);
 
 export const edit_workout_info_including_data_workout = function () {
   const reset_specificEvent_and_dataset = function () {
-    editForm.removeAttribute('data-id');
+    document_obj.editForm.removeAttribute('data-id');
     infoData.specificEvents = [];
   };
 
@@ -119,7 +119,7 @@ export const edit_workout_info_including_data_workout = function () {
       );
 
       itemWorkout.longJourney =
-        renderMethods.checkIsLongJourney(
+        renderMethods.check_is_long_journey(
           itemWorkout.distance,
           itemWorkout.duration,
           itemWorkout.pace_or_speed,
@@ -135,7 +135,9 @@ export const edit_workout_info_including_data_workout = function () {
       exerciseIcon.forEach(
         (item, i) =>
           (item.textContent =
-            renderMethods.iconObject()[exerciseType ? 'running' : 'cycling'][i])
+            renderMethods.icon_obj_container()[
+              exerciseType ? 'running' : 'cycling'
+            ][i])
       );
 
       exerciseTextNodes.forEach(
