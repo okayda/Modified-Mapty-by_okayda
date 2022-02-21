@@ -14,7 +14,7 @@ export const dataObj = {
   error_container: '.error-container',
   errOverlay: '.error-overlay',
   error_message: '.error-message',
-  errBtn: '.error-okay-btn',
+  error_Btn: '.error-okay-btn',
 
   //timestamp modal !!
   //tidar = time + calendar
@@ -64,8 +64,12 @@ export const dataObj = {
   editRun: '#running',
   editCyc: '#cycling',
 
-  edit_rCadence: '.rCadence',
   edit_rDistance: '.rDistance',
+  edit_rDuration: '.rDuration',
+  edit_rCadence: '.rCadence',
+
+  edit_cDistance: '.cDistance',
+  edit_cDuration: '.cDuration',
   edit_cElevation: '.cElevation',
 
   // Side-bar

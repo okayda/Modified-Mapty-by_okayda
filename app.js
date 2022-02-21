@@ -317,7 +317,7 @@ class App {
   }
 
   _error_alert(msg) {
-    objectOverlays.overlay_state.error_alert_enabled = true;
+    objectOverlays.overlay_state.error_alert_setForm_enabled = true;
 
     document.querySelector(queryName.overlay).classList.add('active');
 

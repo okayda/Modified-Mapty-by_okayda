@@ -30,7 +30,7 @@ export default function event_handlers_init() {
     .querySelector(queryName.customSched)
     .addEventListener('click', function () {
       objectOverlays.overlay_state.setForm_enabled = true;
-      document.querySelector('.overlay').classList.add('active');
+      document.querySelector(queryName.overlay).classList.add('active');
       document.querySelector(queryName.tidar_container).classList.add('active');
     });
 
@@ -43,14 +43,26 @@ export default function event_handlers_init() {
     });
 
   document
-    .querySelector(queryName.errBtn)
+    .querySelector(queryName.error_Btn)
     .addEventListener('click', function () {
-      if (objectOverlays.overlay_state.error_alert_enabled) {
-        objectOverlays.overlay_state.error_alert_enabled = false;
+      if (objectOverlays.overlay_state.error_alert_setForm_enabled) {
+        objectOverlays.overlay_state.error_alert_setForm_enabled = false;
+
         document.querySelector(queryName.overlay).classList.remove('active');
+
         document
           .querySelector(queryName.error_container)
           .classList.remove('active');
+      } else {
+        objectOverlays.overlay_state.error_alert_editForm_enabled = false;
+
+        objectOverlays.overlay_state.editForm_enabled = true;
+
+        document
+          .querySelector(queryName.error_container)
+          .classList.remove('active');
+
+        document.querySelector(queryName.editForm).classList.add('active');
       }
     });
 }
