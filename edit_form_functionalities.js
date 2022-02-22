@@ -215,4 +215,6 @@ export const edit_workout_info_including_data_workout = function () {
       break;
     }
   }
+
+  objectOverlays.hide_edit_form();
 };

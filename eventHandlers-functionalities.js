@@ -40,7 +40,6 @@ export default function event_handlers_init() {
     .querySelector(queryName.editForm)
     .addEventListener('submit', function (e) {
       e.preventDefault();
-
       edit_workout_info_including_data_workout();
     });
 

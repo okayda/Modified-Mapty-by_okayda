@@ -17,10 +17,19 @@ export const objectOverlays = {
     error_alert_setForm_enabled: false,
   },
 
+  display_edit_form(state) {
+    document.querySelector(queryName.overlay).classList[state]('active');
+    document.querySelector(queryName.editForm).classList[state]('active');
+  },
+
   show_edit_form() {
     this.overlay_state.editForm_enabled = true;
-    document.querySelector(queryName.overlay).classList.add('active');
-    document.querySelector(queryName.editForm).classList.add('active');
+    this.display_edit_form('add');
+  },
+
+  hide_edit_form() {
+    this.overlay_state.editForm_enabled = false;
+    this.display_edit_form('remove');
   },
 
   reset_exercise_timestamp_type() {
