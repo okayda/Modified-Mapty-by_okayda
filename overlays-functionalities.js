@@ -7,9 +7,12 @@ export const objectOverlays = {
     isRunning: false,
     isCycling: false,
 
-    editForm_enabled: false,
-    timestamp_enabled: false,
     setForm_enabled: false,
+    editForm_enabled: false,
+
+    timestamp_edit_form_enabled: false,
+    timestamp_set_form_enabled: false,
+
     error_alert_editForm_enabled: false,
     error_alert_setForm_enabled: false,
   },
@@ -25,67 +28,102 @@ export const objectOverlays = {
     this.overlay_state.isCycling = false;
   },
 
-  previousDisplay() {
-    if (!this.overlay_state.setForm_enabled) {
-      this.overlay_state.timestamp_enabled = false;
-      document.querySelector(queryName.editForm).classList.add('active');
-      document
-        .querySelector(queryName.tidar_container)
-        .classList.remove('active');
-      this.overlay_state.editForm_enabled = true;
+  timestamp_remove_for_set_form() {
+    this.overlay_state.timestamp_set_form_enabled = false;
+    document.querySelector(queryName.overlay).classList.remove('active');
+    document
+      .querySelector(queryName.tidar_container)
+      .classList.remove('active');
+  },
 
-      setTimeout(function () {
-        document.querySelector(queryName.edit_rDistance).focus();
-      }, 400);
-    } else {
-      this.overlay_state.setForm_enabled = false;
-      document.querySelector(queryName.overlay).classList.remove('active');
-      document
-        .querySelector(queryName.tidar_container)
-        .classList.remove('active');
-    }
+  timestamp_remove_for_edit_form() {
+    this.overlay_state.timestamp_edit_form_enabled = false;
+    this.overlay_state.editForm_enabled = true;
+
+    document
+      .querySelector(queryName.tidar_container)
+      .classList.remove('active');
+
+    document.querySelector(queryName.editForm).classList.add('active');
+
+    setTimeout(function () {
+      document.querySelector(queryName.edit_rDistance).focus();
+    }, 400);
+  },
+
+  set_form_display() {
+    this.overlay_state.timestamp_set_form_enabled = false;
+
+    document.querySelector(queryName.overlay).classList.remove('active');
+    document
+      .querySelector(queryName.tidar_container)
+      .classList.remove('active');
+  },
+
+  edit_form_display() {
+    this.overlay_state.editForm_enabled = false;
+
+    document_obj.editForm.removeAttribute('data-id');
+    infoData.reset_specificEvents_data();
+
+    document.querySelector(queryName.overlay).classList.remove('active');
+    document.querySelector(queryName.editForm).classList.remove('active');
+  },
+
+  error_set_form_modal_display() {
+    this.overlay_state.error_alert_setForm_enabled = false;
+
+    document.querySelector(queryName.overlay).classList.remove('active');
+
+    document
+      .querySelector(queryName.error_container)
+      .classList.remove('active');
+  },
+
+  error_edit_form_modal_display() {
+    this.overlay_state.error_alert_editForm_enabled = false;
+    this.overlay_state.editForm_enabled = true;
+
+    document
+      .querySelector(queryName.error_container)
+      .classList.remove('active');
+
+    document.querySelector(queryName.editForm).classList.add('active');
   },
 
   overlays_init() {
-    document.querySelector('.overlay').addEventListener(
+    document.querySelector(queryName.overlay).addEventListener(
       'click',
       function () {
         if (this.overlay_state.editForm_enabled) {
-          this.overlay_state.editForm_enabled = false;
+          this.edit_form_display();
+          return;
+        }
 
-          document_obj.editForm.removeAttribute('data-id');
-          infoData.reset_specificEvents_data();
-
-          document.querySelector(queryName.overlay).classList.remove('active');
-          document.querySelector(queryName.editForm).classList.remove('active');
-        } else if (this.overlay_state.timestamp_enabled) {
-          this.previousDisplay();
-
+        if (this.overlay_state.timestamp_edit_form_enabled) {
           this.reset_exercise_timestamp_type();
-        } else if (this.overlay_state.error_alert_setForm_enabled) {
-          this.overlay_state.error_alert_setForm_enabled = false;
+          this.timestamp_remove_for_edit_form();
+          return;
+        }
 
-          document.querySelector(queryName.overlay).classList.remove('active');
+        if (this.overlay_state.timestamp_set_form_enabled) {
+          this.timestamp_remove_for_set_form();
+          return;
+        }
 
-          document
-            .querySelector(queryName.error_container)
-            .classList.remove('active');
-        } else if (this.overlay_state.error_alert_editForm_enabled) {
-          this.overlay_state.error_alert_editForm_enabled = false;
-          this.overlay_state.editForm_enabled = true;
+        if (this.overlay_state.error_alert_setForm_enabled) {
+          this.error_set_form_modal_display();
+          return;
+        }
 
-          document
-            .querySelector(queryName.error_container)
-            .classList.remove('active');
+        if (this.overlay_state.error_alert_editForm_enabled) {
+          this.error_edit_form_modal_display();
+          return;
+        }
 
-          document.querySelector(queryName.editForm).classList.add('active');
-        } else {
-          this.overlay_state.setForm_enabled = false;
-
-          document.querySelector(queryName.overlay).classList.remove('active');
-          document
-            .querySelector(queryName.tidar_container)
-            .classList.remove('active');
+        if (this.overlay_state.setForm_enabled) {
+          this.set_form_display();
+          return;
         }
       }.bind(this)
     );

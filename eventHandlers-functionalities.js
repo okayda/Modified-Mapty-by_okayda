@@ -7,13 +7,15 @@ export default function event_handlers_init() {
   document
     .querySelector(queryName.customRun)
     .addEventListener('click', function () {
-      objectOverlays.overlay_state.timestamp_enabled = true;
+      objectOverlays.overlay_state.editForm_enabled = false;
+      objectOverlays.overlay_state.timestamp_edit_form_enabled = true;
+      objectOverlays.overlay_state.isRunning = true;
+
       document
         .querySelector(queryName.editContainer)
         .classList.remove('active');
+
       document.querySelector(queryName.tidar_container).classList.add('active');
-      objectOverlays.overlay_state.editForm_enabled = false;
-      objectOverlays.overlay_state.isRunning = true;
     });
 
   document
@@ -29,7 +31,7 @@ export default function event_handlers_init() {
   document
     .querySelector(queryName.customSched)
     .addEventListener('click', function () {
-      objectOverlays.overlay_state.setForm_enabled = true;
+      objectOverlays.overlay_state.timestamp_set_form_enabled = true;
       document.querySelector(queryName.overlay).classList.add('active');
       document.querySelector(queryName.tidar_container).classList.add('active');
     });

@@ -367,7 +367,8 @@ export const timestampObj = {
       if (CustomData.hour === '00')
         return alert('Make sure your hour time is greater than 0');
 
-      if (objectOverlays.overlay_state.timestamp_enabled) {
+      //for edit form functionalities
+      if (objectOverlays.overlay_state.timestamp_edit_form_enabled) {
         timestampSetText(
           queryName.customRun,
           'Running exercise',
@@ -380,15 +381,19 @@ export const timestampObj = {
         );
 
         objectOverlays.reset_exercise_timestamp_type();
-      } else {
-        // it will execute this if the timestamp in set exercise form is click
-        // not in the edit form
+        objectOverlays.timestamp_remove_for_edit_form();
+        return;
+      }
+
+      //for set form functionalities
+      if (objectOverlays.overlay_state.timestamp_set_form_enabled) {
+        objectOverlays.timestamp_remove_for_set_form();
+
         document.querySelector(
           queryName.customSched
         ).textContent = `${CustomData.date} | ${CustomData.hour}:${CustomData.minutes} ${CustomData.meridiem}`;
+        return;
       }
-
-      objectOverlays.previousDisplay();
     };
 
     document.querySelector('.submit').addEventListener('click', setData);
@@ -397,9 +402,18 @@ export const timestampObj = {
       'click',
       function () {
         this.deleteCustomData();
-        // I wil refactor this code not now below this function
+
         objectOverlays.reset_exercise_timestamp_type();
-        objectOverlays.previousDisplay();
+
+        if (objectOverlays.overlay_state.timestamp_set_form_enabled) {
+          objectOverlays.timestamp_remove_for_set_form();
+          return;
+        }
+
+        if (objectOverlays.overlay_state.timestamp_edit_form_enabled) {
+          objectOverlays.timestamp_remove_for_edit_form();
+          return;
+        }
       }.bind(this)
     );
   },

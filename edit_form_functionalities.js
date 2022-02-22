@@ -12,15 +12,13 @@ const clear_editForm_inputs = function ({
   cadence_or_elevation: cadence_or_elevation,
   exerciseType: exerciseType,
 }) {
+  const str = exerciseType ? 'r' : 'c';
+
   if (distance <= 0)
-    document.querySelector(
-      queryName[exerciseType ? 'edit_rDistance' : 'edit_cDistance']
-    ).value = '';
+    document.querySelector(queryName[`edit_${str}Distance`]).value = '';
 
   if (duration <= 0)
-    document.querySelector(
-      queryName[exerciseType ? 'edit_rDuration' : 'edit_cDuration']
-    ).value = '';
+    document.querySelector(queryName[`edit_${str}Duration`]).value = '';
 
   if (cadence_or_elevation <= 0)
     document.querySelector(
