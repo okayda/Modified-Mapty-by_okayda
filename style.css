@@ -310,6 +310,11 @@ a:visited {
   border-radius: 5px;
 }
 
+.workouts-container .exercise-container.active-edit {
+  position: relative;
+  z-index: 800;
+}
+
 .exercise-container:last-child {
   margin-bottom: 0;
 }

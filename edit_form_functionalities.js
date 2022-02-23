@@ -35,11 +35,6 @@ const show_error_editForm_altert = function (message) {
   document.querySelector(queryName.error_message).textContent = message;
 };
 
-const reset_specificEvent_and_dataset = function () {
-  document_obj.editForm.removeAttribute('data-id');
-  infoData.specificEvents = [];
-};
-
 const makeEmptyEditFormInputs = function (str) {
   const distance = document.querySelector(`.${str}Distance`);
   const duration = document.querySelector(`.${str}Duration`);
@@ -98,6 +93,8 @@ export const edit_workout_info_including_data_workout = function () {
 
   const exerciseTitle = infoData.specificEvents[3];
 
+  const target_exercise = infoData.specificEvents[4];
+
   const targetExerciseHTML = function () {
     let getDOMArr = [];
     document.querySelectorAll(queryName.workItself).forEach(exercise => {
@@ -141,8 +138,6 @@ export const edit_workout_info_including_data_workout = function () {
     show_error_editForm_altert('Make sure all inputs value is > 0');
     return;
   }
-
-  reset_specificEvent_and_dataset();
 
   for (const itemWorkout of infoData.get_workouts_data()) {
     if (itemWorkout.id === exerciseTargetId) {
@@ -208,13 +203,12 @@ export const edit_workout_info_including_data_workout = function () {
         queryName.workItself
       ).className = `exercise-container exercise--${itemWorkout.exerciseType}`;
 
-      infoData.reset_specificEvents_data();
+      //including the specificEvents reset
+      objectOverlays.hide_edit_form();
 
       infoData.setLocalStorage();
 
       break;
     }
   }
-
-  objectOverlays.hide_edit_form();
 };

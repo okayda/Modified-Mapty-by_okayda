@@ -473,17 +473,19 @@ class App {
   _edit_form_icon(target) {
     if (target.id !== 'edit-icon') return;
 
+    const target_exercise = target.closest(queryName.workItself);
+
     infoData.specificEvents.push(
-      target.closest(queryName.workItself).dataset.id,
-      target.closest(queryName.workItself).querySelectorAll('.text_info'),
-      target.closest(queryName.workItself).querySelectorAll('.icon_info'),
-      target.closest(queryName.workItself).querySelector('.title')
+      target_exercise.dataset.id,
+      target_exercise.querySelectorAll('.text_info'),
+      target_exercise.querySelectorAll('.icon_info'),
+      target_exercise.querySelector('.title'),
+      target_exercise
     );
 
-    document_obj.editForm.setAttribute(
-      'data-id',
-      target.closest(queryName.workItself).dataset.id
-    );
+    document_obj.editForm.setAttribute('data-id', target_exercise.dataset.id);
+
+    target_exercise.classList.add('active-edit');
 
     objectOverlays.show_edit_form();
   }

@@ -17,19 +17,23 @@ export const objectOverlays = {
     error_alert_setForm_enabled: false,
   },
 
-  display_edit_form(state) {
+  edit_form_hide_and_show(state) {
     document.querySelector(queryName.overlay).classList[state]('active');
     document.querySelector(queryName.editForm).classList[state]('active');
   },
 
   show_edit_form() {
     this.overlay_state.editForm_enabled = true;
-    this.display_edit_form('add');
+    this.edit_form_hide_and_show('add');
   },
 
   hide_edit_form() {
     this.overlay_state.editForm_enabled = false;
-    this.display_edit_form('remove');
+    this.edit_form_hide_and_show('remove');
+
+    infoData.specificEvents[4].classList.remove('active-edit');
+    document_obj.editForm.removeAttribute('data-id');
+    infoData.reset_specificEvents_data();
   },
 
   reset_exercise_timestamp_type() {
@@ -69,16 +73,6 @@ export const objectOverlays = {
       .classList.remove('active');
   },
 
-  edit_form_display() {
-    this.overlay_state.editForm_enabled = false;
-
-    document_obj.editForm.removeAttribute('data-id');
-    infoData.reset_specificEvents_data();
-
-    document.querySelector(queryName.overlay).classList.remove('active');
-    document.querySelector(queryName.editForm).classList.remove('active');
-  },
-
   error_set_form_modal_display() {
     this.overlay_state.error_alert_setForm_enabled = false;
 
@@ -105,7 +99,7 @@ export const objectOverlays = {
       'click',
       function () {
         if (this.overlay_state.editForm_enabled) {
-          this.edit_form_display();
+          this.hide_edit_form();
           return;
         }
 
