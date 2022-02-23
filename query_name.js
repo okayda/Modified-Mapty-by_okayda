@@ -45,8 +45,8 @@ export const dataObj = {
   btnAN: '.btn-PM',
 
   customSched: '.custom__schedule',
-  customRun: '.custom-schedule-running',
-  customCyc: '.custom-schedule-cycling',
+  timestamp_edit_run: '.custom-schedule-running',
+  timestamp_edit_cyc: '.custom-schedule-cycling',
 
   //clearErrorInput()
   inputFormDistance: '.form__input--distance',

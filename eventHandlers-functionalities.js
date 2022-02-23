@@ -5,7 +5,7 @@ import { edit_workout_info_including_data_workout } from './edit_form_functional
 
 export default function event_handlers_init() {
   document
-    .querySelector(queryName.customRun)
+    .querySelector(queryName.timestamp_edit_run)
     .addEventListener('click', function () {
       objectOverlays.overlay_state.editForm_enabled = false;
       objectOverlays.overlay_state.timestamp_edit_form_enabled = true;
@@ -19,13 +19,17 @@ export default function event_handlers_init() {
     });
 
   document
-    .querySelector(queryName.customCyc)
+    .querySelector(queryName.timestamp_edit_cyc)
     .addEventListener('click', function () {
-      overlay.style.display = 'none';
-      document.querySelector('.overlay-edit-form').style.display = 'block';
-      document.querySelector(queryName.editContainer).style.display = 'none';
-      document.querySelector(queryName.tidar_container).style.display = 'block';
+      objectOverlays.overlay_state.editForm_enabled = false;
+      objectOverlays.overlay_state.timestamp_edit_form_enabled = true;
       objectOverlays.overlay_state.isCycling = true;
+
+      document
+        .querySelector(queryName.editContainer)
+        .classList.remove('active');
+
+      document.querySelector(queryName.tidar_container).classList.add('active');
     });
 
   document

@@ -8,7 +8,7 @@ import { initSideBar } from './sidebar.js';
 
 import { initTheme } from './theme.js';
 
-import { timestampObj as AppTimestamp } from './timestamp.js';
+import { init_timestamp } from './timestamp-functionalities/init-timestamp.js';
 
 import { objectOverlays } from './overlays-functionalities.js';
 
@@ -171,9 +171,9 @@ class App {
 
     initTheme();
 
-    event_handlers_init();
+    init_timestamp();
 
-    AppTimestamp.getCustomSchedule();
+    event_handlers_init();
 
     objectOverlays.overlays_init();
 
