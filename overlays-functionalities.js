@@ -1,11 +1,14 @@
 import { dataObj as queryName } from './query_name.js';
 import { document_obj } from './document_element.js';
-import { infoData, CustomData } from '/app.js';
+import { infoData } from '/app.js';
 
 export const objectOverlays = {
   overlay_state: {
     isRunning: false,
     isCycling: false,
+
+    running_timestamp_enabled: false,
+    cycling_timestamp_enabled: false,
 
     setForm_enabled: false,
     editForm_enabled: false,
@@ -31,7 +34,7 @@ export const objectOverlays = {
     this.overlay_state.editForm_enabled = false;
     this.edit_form_hide_and_show('remove');
 
-    infoData.specificEvents[4].classList.remove('active-edit');
+    infoData.specificEvents[6].classList.remove('active-edit');
     document_obj.editForm.removeAttribute('data-id');
     infoData.reset_specificEvents_data();
   },
@@ -106,6 +109,10 @@ export const objectOverlays = {
         if (this.overlay_state.timestamp_edit_form_enabled) {
           this.reset_exercise_timestamp_type();
           this.timestamp_remove_for_edit_form();
+          infoData.timestamp_data.reset_date_and_properties();
+
+          this.overlay_state.running_timestamp_enabled = false;
+          this.overlay_state.cycling_timestamp_enabled = false;
           return;
         }
 

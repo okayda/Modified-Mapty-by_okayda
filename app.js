@@ -18,11 +18,32 @@ import { renderMethods } from './render_markup.js';
 
 import { initDebugHandlers } from './debug.js';
 
-export let CustomData = {};
+// export let CustomData = {};
+
+const date = new Date();
 
 export const infoData = {
   workouts: [],
   specificEvents: [],
+  timestamp_data: {
+    day: date.getDate(),
+    month: date.getMonth() + 1,
+    year: date.getFullYear(),
+
+    hour: '00',
+    minutes: '00',
+    meridiem: 'NN',
+
+    reset_date_and_properties() {
+      this.day = date.getDate();
+      this.month = date.getMonth() + 1;
+      this.year = date.getFullYear();
+
+      this.hour = '00';
+      this.minutes = '00';
+      this.meridiem = 'NN';
+    },
+  },
 
   get_specificEvents_data() {
     return this.specificEvents;
@@ -193,7 +214,7 @@ class App {
     );
 
     // below this, is used for debugging purposes
-    initDebugHandlers(infoData, CustomData);
+    initDebugHandlers(infoData);
   }
 
   _getPosition() {
@@ -394,7 +415,16 @@ class App {
       isLongJourney,
     ];
 
+    document.querySelector(queryName.customSched).textContent =
+      'Custom Schedule';
+
     workout = new Excercise_Details(...arrVal);
+
+    workout.timestamp = {
+      ...infoData.timestamp_data,
+    };
+
+    infoData.timestamp_data.reset_date_and_properties();
 
     infoData.workouts.push(workout);
 
@@ -480,6 +510,8 @@ class App {
       target_exercise.querySelectorAll('.text_info'),
       target_exercise.querySelectorAll('.icon_info'),
       target_exercise.querySelector('.title'),
+      target_exercise.querySelector('.date'),
+      target_exercise.querySelector('.time'),
       target_exercise
     );
 

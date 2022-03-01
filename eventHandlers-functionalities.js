@@ -10,6 +10,7 @@ export default function event_handlers_init() {
       objectOverlays.overlay_state.editForm_enabled = false;
       objectOverlays.overlay_state.timestamp_edit_form_enabled = true;
       objectOverlays.overlay_state.isRunning = true;
+      objectOverlays.overlay_state.running_timestamp_enabled = true;
 
       document
         .querySelector(queryName.editContainer)
@@ -24,6 +25,7 @@ export default function event_handlers_init() {
       objectOverlays.overlay_state.editForm_enabled = false;
       objectOverlays.overlay_state.timestamp_edit_form_enabled = true;
       objectOverlays.overlay_state.isCycling = true;
+      objectOverlays.overlay_state.cycling_timestamp_enabled = true;
 
       document
         .querySelector(queryName.editContainer)

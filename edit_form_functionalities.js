@@ -1,7 +1,7 @@
 'use strict';
 import { dataObj as queryName } from './query_name.js';
 import { document_obj } from './document_element.js';
-import { infoData, CustomData } from '/app.js';
+import { infoData } from '/app.js';
 
 import { renderMethods } from '/render_markup.js';
 import { objectOverlays } from './overlays-functionalities.js';
@@ -93,7 +93,13 @@ export const edit_workout_info_including_data_workout = function () {
 
   const exerciseTitle = infoData.specificEvents[3];
 
-  const target_exercise = infoData.specificEvents[4];
+  const date = infoData.specificEvents[4];
+
+  const time = infoData.specificEvents[5];
+
+  const target_exercise = infoData.specificEvents[6];
+
+  console.log(date, time);
 
   const targetExerciseHTML = function () {
     let getDOMArr = [];
@@ -141,6 +147,8 @@ export const edit_workout_info_including_data_workout = function () {
 
   for (const itemWorkout of infoData.get_workouts_data()) {
     if (itemWorkout.id === exerciseTargetId) {
+      const data = infoData.timestamp_data;
+
       itemWorkout.exerciseType = exerciseType ? 'running' : 'cycling';
 
       itemWorkout.title =
@@ -155,6 +163,31 @@ export const edit_workout_info_including_data_workout = function () {
       itemWorkout.pace_or_speed = exerciseType
         ? calcPace(itemWorkout)
         : calcSpeed(itemWorkout);
+
+      if (objectOverlays.overlay_state.running_timestamp_enabled) {
+        itemWorkout.timestamp.hour = data.hour;
+        itemWorkout.timestamp.minutes = data.minutes;
+        itemWorkout.timestamp.meridiem = data.meridiem;
+        time.textContent = `${data.hour}:${data.minutes} ${data.meridiem}`;
+
+        itemWorkout.timestamp.day = data.day;
+        itemWorkout.timestamp.month = data.month;
+        itemWorkout.timestamp.year = data.year;
+        date.textContent = `${data.month} \\ ${data.day} \\ ${data.year} `;
+      }
+
+      if (objectOverlays.overlay_state.cycling_timestamp_enabled) {
+        itemWorkout.timestamp.hour = data.hour;
+        itemWorkout.timestamp.minutes = data.minutes;
+        itemWorkout.timestamp.meridiem = data.meridiem;
+        time.textContent = `${data.hour}:${data.minutes} ${data.meridiem}`;
+
+        itemWorkout.timestamp.day = data.day;
+        itemWorkout.timestamp.month = data.month;
+        itemWorkout.timestamp.year = data.year;
+        date.textContent = `${data.month} \\ ${data.day} \\ ${data.year} `;
+        console.log('hello');
+      }
 
       itemWorkout.ExerciseDetails.push(
         itemWorkout.distance,
@@ -203,8 +236,13 @@ export const edit_workout_info_including_data_workout = function () {
         queryName.workItself
       ).className = `exercise-container exercise--${itemWorkout.exerciseType}`;
 
+      objectOverlays.overlay_state.running_timestamp_enabled = false;
+      objectOverlays.overlay_state.cycling_timestamp_enabled = false;
+
       //including the specificEvents reset
       objectOverlays.hide_edit_form();
+
+      data.reset_date_and_properties();
 
       infoData.setLocalStorage();
 

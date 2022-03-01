@@ -329,7 +329,7 @@ a:visited {
   margin-top: 0.8rem;
 }
 
-.exercise-container .timestamp-workout-container .timestamp-workout-text {
+.exercise-container .timestamp-workout-container .date {
   border-right: 2px solid #bebebe;
   margin-right: 1rem;
 }

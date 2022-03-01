@@ -2,7 +2,7 @@
 
 import { dataObj as queryName } from './query_name.js';
 
-import { CustomData } from './app.js';
+import { infoData } from './app.js';
 
 const containerWorkouts = document.querySelector(queryName.workouts);
 
@@ -55,12 +55,13 @@ export const renderMethods = {
   },
 
   renderWorkout(workout) {
-    if (Object.keys(CustomData).length > 0) {
-      const scheduleArr = CustomData.date.replace(/ /g, '').split('/');
-      workout.month = scheduleArr[0];
-      workout.dayNumber = scheduleArr[1];
-      workout.year = scheduleArr[2];
-    }
+    // if (Object.keys(infoData.timestamp_data).length > 0) {
+    //   const timestamp = infoData.timestamp_data;
+
+    //   workout.month = timestamp.month;
+    //   workout.dayNumber = timestamp.day;
+    //   workout.year = timestamp.year;
+    // }
 
     let html = `
         <div class="exercise-container exercise--${
@@ -135,10 +136,14 @@ export const renderMethods = {
      </div>             
         
      <p class="timestamp-workout-container">
-            <span class="timestamp-workout-text">
-    ${workout.dateSchedule}
+            <span class="date">
+    ${workout.timestamp.month} \\ ${workout.timestamp.day} \\ ${
+        workout.timestamp.year
+      }
       </span>
-      <span class="time">${workout.timeSchedule}</span>
+      <span class="time">${workout.timestamp.hour}:${
+        workout.timestamp.minutes
+      } ${workout.timestamp.meridiem}</span>
       </p>
     `;
     if (workout.exerciseType === 'cycling')
@@ -163,10 +168,14 @@ export const renderMethods = {
      </div>
 
      <p class="timestamp-workout-container">
-     <span class="timestamp-workout-text">
-     ${workout.timeSchedule}
-</span>
-<span class="time">00:00 NN</span>
+     <span class="date">
+     ${workout.timestamp.month} \\ ${workout.timestamp.day} \\ ${
+        workout.timestamp.year
+      }
+    </span>
+    <span class="time">${workout.timestamp.hour}:${workout.timestamp.minutes} ${
+        workout.timestamp.meridiem
+      }</span>
 </p>
     `;
     containerWorkouts.insertAdjacentHTML('afterbegin', html);

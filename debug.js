@@ -1,7 +1,7 @@
 import { objectOverlays as overlayState } from './overlays-functionalities.js';
-import { infoData, CustomData } from '/app.js';
+import { infoData } from '/app.js';
 
-export const initDebugHandlers = function (obj, timestamp) {
+export const initDebugHandlers = function (obj) {
   document.querySelector('.workouts').addEventListener('click', function () {
     console.log('<===================>');
     console.log('Workouts Data');
@@ -23,7 +23,7 @@ export const initDebugHandlers = function (obj, timestamp) {
     console.log('<===================>');
 
     console.log('timestamp Data');
-    console.log(timestamp);
+    console.log(obj.timestamp_data);
     console.log('<===================>');
   });
 
