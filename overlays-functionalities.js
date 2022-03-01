@@ -7,8 +7,7 @@ export const objectOverlays = {
     isRunning: false,
     isCycling: false,
 
-    running_timestamp_enabled: false,
-    cycling_timestamp_enabled: false,
+    editForm_timestamp_enabled: false,
 
     setForm_enabled: false,
     editForm_enabled: false,
@@ -111,8 +110,7 @@ export const objectOverlays = {
           this.timestamp_remove_for_edit_form();
           infoData.timestamp_data.reset_date_and_properties();
 
-          this.overlay_state.running_timestamp_enabled = false;
-          this.overlay_state.cycling_timestamp_enabled = false;
+          this.overlay_state.editForm_timestamp_enabled = false;
           return;
         }
 

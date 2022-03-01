@@ -96,8 +96,7 @@ const remove_timestamp_data = function () {
 
   if (objectOverlays.overlay_state.timestamp_edit_form_enabled) {
     objectOverlays.timestamp_remove_for_edit_form();
-    objectOverlays.overlay_state.running_timestamp_enabled = false;
-    objectOverlays.overlay_state.cycling_timestamp_enabled = false;
+    objectOverlays.overlay_state.editForm_timestamp_enabled = false;
   }
 };
 

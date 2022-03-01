@@ -1,0 +1,20 @@
+[33mb06ef4d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m add timestamp edit form functionality
+[33meaa092a[m[33m ([m[1;31morigin/main[m[33m)[m Add file timestamp  modular & remove timestamp.js
+[33m4c633c9[m Add a visibility in overlay while a user editing the workout
+[33m44fc1b6[m Merge branch 'main' of https://github.com/okayda/Modified-Mapty-okayda-jhon
+[33md8a06e7[m Add hide edit form functionalities
+[33me937754[m Update README.md
+[33m2c3e87c[m Update README.md
+[33m42f8b3c[m Create README.md
+[33m5b38b1e[m Add clean refactor at overlays-functionalities.js
+[33m3ea0f68[m Add error alert functionalities for edit form and fixed a bug for edit form -> specificEvents data
+[33m033d879[m add error alert functionalities at set form workout
+[33md908b53[m Add (COMPLETED) Refactoring JavaScript Style Grid
+[33m31b6701[m refactoring JavaScript style Grid
+[33maa4568c[m add adjustment at workout info ellipsis
+[33m8e82b0b[m add edit-form functionalities to user workout
+[33mddab5ae[m before the  edit_form_functionalities file  wil merge in the App,js file
+[33m5482a93[m Add theme functionality
+[33m85890b3[m add changes workout icons
+[33mc8167c2[m add CSS clean structure of class names
+[33m9815f4a[m initial commit

@@ -164,7 +164,7 @@ export const edit_workout_info_including_data_workout = function () {
         ? calcPace(itemWorkout)
         : calcSpeed(itemWorkout);
 
-      if (objectOverlays.overlay_state.running_timestamp_enabled) {
+      if (objectOverlays.overlay_state.editForm_timestamp_enabled) {
         itemWorkout.timestamp.hour = data.hour;
         itemWorkout.timestamp.minutes = data.minutes;
         itemWorkout.timestamp.meridiem = data.meridiem;
@@ -174,19 +174,6 @@ export const edit_workout_info_including_data_workout = function () {
         itemWorkout.timestamp.month = data.month;
         itemWorkout.timestamp.year = data.year;
         date.textContent = `${data.month} \\ ${data.day} \\ ${data.year} `;
-      }
-
-      if (objectOverlays.overlay_state.cycling_timestamp_enabled) {
-        itemWorkout.timestamp.hour = data.hour;
-        itemWorkout.timestamp.minutes = data.minutes;
-        itemWorkout.timestamp.meridiem = data.meridiem;
-        time.textContent = `${data.hour}:${data.minutes} ${data.meridiem}`;
-
-        itemWorkout.timestamp.day = data.day;
-        itemWorkout.timestamp.month = data.month;
-        itemWorkout.timestamp.year = data.year;
-        date.textContent = `${data.month} \\ ${data.day} \\ ${data.year} `;
-        console.log('hello');
       }
 
       itemWorkout.ExerciseDetails.push(
@@ -236,8 +223,7 @@ export const edit_workout_info_including_data_workout = function () {
         queryName.workItself
       ).className = `exercise-container exercise--${itemWorkout.exerciseType}`;
 
-      objectOverlays.overlay_state.running_timestamp_enabled = false;
-      objectOverlays.overlay_state.cycling_timestamp_enabled = false;
+      objectOverlays.overlay_state.editForm_timestamp_enabled = false;
 
       //including the specificEvents reset
       objectOverlays.hide_edit_form();
