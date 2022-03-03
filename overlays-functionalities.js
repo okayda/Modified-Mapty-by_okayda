@@ -102,6 +102,7 @@ export const objectOverlays = {
       function () {
         if (this.overlay_state.editForm_enabled) {
           this.hide_edit_form();
+          this.overlay_state.editForm_timestamp_enabled = false;
           return;
         }
 

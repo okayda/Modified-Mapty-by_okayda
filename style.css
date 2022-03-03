@@ -308,6 +308,27 @@ a:visited {
   padding: 1rem 1.2rem;
   margin: 0 1rem 1.75rem 1rem;
   border-radius: 5px;
+
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.6s;
+}
+
+.workouts-container .exercise-container.active-delete {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.6s, opacity 0.6s linear;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .workouts-container .exercise-container.active-edit {
@@ -1743,5 +1764,15 @@ input[type='radio'] {
 
 .buttons-container .cyan:hover {
   background-color: cyan;
+  background-color: var(--color-dark--2);
+}
+
+.buttons-container .pink {
+  background-color: rgb(197, 159, 166);
+  box-shadow: 0px 5px 0px 0px var(--color-dark--1);
+}
+
+.buttons-container .pink:hover {
+  background-color: rgb(197, 159, 166);
   background-color: var(--color-dark--2);
 }

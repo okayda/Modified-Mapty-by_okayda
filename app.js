@@ -19,8 +19,9 @@ import { renderMethods } from './render_markup.js';
 import { initDebugHandlers } from './debug.js';
 
 // export let CustomData = {};
-
 const date = new Date();
+
+let map;
 
 export const infoData = {
   workouts: [],
@@ -44,6 +45,8 @@ export const infoData = {
       this.meridiem = 'NN';
     },
   },
+
+  markers: [],
 
   get_specificEvents_data() {
     return this.specificEvents;
@@ -181,7 +184,6 @@ class Excercise_Details extends Workout {
 class App {
   date = new Date();
 
-  #map;
   #mapEvent;
   #mapZoomLevel = 13;
 
@@ -215,6 +217,8 @@ class App {
 
     // below this, is used for debugging purposes
     initDebugHandlers(infoData);
+
+    this._removeMarker();
   }
 
   _getPosition() {
@@ -227,29 +231,58 @@ class App {
       );
   }
 
+  _removeMarker() {}
+
   _loadMap(position) {
     const { latitude } = position.coords;
     const { longitude } = position.coords;
-
     const coords = [latitude, longitude];
-    this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.#map);
+    map = L.map('map').setView(coords, this.#mapZoomLevel);
 
-    // L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    //   maxZoom: 20,
-    //   subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    // }).addTo(this.#map);
+    const leafletStreets = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }
+    );
 
-    // L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    //   attribution:
-    //     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    // }).addTo(this.#map);
+    const googleStreets = L.tileLayer(
+      'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+      {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      }
+    ).addTo(map);
 
-    this.#map.on('click', this._showForm.bind(this));
+    const satellite = L.tileLayer(
+      'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+      {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      }
+    );
+
+    const first_marker = L.marker(coords).addTo(map);
+
+    const baseMaps = {
+      'Satellite Maps': googleStreets,
+      'Google Maps': leafletStreets,
+      'Leaflet Maps': satellite,
+    };
+
+    const overlayMaps = {
+      'City Location Marker': first_marker,
+    };
+
+    L.control
+      .layers(baseMaps, overlayMaps, {
+        position: 'bottomleft',
+      })
+      .addTo(map);
+
+    map.on('click', this._showForm.bind(this));
 
     infoData.workouts.forEach(work => this._renderWorkoutMarker(work));
   }
@@ -274,21 +307,37 @@ class App {
   }
 
   _renderWorkoutMarker(workout) {
-    L.marker(workout.coords)
-      .addTo(this.#map)
+    const myIcon = L.icon({
+      iconUrl: `${
+        workout.exerciseType === 'running'
+          ? 'workout-icons/running.png'
+          : 'workout-icons/cycling.png'
+      }`,
+      iconSize: [55, 55],
+    });
+
+    const marker = L.marker(workout.coords, { icon: myIcon })
+      .addTo(map)
       .bindPopup(
         L.popup({
           maxWidth: 250,
           minWidth: 100,
           autoClose: false,
+          offset: [3, -20],
           closeOnClick: false,
           className: `${workout.type}-popup`,
         })
       )
       .setPopupContent(
-        `${workout.type === 'running' ? '🏃‍♂️' : '🚲'} ${workout.description}`
+        `${workout.exerciseType === 'running' ? '🏃‍♂️' : '🚲'} ${
+          workout.description
+        }`
       )
       .openPopup();
+
+    marker.id = workout.id;
+
+    infoData.markers.push(marker);
   }
 
   _moveToPopUp(target) {
@@ -300,7 +349,7 @@ class App {
       work => work.id === targetExerciseId.dataset.id
     );
 
-    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+    map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
       pan: {
         duration: 1,
@@ -419,6 +468,7 @@ class App {
       'Custom Schedule';
 
     workout = new Excercise_Details(...arrVal);
+    console.log(workout.id);
 
     workout.timestamp = {
       ...infoData.timestamp_data,
@@ -522,6 +572,33 @@ class App {
     objectOverlays.show_edit_form();
   }
 
+  _remove_icon(target) {
+    if (target.id !== 'remove-icon') return;
+
+    const markers_data = infoData.markers;
+    const workouts_data = infoData.workouts;
+
+    const target_element = target.closest('.exercise-container');
+    const target_id = target_element.dataset.id;
+
+    target_element.classList.add('active-delete');
+
+    markers_data.forEach((el, i) => {
+      if (el.id === target_id) {
+        map.removeLayer(el);
+        markers_data.splice(i, 1);
+        workouts_data.splice(i, 1);
+
+        infoData.setLocalStorage();
+
+        setInterval(function () {
+          target_element.remove();
+        }, 600);
+        return;
+      }
+    });
+  }
+
   _workout_icons_init(e) {
     const target = e.target;
 
@@ -530,6 +607,8 @@ class App {
     this._map_marker_icon(target);
 
     this._edit_form_icon(target);
+
+    this._remove_icon(target);
   }
 
   // only for workout icons functionalities

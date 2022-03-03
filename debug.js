@@ -45,4 +45,19 @@ export const initDebugHandlers = function (obj) {
       console.log(infoData.reset_workouts_data());
       console.log('<===================>');
     });
+
+  document.querySelector('.markers').addEventListener('click', function () {
+    console.log('<===================>');
+    console.log('Markers Data');
+    console.log(infoData.markers);
+    console.log('<===================>');
+  });
+
+  document
+    .querySelector('.delete-all-exercise')
+    .addEventListener('click', function () {
+      console.log('<===================>');
+      console.log('Delete all exercise executed');
+      console.log('<===================>');
+    });
 };
