@@ -447,16 +447,46 @@ a:visited {
   padding-right: 0.6rem;
 }
 
-.running-popup .leaflet-popup-content-wrapper {
+/* .running-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--2);
 }
 
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
+} */
+
+/* .remove {
+  background-color: var(--color-brand--2);
+} */
+
+.marker-content-color-running {
+  color: var(--color-brand--2);
+}
+
+.marker-content-color-cycling {
+  color: var(--color-brand--1);
 }
 
 .leaflet-popup .leaflet-popup-content {
   font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 0 0.8rem;
+}
+
+.leaflet-popup .leaflet-popup-content p {
+  padding: 1rem 1.5rem;
+  margin: 0;
+  margin-left: 0.6rem;
+  font-weight: bold;
+}
+
+.leaflet-popup .leaflet-popup-content p:hover {
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  border-radius: 50px;
 }
 
 .leaflet-popup .leaflet-popup-tip {

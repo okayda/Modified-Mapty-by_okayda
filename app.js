@@ -23,7 +23,23 @@ const date = new Date();
 
 let map;
 
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 export const infoData = {
+  map: null,
   workouts: [],
   specificEvents: [],
   timestamp_data: {
@@ -98,44 +114,6 @@ class Workout {
     this.longJourney = longJourney;
     this.isDropDown = isDropDown;
   }
-
-  _setDescription() {
-    // prettier-ignore
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-            'August', 'September', 'October', 'November', 'December'];
-
-    const weekDays = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-
-    // below, this is the title of each market in the leaflep map.
-
-    this.description = `${this.exerciseType[0].toUpperCase()}${this.exerciseType.slice(
-      1
-    )} on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
-    this.dateSchedule = `0 \\ 00 \\ 0000`;
-    this.timeSchedule = `00:00 NN`;
-    // this.exerciseType = `${this.exerciseType[0].toUpperCase()}${this.exerciseType.slice(
-    //   1
-    // )}`;
-
-    this.month = `${this.date.getMonth() + 1}`;
-
-    // this.dayName = `${weekDays[this.date.getDay()]}`;
-    this.year = `${this.date.getFullYear()}`;
-
-    this.dayNumber = `${this.date.getDate()}`;
-
-    this.hours = `${this.date.getHours()}`;
-
-    this.minutes = `${this.date.getMinutes()}`;
-  }
 }
 
 class Excercise_Details extends Workout {
@@ -154,8 +132,6 @@ class Excercise_Details extends Workout {
     this.exerciseType = exerciseType;
     this.title =
       this.exerciseType[0].toUpperCase() + this.exerciseType.slice(1);
-
-    this._setDescription();
 
     this.specific_prop_for_type_exercise();
 
@@ -202,7 +178,33 @@ class App {
 
     this._getLocalStorage();
 
-    // form.addEventListener('submit', this._newWorkout.bind(this));
+    // for workout & marker remove
+    document.querySelector('#map').addEventListener(
+      'click',
+      function (e) {
+        const target = e.target;
+        if (target.className !== 'remove') return;
+        let a;
+        const target_id = target.id;
+        const target_workout = document.querySelectorAll('.exercise-container');
+
+        infoData.markers.forEach((el, i) => {
+          if (el.id == target_id) {
+            this._remove_marker_and_info_data(el, i);
+
+            setInterval(function () {
+              target_workout[i].remove();
+            }, 600);
+
+            a = i;
+            return;
+          }
+        });
+
+        target_workout[a].classList.add('active-delete');
+      }.bind(this)
+    );
+
     document_obj.form.addEventListener(
       'submit',
       this._check_and_add_workout.bind(this)
@@ -215,10 +217,7 @@ class App {
       this._toggleElevationField
     );
 
-    // below this, is used for debugging purposes
     initDebugHandlers(infoData);
-
-    this._removeMarker();
   }
 
   _getPosition() {
@@ -231,14 +230,12 @@ class App {
       );
   }
 
-  _removeMarker() {}
-
   _loadMap(position) {
     const { latitude } = position.coords;
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
 
-    map = L.map('map').setView(coords, this.#mapZoomLevel);
+    infoData.map = L.map('map').setView(coords, this.#mapZoomLevel);
 
     const leafletStreets = L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -254,7 +251,7 @@ class App {
         maxZoom: 20,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
       }
-    ).addTo(map);
+    ).addTo(infoData.map);
 
     const satellite = L.tileLayer(
       'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
@@ -264,12 +261,12 @@ class App {
       }
     );
 
-    const first_marker = L.marker(coords).addTo(map);
+    const first_marker = L.marker(coords).addTo(infoData.map);
 
     const baseMaps = {
-      'Satellite Maps': googleStreets,
-      'Google Maps': leafletStreets,
-      'Leaflet Maps': satellite,
+      'Satellite Maps': satellite,
+      'Google Maps': googleStreets,
+      'Leaflet Maps': leafletStreets,
     };
 
     const overlayMaps = {
@@ -280,9 +277,9 @@ class App {
       .layers(baseMaps, overlayMaps, {
         position: 'bottomleft',
       })
-      .addTo(map);
+      .addTo(infoData.map);
 
-    map.on('click', this._showForm.bind(this));
+    infoData.map.on('click', this._showForm.bind(this));
 
     infoData.workouts.forEach(work => this._renderWorkoutMarker(work));
   }
@@ -317,21 +314,23 @@ class App {
     });
 
     const marker = L.marker(workout.coords, { icon: myIcon })
-      .addTo(map)
+      .addTo(infoData.map)
       .bindPopup(
         L.popup({
-          maxWidth: 250,
+          maxWidth: 400,
           minWidth: 100,
           autoClose: false,
           offset: [3, -20],
           closeOnClick: false,
-          className: `${workout.type}-popup`,
+          closeButton: false,
         })
       )
       .setPopupContent(
-        `${workout.exerciseType === 'running' ? '🏃‍♂️' : '🚲'} ${
-          workout.description
-        }`
+        `<span class="marker-content-color-${
+          workout.exerciseType === 'running' ? 'running' : 'cycling'
+        }">${workout.description}</span> <p id="${
+          workout.id
+        }" class="remove">X</p>`
       )
       .openPopup();
 
@@ -349,7 +348,7 @@ class App {
       work => work.id === targetExerciseId.dataset.id
     );
 
-    map.setView(workout.coords, this.#mapZoomLevel, {
+    infoData.map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
       pan: {
         duration: 1,
@@ -474,6 +473,10 @@ class App {
       ...infoData.timestamp_data,
     };
 
+    workout.description = `${workout.title} on ${
+      months[workout.timestamp.month]
+    } ${workout.timestamp.day}`;
+
     infoData.timestamp_data.reset_date_and_properties();
 
     infoData.workouts.push(workout);
@@ -575,21 +578,14 @@ class App {
   _remove_icon(target) {
     if (target.id !== 'remove-icon') return;
 
-    const markers_data = infoData.markers;
-    const workouts_data = infoData.workouts;
-
     const target_element = target.closest('.exercise-container');
     const target_id = target_element.dataset.id;
 
     target_element.classList.add('active-delete');
 
-    markers_data.forEach((el, i) => {
+    infoData.markers.forEach((el, i) => {
       if (el.id === target_id) {
-        map.removeLayer(el);
-        markers_data.splice(i, 1);
-        workouts_data.splice(i, 1);
-
-        infoData.setLocalStorage();
+        this._remove_marker_and_info_data(el, i);
 
         setInterval(function () {
           target_element.remove();
@@ -616,6 +612,14 @@ class App {
     document
       .querySelector(queryName.workouts)
       .addEventListener('click', this._workout_icons_init.bind(this));
+  }
+
+  _remove_marker_and_info_data(el, i) {
+    infoData.map.removeLayer(el);
+    infoData.markers.splice(i, 1);
+    infoData.workouts.splice(i, 1);
+
+    infoData.setLocalStorage();
   }
 }
 const app = new App();

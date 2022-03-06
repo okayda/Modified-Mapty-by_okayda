@@ -145,7 +145,7 @@ export const edit_workout_info_including_data_workout = function () {
     return;
   }
 
-  for (const itemWorkout of infoData.get_workouts_data()) {
+  for (const [index, itemWorkout] of infoData.get_workouts_data().entries()) {
     if (itemWorkout.id === exerciseTargetId) {
       const data = infoData.timestamp_data;
 
@@ -175,6 +175,25 @@ export const edit_workout_info_including_data_workout = function () {
         itemWorkout.timestamp.year = data.year;
         date.textContent = `${data.month} \\ ${data.day} \\ ${data.year} `;
       }
+
+      const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ];
+
+      itemWorkout.description = `${itemWorkout.title} on ${
+        months[itemWorkout.timestamp.month - 1]
+      } ${itemWorkout.timestamp.day}`;
 
       itemWorkout.ExerciseDetails.push(
         itemWorkout.distance,
@@ -207,6 +226,14 @@ export const edit_workout_info_including_data_workout = function () {
 
       exerciseTextNodes.forEach(
         (item, i) => (item.textContent = itemWorkout.ExerciseDetails[i])
+      );
+
+      infoData.markers[index].setPopupContent(
+        `<span class="marker-content-color-${
+          exerciseType ? 'running' : 'cycling'
+        }"> ${itemWorkout.description}</span> <p id="${
+          itemWorkout.id
+        }" class="remove">X</p>`
       );
 
       if (itemWorkout.longJourney === false) {
