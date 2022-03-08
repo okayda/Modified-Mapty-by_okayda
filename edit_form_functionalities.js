@@ -1,10 +1,10 @@
 'use strict';
-import { dataObj as queryName } from './query_name.js';
-import { document_obj } from './document_element.js';
-import { infoData } from '/app.js';
+import { document_selector_name as queryName } from './query_name.js';
+import { app_data } from './app_data.js';
 
-import { renderMethods } from '/render_markup.js';
-import { objectOverlays } from './overlays-functionalities.js';
+import { render_methods } from '/render_markup.js';
+import { overlays_data } from './overlays_functionalities.js';
+import { utilities } from './utilities.js';
 
 const clear_editForm_inputs = function ({
   distance: distance,
@@ -27,8 +27,8 @@ const clear_editForm_inputs = function ({
 };
 
 const show_error_editForm_altert = function (message) {
-  objectOverlays.overlay_state.editForm_enabled = false;
-  objectOverlays.overlay_state.error_alert_editForm_enabled = true;
+  overlays_data.overlay_state.editForm_enabled = false;
+  overlays_data.overlay_state.error_alert_editForm_enabled = true;
 
   document.querySelector(queryName.editForm).classList.remove('active');
   document.querySelector(queryName.error_container).classList.add('active');
@@ -85,26 +85,24 @@ export const edit_workout_info_including_data_workout = function () {
   // False -> Cycling
   const exerciseType = document.querySelector(queryName.editRun).checked;
 
-  const exerciseTargetId = infoData.specificEvents[0];
+  const exerciseTargetId = Number(app_data.specificEvents[0]);
 
-  const exerciseTextNodes = infoData.specificEvents[1];
+  const exerciseTextNodes = app_data.specificEvents[1];
 
-  const exerciseIcon = infoData.specificEvents[2];
+  const exerciseIcon = app_data.specificEvents[2];
 
-  const exerciseTitle = infoData.specificEvents[3];
+  const exerciseTitle = app_data.specificEvents[3];
 
-  const date = infoData.specificEvents[4];
+  const date = app_data.specificEvents[4];
 
-  const time = infoData.specificEvents[5];
+  const time = app_data.specificEvents[5];
 
-  const target_exercise = infoData.specificEvents[6];
-
-  console.log(date, time);
+  const target_exercise = app_data.specificEvents[6];
 
   const targetExerciseHTML = function () {
     let getDOMArr = [];
     document.querySelectorAll(queryName.workItself).forEach(exercise => {
-      if (exercise.dataset.id === exerciseTargetId)
+      if (Number(exercise.dataset.id) === exerciseTargetId)
         getDOMArr.push(
           exercise.querySelector(queryName.workInfo),
           exercise.querySelector('.fa-arrow-down')
@@ -145,9 +143,9 @@ export const edit_workout_info_including_data_workout = function () {
     return;
   }
 
-  for (const [index, itemWorkout] of infoData.get_workouts_data().entries()) {
+  for (const [index, itemWorkout] of app_data.get_workouts_data().entries()) {
     if (itemWorkout.id === exerciseTargetId) {
-      const data = infoData.timestamp_data;
+      const data = app_data.timestamp_data;
 
       itemWorkout.exerciseType = exerciseType ? 'running' : 'cycling';
 
@@ -164,7 +162,7 @@ export const edit_workout_info_including_data_workout = function () {
         ? calcPace(itemWorkout)
         : calcSpeed(itemWorkout);
 
-      if (objectOverlays.overlay_state.editForm_timestamp_enabled) {
+      if (overlays_data.overlay_state.editForm_timestamp_enabled) {
         itemWorkout.timestamp.hour = data.hour;
         itemWorkout.timestamp.minutes = data.minutes;
         itemWorkout.timestamp.meridiem = data.meridiem;
@@ -176,23 +174,8 @@ export const edit_workout_info_including_data_workout = function () {
         date.textContent = `${data.month} \\ ${data.day} \\ ${data.year} `;
       }
 
-      const months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-      ];
-
       itemWorkout.description = `${itemWorkout.title} on ${
-        months[itemWorkout.timestamp.month - 1]
+        utilities.months[itemWorkout.timestamp.month - 1]
       } ${itemWorkout.timestamp.day}`;
 
       itemWorkout.ExerciseDetails.push(
@@ -203,7 +186,7 @@ export const edit_workout_info_including_data_workout = function () {
       );
 
       itemWorkout.longJourney =
-        renderMethods.check_is_long_journey(
+        render_methods.check_is_long_journey(
           itemWorkout.distance,
           itemWorkout.duration,
           itemWorkout.pace_or_speed,
@@ -219,7 +202,7 @@ export const edit_workout_info_including_data_workout = function () {
       exerciseIcon.forEach(
         (item, i) =>
           (item.textContent =
-            renderMethods.icon_obj_container()[
+            render_methods.icon_obj_container()[
               exerciseType ? 'running' : 'cycling'
             ][i])
       );
@@ -228,13 +211,25 @@ export const edit_workout_info_including_data_workout = function () {
         (item, i) => (item.textContent = itemWorkout.ExerciseDetails[i])
       );
 
-      infoData.markers[index].setPopupContent(
-        `<span class="marker-content-color-${
-          exerciseType ? 'running' : 'cycling'
-        }"> ${itemWorkout.description}</span> <p id="${
-          itemWorkout.id
-        }" class="remove">X</p>`
-      );
+      app_data.map.removeLayer(app_data.markers[index]);
+
+      app_data.markers[index] = L.marker(itemWorkout.coords, {
+        icon: utilities.my_icon(exerciseType),
+      })
+        .addTo(app_data.map)
+        .bindPopup(
+          L.popup({
+            ...utilities.popup_options,
+          })
+        )
+        .setPopupContent(
+          `<span class="marker-content-color-${
+            exerciseType ? 'running' : 'cycling'
+          }"> ${itemWorkout.description}</span> <p id="${
+            itemWorkout.id
+          }" class="remove">X</p>`
+        )
+        .openPopup();
 
       if (itemWorkout.longJourney === false) {
         add_style_to_arrow(itemWorkout.longJourney);
@@ -250,14 +245,14 @@ export const edit_workout_info_including_data_workout = function () {
         queryName.workItself
       ).className = `exercise-container exercise--${itemWorkout.exerciseType}`;
 
-      objectOverlays.overlay_state.editForm_timestamp_enabled = false;
+      overlays_data.overlay_state.editForm_timestamp_enabled = false;
 
       //including the specificEvents reset
-      objectOverlays.hide_edit_form();
+      overlays_data.hide_edit_form();
 
       data.reset_date_and_properties();
 
-      infoData.setLocalStorage();
+      app_data.setLocalStorage();
 
       break;
     }

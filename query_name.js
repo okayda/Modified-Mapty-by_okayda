@@ -1,4 +1,4 @@
-export const dataObj = {
+export const document_selector_name = {
   form: '.set-form',
   workouts: '.workouts-container',
   inputType: '.form__input--type',

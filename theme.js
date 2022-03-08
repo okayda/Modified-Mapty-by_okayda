@@ -1,4 +1,4 @@
-export const initTheme = function () {
+export default function web_page_theme() {
   const theme = document.querySelector('.theme');
 
   const workoutSidebar = document.querySelector('.workouts-sidebar');
@@ -78,4 +78,4 @@ export const initTheme = function () {
 
     className === 'light' ? lightTheme() : darkTheme();
   });
-};
+}

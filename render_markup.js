@@ -1,12 +1,10 @@
 'use strict ';
 
-import { dataObj as queryName } from './query_name.js';
-
-import { infoData } from './app.js';
+import { document_selector_name as queryName } from './query_name.js';
 
 const containerWorkouts = document.querySelector(queryName.workouts);
 
-export const renderMethods = {
+export const render_methods = {
   show_or_not_arrow: (isLongJourney, isDropDown) => {
     let str;
     if (isLongJourney) {

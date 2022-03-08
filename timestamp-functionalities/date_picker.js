@@ -2,7 +2,7 @@
 
 // import { dataObj as queryName } from '../query_name.js';
 // import { objMethod } from './timestamp-share-methods.js';
-import { infoData } from '../app.js';
+import { app_data } from '../app_data.js';
 
 const date = new Date();
 
@@ -81,7 +81,7 @@ const event_delegation = function (e) {
   if (target.className === 'day') {
     document.querySelectorAll('.day')[user_Date_clicked.day - 1].className =
       'day';
-    const data = infoData.timestamp_data;
+    const data = app_data.timestamp_data;
     const day_selected = +e.target.textContent;
 
     target.className = 'day selected';

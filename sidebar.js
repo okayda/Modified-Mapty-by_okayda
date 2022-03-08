@@ -1,8 +1,8 @@
 import { obj as dropAlter } from './alternate.js';
-import { obj as dropNested } from './nestedAlternate.js';
-import { dataObj as queryName } from './query_name.js';
+import { obj as dropNested } from './nested_alternate.js';
+import { document_selector_name as queryName } from './query_name.js';
 
-export const initSideBar = function () {
+export default function side_bar_init() {
   OpenMenuHandler();
   CloseMenuHandler();
 
@@ -148,7 +148,7 @@ export const initSideBar = function () {
     else if (itContains(e, 'running-btn')) sortRunning();
     else if (itContains(e, 'cycling-btn')) sortCycling();
   });
-};
+}
 
 function OpenMenuHandler() {
   document

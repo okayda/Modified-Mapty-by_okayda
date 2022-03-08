@@ -1,5 +1,5 @@
-import { objectOverlays as overlayState } from './overlays-functionalities.js';
-import { infoData } from '/app.js';
+import { overlays_data as overlayState } from './overlays_functionalities.js';
+import { app_data } from './app_data.js';
 
 export const initDebugHandlers = function (obj) {
   document.querySelector('.workouts').addEventListener('click', function () {
@@ -42,14 +42,14 @@ export const initDebugHandlers = function (obj) {
     .addEventListener('click', function () {
       console.log('<===================>');
       console.log('Reset all executed');
-      console.log(infoData.reset_workouts_data());
+      console.log(app_data.reset_workouts_data());
       console.log('<===================>');
     });
 
   document.querySelector('.markers').addEventListener('click', function () {
     console.log('<===================>');
     console.log('Markers Data');
-    console.log(infoData.markers);
+    console.log(app_data.markers);
     console.log('<===================>');
   });
 

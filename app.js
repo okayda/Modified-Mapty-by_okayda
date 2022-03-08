@@ -1,112 +1,29 @@
 'use strict';
 
-import { dataObj as queryName } from './query_name.js';
+import { app_data } from './app_data.js';
 
-import { document_obj } from './document_element.js';
+import { document_selector_name as queryName } from './query_name.js';
 
-import { initSideBar } from './sidebar.js';
+import { document_element_forms } from './document_element.js';
 
-import { initTheme } from './theme.js';
+import event_handlers_init from './handlers_functionalities.js';
 
-import { init_timestamp } from './timestamp-functionalities/init-timestamp.js';
+import side_bar_init from './sidebar.js';
 
-import { objectOverlays } from './overlays-functionalities.js';
+import web_page_theme from './theme.js';
 
-import event_handlers_init from './eventHandlers-functionalities.js';
+import timestamp_init from './timestamp-functionalities/timestamp_init.js';
 
-import { renderMethods } from './render_markup.js';
+import { overlays_data } from './overlays_functionalities.js';
+
+import { render_methods } from './render_markup.js';
+
+import { utilities } from './utilities.js';
 
 import { initDebugHandlers } from './debug.js';
 
-// export let CustomData = {};
-const date = new Date();
-
-let map;
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
-export const infoData = {
-  map: null,
-  workouts: [],
-  specificEvents: [],
-  timestamp_data: {
-    day: date.getDate(),
-    month: date.getMonth() + 1,
-    year: date.getFullYear(),
-
-    hour: '00',
-    minutes: '00',
-    meridiem: 'NN',
-
-    reset_date_and_properties() {
-      this.day = date.getDate();
-      this.month = date.getMonth() + 1;
-      this.year = date.getFullYear();
-
-      this.hour = '00';
-      this.minutes = '00';
-      this.meridiem = 'NN';
-    },
-  },
-
-  markers: [],
-
-  get_specificEvents_data() {
-    return this.specificEvents;
-  },
-
-  get_workouts_data() {
-    return this.workouts;
-  },
-
-  add_specificEvents_data(add) {
-    this.specificEvents.push(...add);
-  },
-
-  add_workouts_data(add) {
-    this.workouts.push(add);
-  },
-
-  reset_specificEvents_data() {
-    this.specificEvents = [];
-  },
-
-  reset_workouts_data() {
-    localStorage.removeItem('workouts');
-    location.reload();
-  },
-
-  delete_specific_specificEvents_data() {
-    //do something
-  },
-
-  delete_specific_workouts_data() {
-    //do something
-  },
-
-  setLocalStorage() {
-    localStorage.setItem('workouts', JSON.stringify(infoData.workouts));
-  },
-};
-
 class Workout {
-  date = new Date();
-  id = (Date.now() + '').slice(-10);
-  clicks = 0;
-
+  id = Number((Date.now() + '').slice(-10));
   constructor(coords, distance, duration, longJourney, isDropDown) {
     this.coords = coords;
     this.distance = distance;
@@ -158,69 +75,40 @@ class Excercise_Details extends Workout {
 }
 
 class App {
-  date = new Date();
-
   #mapEvent;
   #mapZoomLevel = 13;
 
   constructor() {
-    this._getPosition();
-
-    initSideBar();
-
-    initTheme();
-
-    init_timestamp();
+    this._get_user_position();
 
     event_handlers_init();
 
-    objectOverlays.overlays_init();
+    web_page_theme();
+
+    side_bar_init();
+
+    timestamp_init();
+
+    overlays_data.overlays_init();
 
     this._getLocalStorage();
 
-    // for workout & marker remove
-    document.querySelector('#map').addEventListener(
-      'click',
-      function (e) {
-        const target = e.target;
-        if (target.className !== 'remove') return;
-        let a;
-        const target_id = target.id;
-        const target_workout = document.querySelectorAll('.exercise-container');
-
-        infoData.markers.forEach((el, i) => {
-          if (el.id == target_id) {
-            this._remove_marker_and_info_data(el, i);
-
-            setInterval(function () {
-              target_workout[i].remove();
-            }, 600);
-
-            a = i;
-            return;
-          }
-        });
-
-        target_workout[a].classList.add('active-delete');
-      }.bind(this)
-    );
-
-    document_obj.form.addEventListener(
+    document_element_forms.form.addEventListener(
       'submit',
       this._check_and_add_workout.bind(this)
     );
 
     this._workouts_container_event_delegation();
 
-    document_obj.inputType.addEventListener(
+    document_element_forms.inputType.addEventListener(
       'change',
       this._toggleElevationField
     );
 
-    initDebugHandlers(infoData);
+    initDebugHandlers(app_data);
   }
 
-  _getPosition() {
+  _get_user_position() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
         this._loadMap.bind(this),
@@ -235,7 +123,7 @@ class App {
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
 
-    infoData.map = L.map('map').setView(coords, this.#mapZoomLevel);
+    app_data.map = L.map('map').setView(coords, this.#mapZoomLevel);
 
     const leafletStreets = L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -251,7 +139,7 @@ class App {
         maxZoom: 20,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
       }
-    ).addTo(infoData.map);
+    ).addTo(app_data.map);
 
     const satellite = L.tileLayer(
       'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
@@ -261,7 +149,7 @@ class App {
       }
     );
 
-    const first_marker = L.marker(coords).addTo(infoData.map);
+    const first_marker = L.marker(coords).addTo(app_data.map);
 
     const baseMaps = {
       'Satellite Maps': satellite,
@@ -277,52 +165,45 @@ class App {
       .layers(baseMaps, overlayMaps, {
         position: 'bottomleft',
       })
-      .addTo(infoData.map);
+      .addTo(app_data.map);
 
-    infoData.map.on('click', this._showForm.bind(this));
+    app_data.map.on('click', this._showForm.bind(this));
 
-    infoData.workouts.forEach(work => this._renderWorkoutMarker(work));
+    app_data.workouts.forEach(work => this._renderWorkoutMarker(work));
   }
 
   _showForm(mapE) {
     this.#mapEvent = mapE;
-    document_obj.form.classList.remove('hidden');
-    document_obj.inputDistance.focus();
+    document_element_forms.form.classList.remove('hidden');
+    document_element_forms.inputDistance.focus();
   }
 
   _hideForm() {
-    document_obj.inputDistance.value =
-      document_obj.inputCadence.value =
-      document_obj.inputDuration.value =
-      document_obj.inputElevation.value =
+    document_element_forms.inputDistance.value =
+      document_element_forms.inputCadence.value =
+      document_element_forms.inputDuration.value =
+      document_element_forms.inputElevation.value =
         '';
 
-    document_obj.form.style.display = 'none';
-    document_obj.form.classList.add('hidden');
+    document_element_forms.form.style.display = 'none';
+    document_element_forms.form.classList.add('hidden');
 
-    setTimeout(() => (document_obj.form.style.display = 'grid'), 1000);
+    setTimeout(
+      () => (document_element_forms.form.style.display = 'grid'),
+      1000
+    );
   }
 
   _renderWorkoutMarker(workout) {
-    const myIcon = L.icon({
-      iconUrl: `${
-        workout.exerciseType === 'running'
-          ? 'workout-icons/running.png'
-          : 'workout-icons/cycling.png'
-      }`,
-      iconSize: [55, 55],
-    });
-
-    const marker = L.marker(workout.coords, { icon: myIcon })
-      .addTo(infoData.map)
+    const marker = L.marker(workout.coords, {
+      icon: utilities.my_icon(
+        workout.exerciseType === 'running' ? true : false
+      ),
+    })
+      .addTo(app_data.map)
       .bindPopup(
         L.popup({
-          maxWidth: 400,
-          minWidth: 100,
-          autoClose: false,
-          offset: [3, -20],
-          closeOnClick: false,
-          closeButton: false,
+          ...utilities.popup_options,
         })
       )
       .setPopupContent(
@@ -336,7 +217,7 @@ class App {
 
     marker.id = workout.id;
 
-    infoData.markers.push(marker);
+    app_data.markers.push(marker);
   }
 
   _moveToPopUp(target) {
@@ -344,11 +225,11 @@ class App {
 
     if (!targetExerciseId) return;
 
-    const workout = infoData.workouts.find(
+    const workout = app_data.workouts.find(
       work => work.id === targetExerciseId.dataset.id
     );
 
-    infoData.map.setView(workout.coords, this.#mapZoomLevel, {
+    app_data.map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
       pan: {
         duration: 1,
@@ -361,18 +242,18 @@ class App {
 
     if (!data) return;
 
-    infoData.workouts = data;
+    app_data.workouts = data;
 
-    infoData.workouts.forEach(work =>
-      renderMethods.renderWorkout(work, work.isDropDown)
+    app_data.workouts.forEach(work =>
+      render_methods.renderWorkout(work, work.isDropDown)
     );
   }
 
   _toggleElevationField() {
-    document_obj.inputElevation
+    document_element_forms.inputElevation
       .closest('.form__row')
       .classList.toggle('form__row--hidden');
-    document_obj.inputCadence
+    document_element_forms.inputCadence
       .closest('.form__row')
       .classList.toggle('form__row--hidden');
   }
@@ -386,7 +267,7 @@ class App {
   }
 
   _error_alert(msg) {
-    objectOverlays.overlay_state.error_alert_setForm_enabled = true;
+    overlays_data.overlay_state.error_alert_setForm_enabled = true;
 
     document.querySelector(queryName.overlay).classList.add('active');
 
@@ -400,14 +281,16 @@ class App {
 
   _check_and_add_workout(e) {
     const type =
-      document_obj.inputType.value === 'running' ? 'running' : 'cycling';
-    const distance = +document_obj.inputDistance.value;
-    const duration = +document_obj.inputDuration.value;
+      document_element_forms.inputType.value === 'running'
+        ? 'running'
+        : 'cycling';
+    const distance = +document_element_forms.inputDistance.value;
+    const duration = +document_element_forms.inputDuration.value;
 
     //for Running
-    const cadence = +document_obj.inputCadence.value;
+    const cadence = +document_element_forms.inputCadence.value;
     //for Cycling
-    const elevation = +document_obj.inputElevation.value;
+    const elevation = +document_element_forms.inputElevation.value;
 
     const exerciseTypeProp = type === 'running' ? cadence : elevation;
 
@@ -445,7 +328,7 @@ class App {
     }
 
     const isLongJourney =
-      renderMethods.check_is_long_journey(
+      render_methods.check_is_long_journey(
         distance,
         duration,
         exerciseTypeProp
@@ -470,24 +353,24 @@ class App {
     console.log(workout.id);
 
     workout.timestamp = {
-      ...infoData.timestamp_data,
+      ...app_data.timestamp_data,
     };
 
     workout.description = `${workout.title} on ${
-      months[workout.timestamp.month]
+      utilities.months[workout.timestamp.month]
     } ${workout.timestamp.day}`;
 
-    infoData.timestamp_data.reset_date_and_properties();
+    app_data.timestamp_data.reset_date_and_properties();
 
-    infoData.workouts.push(workout);
+    app_data.workouts.push(workout);
 
     this._renderWorkoutMarker(workout);
 
-    renderMethods.renderWorkout(workout);
+    render_methods.renderWorkout(workout);
 
     this._hideForm();
 
-    infoData.setLocalStorage();
+    app_data.setLocalStorage();
   }
 
   // *******************************************************
@@ -516,20 +399,22 @@ class App {
     const exercise_text_nodes =
       target_workout_container.querySelectorAll('.text_info');
 
-    const exerciseTargetId = target.closest(queryName.workItself).dataset.id;
+    const exerciseTargetId = Number(
+      target.closest(queryName.workItself).dataset.id
+    );
 
-    infoData.workouts.forEach(eachExercise => {
+    app_data.workouts.forEach(eachExercise => {
       if (eachExercise.id === exerciseTargetId) {
         if (check_if_contains_ellipsis(Array.from(exercise_text_nodes)) === 0) {
           exercise_text_nodes.forEach(item => {
             if (item.textContent > 999)
-              item.textContent = renderMethods.make_ellipsis(item.textContent);
+              item.textContent = render_methods.make_ellipsis(item.textContent);
           });
 
           eachExercise.isDropDown = false;
 
-          infoData.setLocalStorage();
-
+          app_data.setLocalStorage();
+          console.log('lol');
           return;
         }
 
@@ -539,7 +424,8 @@ class App {
 
         eachExercise.isDropDown = true;
 
-        infoData.setLocalStorage();
+        app_data.setLocalStorage();
+        console.log('lol22');
 
         return;
       }
@@ -558,7 +444,7 @@ class App {
 
     const target_exercise = target.closest(queryName.workItself);
 
-    infoData.specificEvents.push(
+    app_data.specificEvents.push(
       target_exercise.dataset.id,
       target_exercise.querySelectorAll('.text_info'),
       target_exercise.querySelectorAll('.icon_info'),
@@ -568,24 +454,27 @@ class App {
       target_exercise
     );
 
-    document_obj.editForm.setAttribute('data-id', target_exercise.dataset.id);
+    document_element_forms.editForm.setAttribute(
+      'data-id',
+      target_exercise.dataset.id
+    );
 
     target_exercise.classList.add('active-edit');
 
-    objectOverlays.show_edit_form();
+    overlays_data.show_edit_form();
   }
 
   _remove_icon(target) {
     if (target.id !== 'remove-icon') return;
 
     const target_element = target.closest('.exercise-container');
-    const target_id = target_element.dataset.id;
-
+    const target_id = Number(target_element.dataset.id);
     target_element.classList.add('active-delete');
 
-    infoData.markers.forEach((el, i) => {
+    app_data.markers.forEach((el, i) => {
       if (el.id === target_id) {
-        this._remove_marker_and_info_data(el, i);
+        app_data._remove_marker_and_info_data(el, i);
+        app_data.setLocalStorage();
 
         setInterval(function () {
           target_element.remove();
@@ -612,14 +501,6 @@ class App {
     document
       .querySelector(queryName.workouts)
       .addEventListener('click', this._workout_icons_init.bind(this));
-  }
-
-  _remove_marker_and_info_data(el, i) {
-    infoData.map.removeLayer(el);
-    infoData.markers.splice(i, 1);
-    infoData.workouts.splice(i, 1);
-
-    infoData.setLocalStorage();
   }
 }
 const app = new App();

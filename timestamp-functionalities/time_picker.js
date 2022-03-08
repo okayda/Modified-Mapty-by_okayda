@@ -1,7 +1,7 @@
 'use strict';
 
-import { dataObj as queryName } from '../query_name.js';
-import { objMethod } from './timestamp-share-methods.js';
+import { document_selector_name as queryName } from '../query_name.js';
+import { objMethod } from './timestamp_share_methods.js';
 
 export const init_time = function () {
   //   const date = new Date();

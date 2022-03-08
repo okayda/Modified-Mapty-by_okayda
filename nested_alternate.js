@@ -1,6 +1,6 @@
 'use strict';
 
-import { dataObj as queryName } from './query_name.js';
+import { document_selector_name as queryName } from './query_name.js';
 
 const exerciseSelector = queryName.exerciseContainer;
 const runningSelector = queryName.runningContainer;

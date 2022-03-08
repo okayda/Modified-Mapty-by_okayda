@@ -447,18 +447,6 @@ a:visited {
   padding-right: 0.6rem;
 }
 
-/* .running-popup .leaflet-popup-content-wrapper {
-  border-left: 5px solid var(--color-brand--2);
-}
-
-.cycling-popup .leaflet-popup-content-wrapper {
-  border-left: 5px solid var(--color-brand--1);
-} */
-
-/* .remove {
-  background-color: var(--color-brand--2);
-} */
-
 .marker-content-color-running {
   color: var(--color-brand--2);
 }

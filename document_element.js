@@ -1,6 +1,6 @@
-import { dataObj as queryName } from './query_name.js';
+import { document_selector_name as queryName } from './query_name.js';
 
-export const document_obj = {
+export const document_element_forms = {
   form: document.querySelector(queryName.form),
 
   inputType: document.querySelector(queryName.inputType),
