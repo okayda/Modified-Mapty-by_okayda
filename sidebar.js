@@ -1,6 +1,10 @@
-import { obj as dropAlter } from './alternate.js';
-import { obj as dropNested } from './nested_alternate.js';
+'use strict';
+
 import { document_selector_name as queryName } from './query_name.js';
+
+import { alternate_obj } from './alternate.js';
+
+import { nested_alternate_obj } from './nested_alternate.js';
 
 export default function side_bar_init() {
   OpenMenuHandler();
@@ -23,9 +27,9 @@ export default function side_bar_init() {
     showCheckbox = true;
     showRadioRunning = true;
     showRadioCycling = true;
-    displayingAnimation(...dropNested.animationProp.exerciseNot);
-    displayingAnimation(...dropNested.animationProp.runningNot);
-    displayingAnimation(...dropNested.animationProp.cyclingNot);
+    displayingAnimation(...nested_alternate_obj.animationProp.exerciseNot);
+    displayingAnimation(...nested_alternate_obj.animationProp.runningNot);
+    displayingAnimation(...nested_alternate_obj.animationProp.cyclingNot);
   };
 
   document.querySelector('.nav-items').addEventListener('click', function (e) {
@@ -41,16 +45,16 @@ export default function side_bar_init() {
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
 
-        dropNested.hideAllExerciseNested();
+        nested_alternate_obj.hideAllExerciseNested();
 
-        dropAlter.previousPanel.splice(0, 1);
+        alternate_obj.previousPanel.splice(0, 1);
 
-        dropAlter.countOpen = 0;
+        alternate_obj.countOpen = 0;
 
-        dropAlter.previousDrop = [];
+        alternate_obj.previousDrop = [];
       } else {
         panel.style.maxHeight = panel.scrollHeight + 'px';
-        dropAlter.alternateArrow(panel, dropdownClass);
+        alternate_obj.alternateArrow(panel, dropdownClass);
       }
     }
   });
@@ -78,63 +82,75 @@ export default function side_bar_init() {
   const displayExercise = function () {
     hiedAllExerciseNested();
 
-    if (dropNested.showCheckbox) {
-      dropNested.displayingAnimation(...dropNested.animationProp.exerciseShow);
+    if (nested_alternate_obj.showCheckbox) {
+      nested_alternate_obj.displayingAnimation(
+        ...nested_alternate_obj.animationProp.exerciseShow
+      );
 
       exerciseDOM_zIndex('100', '-1', '-1');
 
-      dropNested.showCheckbox = false;
+      nested_alternate_obj.showCheckbox = false;
 
-      dropNested.hideAlreadyShow(showRadioRunning, 'running');
-      dropNested.hideAlreadyShow(showRadioCycling, 'cycling');
+      nested_alternate_obj.hideAlreadyShow(showRadioRunning, 'running');
+      nested_alternate_obj.hideAlreadyShow(showRadioCycling, 'cycling');
 
-      dropNested.showRadioRunning = true;
-      dropNested.showRadioCycling = true;
+      nested_alternate_obj.showRadioRunning = true;
+      nested_alternate_obj.showRadioCycling = true;
     } else {
-      dropNested.displayingAnimation(...dropNested.animationProp.exerciseNot);
-      dropNested.showCheckbox = true;
+      nested_alternate_obj.displayingAnimation(
+        ...nested_alternate_obj.animationProp.exerciseNot
+      );
+      nested_alternate_obj.showCheckbox = true;
     }
   };
 
   const sortRunning = function () {
-    if (dropNested.showRadioRunning) {
+    if (nested_alternate_obj.showRadioRunning) {
       hiedAllExerciseNested();
 
-      dropNested.displayingAnimation(...dropNested.animationProp.runningShow);
+      nested_alternate_obj.displayingAnimation(
+        ...nested_alternate_obj.animationProp.runningShow
+      );
 
       exerciseDOM_zIndex('-1', '100', '-1');
 
-      dropNested.showRadioRunning = false;
+      nested_alternate_obj.showRadioRunning = false;
 
-      dropNested.hideAlreadyShow(showCheckbox, 'exercise');
-      dropNested.hideAlreadyShow(showRadioCycling, 'cycling');
+      nested_alternate_obj.hideAlreadyShow(showCheckbox, 'exercise');
+      nested_alternate_obj.hideAlreadyShow(showRadioCycling, 'cycling');
 
-      dropNested.showCheckbox = true;
-      dropNested.showRadioCycling = true;
+      nested_alternate_obj.showCheckbox = true;
+      nested_alternate_obj.showRadioCycling = true;
     } else {
-      dropNested.displayingAnimation(...dropNested.animationProp.runningNot);
-      dropNested.showRadioRunning = true;
+      nested_alternate_obj.displayingAnimation(
+        ...nested_alternate_obj.animationProp.runningNot
+      );
+      nested_alternate_obj.showRadioRunning = true;
     }
   };
 
   const sortCycling = function () {
-    if (dropNested.showRadioCycling) {
+    if (nested_alternate_obj.showRadioCycling) {
       hiedAllExerciseNested();
 
-      dropNested.displayingAnimation(...dropNested.animationProp.cyclingShow);
+      nested_alternate_obj.displayingAnimation(
+        ...nested_alternate_obj.animationProp.cyclingShow
+      );
 
       exerciseDOM_zIndex('-1', '-1', '100');
 
-      dropNested.showRadioCycling = false;
+      nested_alternate_obj.showRadioCycling = false;
 
-      dropNested.hideAlreadyShow(showRadioRunning, 'running');
-      dropNested.hideAlreadyShow(showCheckbox, 'exercise');
+      nested_alternate_obj.hideAlreadyShow(showRadioRunning, 'running');
+      nested_alternate_obj.hideAlreadyShow(showCheckbox, 'exercise');
 
-      dropNested.showRadioRunning = true;
-      dropNested.showCheckbox = true;
+      nested_alternate_obj.showRadioRunning = true;
+      nested_alternate_obj.showCheckbox = true;
     } else {
-      dropNested.displayingAnimation(...dropNested.animationProp.cyclingNot);
-      dropNested.showRadioCycling = true;
+      nested_alternate_obj.displayingAnimation(
+        ...nested_alternate_obj.animationProp.cyclingNot
+      );
+      nested_alternate_obj.showRadioCycling = true;
     }
   };
 

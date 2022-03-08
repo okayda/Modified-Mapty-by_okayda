@@ -1,7 +1,12 @@
-import { document_selector_name as queryName } from './query_name.js';
-import { overlays_data } from './overlays_functionalities.js';
-import { edit_workout_info_including_data_workout } from './edit_form_functionalities.js';
+'use strict';
+
 import { app_data } from './app_data.js';
+
+import { document_selector_name as queryName } from './query_name.js';
+
+import { overlays_data } from './overlays_functionalities.js';
+
+import { edit_workout_info_including_data_workout } from './edit_form_functionalities.js';
 
 export default function event_handlers_init() {
   document

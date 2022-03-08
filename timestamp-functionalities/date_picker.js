@@ -1,7 +1,5 @@
 'use strict';
 
-// import { dataObj as queryName } from '../query_name.js';
-// import { objMethod } from './timestamp-share-methods.js';
 import { app_data } from '../app_data.js';
 
 const date = new Date();

@@ -1,3 +1,5 @@
+'use strict';
+
 export const utilities = {
   date: new Date(),
 
@@ -34,12 +36,3 @@ export const utilities = {
     'December',
   ],
 };
-
-// const myIcon = L.icon({
-//   iconUrl: `${
-//     workout.exerciseType === 'running'
-//       ? 'workout-icons/running.png'
-//       : 'workout-icons/cycling.png'
-//   }`,
-//   iconSize: [55, 55],
-// });

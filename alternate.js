@@ -1,4 +1,6 @@
-export const obj = {
+'use strict';
+
+export const alternate_obj = {
   countOpen: 0,
   previousPanel: [],
   previousDrop: [],

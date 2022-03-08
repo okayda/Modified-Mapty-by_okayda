@@ -1,13 +1,17 @@
 'use strict';
-import { init_calendar } from './date_picker.js';
-import { init_time } from './time_picker.js';
-
-import { document_selector_name as queryName } from '../query_name.js';
+'use strict';
 
 import { app_data } from '../app_data.js';
 
+import { document_selector_name as queryName } from '../query_name.js';
+
+import { timestamp_utilities_method } from './timestamp_share_methods.js';
+
 import { overlays_data } from '../overlays_functionalities.js';
-import { objMethod } from './timestamp_share_methods.js';
+
+import { init_calendar } from './date_picker.js';
+
+import { init_time } from './time_picker.js';
 
 const timestampSetText = function (
   target_timestamp,
@@ -83,11 +87,10 @@ const remove_timestamp_data = function () {
   document.querySelector(queryName.timeH).textContent = '00';
   document.querySelector(queryName.timeM).textContent = '00';
 
-  objMethod.setMeridiem();
+  timestamp_utilities_method.setMeridiem();
 
-  document.querySelector(queryName.dateText).textContent = objMethod.formatDate(
-    new Date()
-  );
+  document.querySelector(queryName.dateText).textContent =
+    timestamp_utilities_method.formatDate(new Date());
 
   overlays_data.reset_exercise_timestamp_type();
 

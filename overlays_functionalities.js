@@ -1,8 +1,12 @@
-import { document_selector_name as queryName } from './query_name.js';
-import { document_element_forms } from './document_element.js';
+'use strict';
+
 import { app_data } from './app_data.js';
 
-export const overlays_data = {
+import { document_selector_name as queryName } from './query_name.js';
+
+import { document_element_forms } from './document_element.js';
+
+const overlays_data = {
   overlay_state: {
     isRunning: false,
     isCycling: false,
@@ -95,46 +99,47 @@ export const overlays_data = {
 
     document.querySelector(queryName.editForm).classList.add('active');
   },
-
-  overlays_init() {
-    document.querySelector(queryName.overlay).addEventListener(
-      'click',
-      function () {
-        if (this.overlay_state.editForm_enabled) {
-          this.hide_edit_form();
-          this.overlay_state.editForm_timestamp_enabled = false;
-          return;
-        }
-
-        if (this.overlay_state.timestamp_edit_form_enabled) {
-          this.reset_exercise_timestamp_type();
-          this.timestamp_remove_for_edit_form();
-          app_data.timestamp_data.reset_date_and_properties();
-
-          this.overlay_state.editForm_timestamp_enabled = false;
-          return;
-        }
-
-        if (this.overlay_state.timestamp_set_form_enabled) {
-          this.timestamp_remove_for_set_form();
-          return;
-        }
-
-        if (this.overlay_state.error_alert_setForm_enabled) {
-          this.error_set_form_modal_display();
-          return;
-        }
-
-        if (this.overlay_state.error_alert_editForm_enabled) {
-          this.error_edit_form_modal_display();
-          return;
-        }
-
-        if (this.overlay_state.setForm_enabled) {
-          this.set_form_display();
-          return;
-        }
-      }.bind(this)
-    );
-  },
 };
+
+const overlay_init = function () {
+  document
+    .querySelector(queryName.overlay)
+    .addEventListener('click', function () {
+      if (overlays_data.overlay_state.editForm_enabled) {
+        overlays_data.hide_edit_form();
+        overlays_data.overlay_state.editForm_timestamp_enabled = false;
+        return;
+      }
+
+      if (overlays_data.overlay_state.timestamp_edit_form_enabled) {
+        overlays_data.reset_exercise_timestamp_type();
+        overlays_data.timestamp_remove_for_edit_form();
+        app_data.timestamp_data.reset_date_and_properties();
+
+        overlays_data.overlay_state.editForm_timestamp_enabled = false;
+        return;
+      }
+
+      if (overlays_data.overlay_state.timestamp_set_form_enabled) {
+        overlays_data.timestamp_remove_for_set_form();
+        return;
+      }
+
+      if (overlays_data.overlay_state.error_alert_setForm_enabled) {
+        overlays_data.error_set_form_modal_display();
+        return;
+      }
+
+      if (overlays_data.overlay_state.error_alert_editForm_enabled) {
+        overlays_data.error_edit_form_modal_display();
+        return;
+      }
+
+      if (overlays_data.overlay_state.setForm_enabled) {
+        overlays_data.set_form_display();
+        return;
+      }
+    });
+};
+
+export { overlays_data, overlay_init };

@@ -1,7 +1,8 @@
 'use strict';
+
 import { document_selector_name as queryName } from '../query_name.js';
 
-export const objMethod = {
+export const timestamp_utilities_method = {
   formatDate(d) {
     let day = d.getDate();
 

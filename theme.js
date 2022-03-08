@@ -1,3 +1,5 @@
+'use strict';
+
 export default function web_page_theme() {
   const theme = document.querySelector('.theme');
 

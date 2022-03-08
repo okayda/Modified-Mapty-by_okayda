@@ -10,7 +10,7 @@ const exerciseNested = `${exerciseSelector} ${queryName.optionSelector}`;
 const runningNested = `${runningSelector}  ${queryName.optionSelector}`;
 const cyclingNested = `${cyclingSelector}  ${queryName.optionSelector}`;
 
-export const obj = {
+export const nested_alternate_obj = {
   showRadioRunning: true,
   showRadioCycling: true,
   showCheckbox: true,

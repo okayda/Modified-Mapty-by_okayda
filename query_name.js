@@ -1,3 +1,5 @@
+'use strict';
+
 export const document_selector_name = {
   form: '.set-form',
   workouts: '.workouts-container',

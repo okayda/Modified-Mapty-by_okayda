@@ -8,19 +8,19 @@ import { document_element_forms } from './document_element.js';
 
 import event_handlers_init from './handlers_functionalities.js';
 
-import side_bar_init from './sidebar.js';
-
 import web_page_theme from './theme.js';
+
+import side_bar_init from './sidebar.js';
 
 import timestamp_init from './timestamp-functionalities/timestamp_init.js';
 
-import { overlays_data } from './overlays_functionalities.js';
+import { overlays_data, overlay_init } from './overlays_functionalities.js';
 
 import { render_methods } from './render_markup.js';
 
 import { utilities } from './utilities.js';
 
-import { initDebugHandlers } from './debug.js';
+import { debug_handler } from './debug_handler.js';
 
 class Workout {
   id = Number((Date.now() + '').slice(-10));
@@ -89,7 +89,7 @@ class App {
 
     timestamp_init();
 
-    overlays_data.overlays_init();
+    overlay_init();
 
     this._getLocalStorage();
 
@@ -105,7 +105,7 @@ class App {
       this._toggleElevationField
     );
 
-    initDebugHandlers(app_data);
+    debug_handler(app_data);
   }
 
   _get_user_position() {

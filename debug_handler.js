@@ -1,7 +1,10 @@
-import { overlays_data as overlayState } from './overlays_functionalities.js';
+'use strict';
+
 import { app_data } from './app_data.js';
 
-export const initDebugHandlers = function (obj) {
+import { overlays_data as overlayState } from './overlays_functionalities.js';
+
+export const debug_handler = function (obj) {
   document.querySelector('.workouts').addEventListener('click', function () {
     console.log('<===================>');
     console.log('Workouts Data');

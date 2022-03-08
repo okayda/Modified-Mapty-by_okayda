@@ -1,3 +1,5 @@
+'use strict';
+
 import { document_selector_name as queryName } from './query_name.js';
 
 export const document_element_forms = {

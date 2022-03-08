@@ -1,7 +1,8 @@
 'use strict';
 
 import { document_selector_name as queryName } from '../query_name.js';
-import { objMethod } from './timestamp_share_methods.js';
+
+import { timestamp_utilities_method } from './timestamp_share_methods.js';
 
 export const init_time = function () {
   //   const date = new Date();
@@ -144,13 +145,13 @@ export const init_time = function () {
   customTime(
     document.getElementsByClassName(hoursClassName),
     12,
-    objMethod.getMeridiem()
+    timestamp_utilities_method.getMeridiem()
   );
   customTime(document.getElementsByClassName(minutesClassName), 59);
 
   document.addEventListener('click', closeAllSelect);
 
-  objMethod.setMeridiem();
+  timestamp_utilities_method.setMeridiem();
 
   const changeOptionText = function (meridiem) {
     const selectHours = '.select-hours';
