@@ -36,14 +36,6 @@ export const app_data = {
     return this.workouts;
   },
 
-  add_specificEvents_data(add) {
-    this.specificEvents.push(...add);
-  },
-
-  add_workouts_data(add) {
-    this.workouts.push(add);
-  },
-
   reset_specificEvents_data() {
     this.specificEvents = [];
   },

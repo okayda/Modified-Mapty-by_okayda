@@ -1,202 +1,104 @@
 'use strict';
 
-import { document_selector_name as queryName } from '../query_name.js';
-
-import { timestamp_utilities_method } from './timestamp_share_methods.js';
-
 export const init_time = function () {
-  //   const date = new Date();
-  //   const id = (Date.now() + '').slice(-10);
+  const hours_set = document.querySelector('.hours-set');
+  const minutes_set = document.querySelector('.minutes-set');
+  const merediem_set = document.querySelector('.meridiem-set');
 
-  // UI text Class Name
-  const hoursSet = document.querySelector(queryName.timeH);
-  const minutesSet = document.querySelector(queryName.timeM);
-
-  // select Class Name
-  const hoursClassName = 'select-hours';
-  const minutesClassName = 'select-minutes';
-
-  const closeAllSelect = function (element) {
-    const arrId = [];
-
-    const selectItems = document.querySelectorAll('.select-items');
-    const selected = document.querySelectorAll('.select-selected');
-
-    for (let i = 0; i < selected.length; i++) {
-      if (element === selected[i]) {
-        arrId.push(i);
-      } else {
-        selected[i].classList.remove('select-arrow-active');
-        selected[i].classList.remove('select-selected-bottom-square');
-      }
-    }
-
-    for (let i = 0; i < selectItems.length; i++) {
-      if (arrId.indexOf(i)) selectItems[i].classList.add('select-hide');
-    }
-  };
-
-  const optionsFunctionality = function (
-    targetSelect,
-    selectElement,
-    createDiv,
-    targetSelectClassName
-  ) {
-    const createDivOptionList = document.createElement('DIV');
-    createDivOptionList.setAttribute('class', 'select-items select-hide');
-
-    for (let j = 1; j < selectElement.length; j++) {
-      const createDivOptionItem = document.createElement('DIV');
-      createDivOptionItem.innerHTML = selectElement.options[j].innerHTML;
-
-      createDivOptionItem.addEventListener('click', function () {
-        const selectedItems =
-          this.parentNode.parentNode.getElementsByTagName('select')[0];
-        const textElement = this.parentNode.previousSibling;
-
-        for (let k = 0; k < selectedItems.length; k++) {
-          if (selectElement[k].innerHTML === this.innerHTML) {
-            selectElement.selectedIndex = k;
-
-            textElement.innerHTML = this.innerHTML;
-
-            const timeNumber = this.textContent.split(' ')[0];
-
-            if (targetSelectClassName === hoursClassName)
-              hoursSet.textContent = timeNumber;
-            else if (timeNumber < 10) minutesSet.textContent = `0${timeNumber}`;
-            else minutesSet.textContent = timeNumber;
-
-            const userSelected =
-              this.parentNode.getElementsByTagName('same-as-selected');
-
-            for (let d = 0; d < userSelected.length; d++)
-              userSelected[d].removeAttribute('class');
-
-            this.setAttribute('class', 'same-as-selected');
-
-            break;
-          }
-        }
-        textElement.click();
-      });
-      createDivOptionList.appendChild(createDivOptionItem);
-    }
-
-    targetSelect[0].appendChild(createDivOptionList);
-    createDiv.addEventListener('click', function (e) {
-      e.stopPropagation();
-      closeAllSelect(this);
-      this.nextSibling.classList.toggle('select-hide');
-      this.classList.toggle('select-arrow-active');
-      this.classList.toggle('select-selected-bottom-square');
-    });
-  };
-
-  const customTime = function (targetSelect, howManyNum, merediem) {
-    const targetSelectClassName = targetSelect[0].className.split(' ')[1];
-
-    const parentSelect = document.querySelector(
-      `.${targetSelectClassName} select`
-    );
-
-    const firstOptionTitle = document.createElement('option');
-
-    firstOptionTitle.value = 0;
-    firstOptionTitle.text = `${
-      targetSelectClassName === hoursClassName
-        ? 'Select Hours'
-        : 'Select Minutes'
-    }`;
-
-    parentSelect.appendChild(firstOptionTitle);
-
-    for (let i = howManyNum === 59 ? 0 : 1; i <= howManyNum; i++) {
-      const createOptions = document.createElement('option');
-
-      createOptions.value = i;
-      createOptions.text = `${i} ${
-        targetSelectClassName === hoursClassName ? merediem : 'Minutes'
-      }`;
-
-      parentSelect.appendChild(createOptions);
-    }
-
-    const selectElement = targetSelect[0].getElementsByTagName('select')[0];
-
-    const createDiv = document.createElement('DIV');
-    createDiv.setAttribute(
-      'class',
-      'select-selected select-selected-bottom-rounded'
-    );
-    createDiv.innerHTML =
-      selectElement.options[selectElement.selectedIndex].innerHTML;
-
-    targetSelect[0].appendChild(createDiv);
-
-    optionsFunctionality(
-      targetSelect,
-      selectElement,
-      createDiv,
-      targetSelectClassName
-    );
-  };
-
-  customTime(
-    document.getElementsByClassName(hoursClassName),
-    12,
-    timestamp_utilities_method.getMeridiem()
+  const select_hours_drop = document.querySelector('.selected-hours-drop');
+  const options_hours_container = document.querySelector(
+    '.options-hours-container'
   );
-  customTime(document.getElementsByClassName(minutesClassName), 59);
 
-  document.addEventListener('click', closeAllSelect);
+  const select_minutes_drop = document.querySelector('.selected-minutes-drop');
+  const options_minutes_container = document.querySelector(
+    '.options-minutes-container'
+  );
 
-  timestamp_utilities_method.setMeridiem();
+  const morning_btn = document.querySelector('.morning');
+  const afternoon_btn = document.querySelector('.afternoon');
 
-  const changeOptionText = function (meridiem) {
-    const selectHours = '.select-hours';
-    const selectSelected = '.select-selected';
-
-    document.querySelector(queryName.meridiem).textContent = meridiem;
-    const userSelectHours = document.querySelector(selectSelected).textContent;
-
-    const deleteSelect = document.querySelector(`${selectHours} select`);
-    deleteSelect.remove();
-
-    const createSelect = document.createElement('select');
-    document.querySelector(selectHours).appendChild(createSelect);
-
-    const deleteDiv = document.querySelectorAll(`${selectHours} div`);
-    deleteDiv.forEach(item => item.remove());
-
-    customTime(document.getElementsByClassName(hoursClassName), 12, meridiem);
-
-    document.querySelector(selectSelected).textContent = `${
-      userSelectHours.split(' ')[0]
-    } ${meridiem}`;
+  const meridiem_btn_text = function (this_obj) {
+    merediem_set.textContent = this_obj.textContent;
+    this_obj.classList.add('active');
   };
 
-  const meridiemSetText = function () {
-    const activeMeridiem = 'active-meridiem';
+  morning_btn.addEventListener('click', function () {
+    meridiem_btn_text(this);
+    afternoon_btn.classList.remove('active');
+  });
 
-    const btnAM = document.querySelector(queryName.btnBN).classList;
-    const btnPM = document.querySelector(queryName.btnAN).classList;
+  afternoon_btn.addEventListener('click', function () {
+    meridiem_btn_text(this);
+    morning_btn.classList.remove('active');
+  });
 
-    if (this.textContent === 'AM' && btnPM.contains(activeMeridiem)) {
-      btnPM.remove(activeMeridiem);
-      btnAM.add(activeMeridiem);
-    } else {
-      btnAM.remove(activeMeridiem);
-      btnPM.add(activeMeridiem);
-    }
+  select_hours_drop.addEventListener('click', () => {
+    options_hours_container.classList.toggle('active');
+  });
 
-    changeOptionText(this.textContent);
+  const get_text = function (e) {
+    const target_text = e.target.querySelector('.text');
+    const tartget_class = e.target.className;
+
+    return tartget_class === 'text'
+      ? e.target.textContent
+      : target_text.textContent;
   };
 
-  document
-    .querySelector(queryName.btnBN)
-    .addEventListener('click', meridiemSetText);
-  document
-    .querySelector(queryName.btnAN)
-    .addEventListener('click', meridiemSetText);
+  options_hours_container.addEventListener('click', function (e) {
+    select_hours_drop.textContent = get_text(e);
+    const hours_text = get_text(e).split(' ')[0];
+
+    hours_set.textContent = hours_text;
+
+    this.classList.toggle('active');
+  });
+
+  select_minutes_drop.addEventListener('click', () => {
+    options_minutes_container.classList.toggle('active');
+  });
+
+  options_minutes_container.addEventListener('click', function (e) {
+    select_minutes_drop.textContent = get_text(e);
+    const minutes_text = get_text(e).split(' ')[0];
+
+    minutes_set.textContent = minutes_text;
+
+    this.classList.toggle('active');
+  });
+
+  const time_markup_text = function (i, time_type) {
+    return `<div class="option">
+    <input type="radio" class="radio" name="category">
+    <label class="text">${i} ${time_type}</label>
+    </div>`;
+  };
+
+  const create_time_element = function (obj) {
+    for (let i = obj.time_start; i <= obj.time_end; i++)
+      obj.markup_insert_container.insertAdjacentHTML(
+        'beforeend',
+        obj.create_text(i, obj.time_type)
+      );
+  };
+
+  const hours_values = {
+    time_type: 'Hour',
+    time_start: 1,
+    time_end: 12,
+    create_text: time_markup_text,
+    markup_insert_container: options_hours_container,
+  };
+
+  const minutes_values = {
+    time_type: 'Minutes',
+    time_start: 0,
+    time_end: 59,
+    create_text: time_markup_text,
+    markup_insert_container: options_minutes_container,
+  };
+
+  create_time_element(hours_values);
+  create_time_element(minutes_values);
 };

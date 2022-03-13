@@ -28,7 +28,6 @@
       crossorigin=""
     ></script>
 
-
     <script defer type="module" src="app.js"></script>
     <title>mapty // Map your workouts</title>
   </head>
@@ -62,42 +61,55 @@
         <div class="page">
           <div class="input">
             <div class="title">Distance</div>
-            <input class="rDistance" type="number"/>
+            <input class="rDistance" type="number" />
           </div>
 
           <div class="input">
             <div class="title">Duration</div>
-            <input class="rDuration" type="number"/>
+            <input class="rDuration" type="number" />
           </div>
 
           <div class="input">
             <div class="title">Cadence</div>
-            <input class="rCadence" type="number"/>
+            <input class="rCadence" type="number" />
           </div>
 
           <div class="input">
-            <h2 class="custom-schedule-running">TIMESTAMP <img src="side-bar-icons/schedule.png" class="workout-img" alt="" /></h2>
-            
+            <h2 class="custom-schedule-running">
+              TIMESTAMP
+              <img
+                src="side-bar-icons/schedule.png"
+                class="workout-img"
+                alt=""
+              />
+            </h2>
           </div>
         </div>
         <div class="page">
           <div class="input">
             <div class="title">Distance</div>
-            <input class="cDistance" type="number"/>
+            <input class="cDistance" type="number" />
           </div>
 
           <div class="input">
             <div class="title">Duration</div>
-            <input class="cDuration" type="number"/>
+            <input class="cDuration" type="number" />
           </div>
 
           <div class="input">
             <div class="title">Elev Gain</div>
-            <input class="cElevation" type="number"/>
+            <input class="cElevation" type="number" />
           </div>
 
           <div class="input">
-            <h2 class="custom-schedule-cycling">TIMESTAMP <img src="side-bar-icons/schedule.png" class="workout-img" alt="" /></h2>
+            <h2 class="custom-schedule-cycling">
+              TIMESTAMP
+              <img
+                src="side-bar-icons/schedule.png"
+                class="workout-img"
+                alt=""
+              />
+            </h2>
           </div>
         </div>
       </div>
@@ -118,13 +130,13 @@
     <div class="workouts-sidebar">
       <div class="parent-exercises-container">
         <div class="exercises-nav-bar">
-            <i class="fa fa-bars menu-btn"></i>
+          <i class="fa fa-bars menu-btn"></i>
           <div class="search-container">
             <div class="search-icon-container">
               <i class="fas fa-search search-icon"></i>
             </div>
             <div class="search-input-container">
-              <input type="text" placeholder="Search" id="mysearch" />
+              <input type="text" placeholder="stamp" id="mysearch" />
             </div>
           </div>
 
@@ -154,54 +166,72 @@
       </div>
       <footer class="workout-sidebar-footer">
         <p>
-          © Copyright by <a href="#">Jonas Schmedtmann</a>. Use for learning or your portfolio. Don't use to teach. Don't claim as your own.
+          © Copyright by <a href="#">Jonas Schmedtmann</a>. Use for learning or
+          your portfolio. Don't use to teach. Don't claim as your own.
         </p>
       </footer>
     </div>
 
     <nav class="side-bar">
       <div class="close-btn-container">
-        <img src="icon.png" class="logo" alt="Logo">
+        <img src="icon.png" class="logo" alt="Logo" />
         <h2 class="logo-title">Mapty</h2>
         <i class="fas fa-times close-btn"></i>
       </div>
 
       <ul class="nav-items">
-
         <li class="nav-item">
-          
           <!-- <a class="nav-link-title"><img src="side-bar-icons/hearth.png" class="hearth-exercsie" alt="">Exercise<i class="fas fa-angle-up"></i><img src="side-bar-icons/up-arrow.png" class="fas fa-angle-right drop-icon up-arrow" alt=""></a> -->
-          <a class="nav-link-title"><img src="side-bar-icons/hearth.png" class="hearth-exercsie" alt="">Exercise<i class="fas fa-angle-right drop-icon up-arrow"></i></a>
+          <a class="nav-link-title"
+            ><img
+              src="side-bar-icons/hearth.png"
+              class="hearth-exercsie"
+              alt="" />Exercise<i
+              class="fas fa-angle-right drop-icon up-arrow"
+            ></i
+          ></a>
 
           <div class="dropdown-link exercise-dropdown">
-
             <div class="no-nested">
-            <a class="nav-link">Delete specific exercises</a>
+              <a class="nav-link">Delete specific exercises</a>
+            </div>
+
+            <a class="nested-link-title exercise-btn nested-dropdown-icon"
+              >Display exercises<i
+                class="fas fa-angle-right nested-drop-icon"
+              ></i
+            ></a>
+
+            <a class="nested-link-title running-btn nested-dropdown-icon"
+              >Sort Running<i class="fas fa-angle-right nested-drop-icon"></i
+            ></a>
+
+            <a class="nested-link-title cycling-btn nested-dropdown-icon"
+              >Sort Cycling<i class="fas fa-angle-right nested-drop-icon"></i
+            ></a>
           </div>
-
-            <a class="nested-link-title exercise-btn nested-dropdown-icon">Display exercises<i class="fas fa-angle-right nested-drop-icon "></i></a>
-
-            <a class="nested-link-title running-btn nested-dropdown-icon">Sort Running<i class="fas fa-angle-right nested-drop-icon"></i></a>
-
-            <a class="nested-link-title cycling-btn nested-dropdown-icon">Sort Cycling<i class="fas fa-angle-right nested-drop-icon"></i></a>
-          </div>
-
         </li>
 
         <li class="nav-item">
-
-          <a class="nav-link-title"><img src="side-bar-icons/completed-task.png" class="completed-task" alt="">Task<i class="fas fa-angle-right drop-icon up-arrow"></i></a>
+          <a class="nav-link-title"
+            ><img
+              src="side-bar-icons/completed-task.png"
+              class="completed-task"
+              alt="" />Task<i class="fas fa-angle-right drop-icon up-arrow"></i
+          ></a>
 
           <div class="dropdown-link">
-            <p class="nav-link ">Completed task</p>
-            <p class="nav-link ">Removed task</p>
-
+            <p class="nav-link">Completed task</p>
+            <p class="nav-link">Removed task</p>
           </div>
         </li>
 
         <li class="nav-item">
-          
-          <a class="nav-link-title"><i class="fas fa-cloud-moon"></i>Theme<i class="fas fa-angle-right drop-icon up-arrow"></i></a>
+          <a class="nav-link-title"
+            ><i class="fas fa-cloud-moon"></i>Theme<i
+              class="fas fa-angle-right drop-icon up-arrow"
+            ></i
+          ></a>
 
           <div class="dropdown-link theme">
             <a class="dark nav-link active-link">Dark</a>
@@ -210,17 +240,19 @@
         </li>
 
         <li class="nav-item">
-
-          <a class="nav-link-title"><img src="side-bar-icons/info.png" class="info-about" alt="">About</a>
+          <a class="nav-link-title"
+            ><img
+              src="side-bar-icons/info.png"
+              class="info-about"
+              alt=""
+            />About</a
+          >
 
           <div class="dropdown-link">
             <p class="nav-link">Nothing</p>
+          </div>
         </li>
       </ul>
-      </div>
-
-
-
     </nav>
 
     <form class="set-form hidden">
@@ -264,7 +296,7 @@
       <div class="content-container">
         <div class="date-picker">
           <!-- below month/day/year  -->
-          <div class="selected-date">/00/00/0000</div> 
+          <div class="selected-date">/00/00/0000</div>
           <div class="dates">
             <!-- below mont, prev and fore arrow  -->
             <div class="month">
@@ -274,23 +306,22 @@
             </div>
 
             <!-- below month day container  -->
-            <div class="days">
-            </div>
+            <div class="days"></div>
           </div>
         </div>
 
         <div class="time-picker">
           <div class="selected-time">
             <span class="hours-set">00</span>:<span class="minutes-set">00</span
-            >&nbsp;<span class="meridiem-set">--</span>
+            >&nbsp;<span class="meridiem-set">NN</span>
           </div>
 
-          <div class="meridiem">
+          <!-- <div class="meridiem">
             <button class="btn-AM">AM</button>
             <button class="btn-PM">PM</button>
-          </div>
+          </div> -->
 
-          <div class="time-inputs">
+          <!-- <div class="time-inputs">
             <div class="custom-select select-hours" style="width: 200px">
               <select></select>
             </div>
@@ -298,13 +329,36 @@
             <div class="custom-select select-minutes" style="width: 200px">
               <select></select>
             </div>
+          </div> -->
+
+          <div class="clock-container">
+            <div class="clock-content-btn">
+              <button class="morning">AM</button>
+              <button class="afternoon">PM</button>
+            </div>
+
+            <div class="clock-content-container">
+              <div class="select-box-hours">
+                <div class="options-hours-container"></div>
+                <div class="selected-hours-drop">Select Hours</div>
+              </div>
+
+              <div class="select-box-minutes">
+                <div class="options-minutes-container"></div>
+                <div class="selected-minutes-drop">Select Minutes</div>
+              </div>
+            </div>
           </div>
 
-          <div class="buttons">
+          <!-- <div class="buttons">
             <button class="cancel">Cancel</button>
             <button class="submit">Save</button>
-          </div>
+          </div> -->
         </div>
+      </div>
+      <div class="timestamp-btn-container">
+        <button class="submit">Save</button>
+        <button class="cancel">Cancel</button>
       </div>
     </div>
 
@@ -314,109 +368,133 @@
 ***********************
 *********************** -->
 
-<div class="container-nested-option">
+    <div class="container-nested-option">
+      <div class="container-row-nav-exercise">
+        <ul class="nested-unorder-list">
+          <li class="nested-list">
+            <label>
+              <input type="checkbox" />
+              <span>
+                <img src="workout-icons/running.png" class="workout-img" />
+                Running
+              </span>
+            </label>
+          </li>
 
-<div class="container-row-nav-exercise">
-  <ul class="nested-unorder-list">
-    <li class="nested-list">
-      <label>
-        <input type="checkbox" />
-        <span>
-          <img src="workout-icons/running.png" class="workout-img"/> Running
-        </span>
-      </label>
-    <li class="nested-list">
-      <label>
-        <input type="checkbox" checked />
-        <span>
-          <img src="workout-icons/cycling.png" class="workout-img"/> Cycling
-        </span>
-      </label>
-    </li>
-  </ul>
-</div>
+          <li class="nested-list">
+            <label>
+              <input type="checkbox" checked />
+              <span>
+                <img src="workout-icons/cycling.png" class="workout-img" />
+                Cycling
+              </span>
+            </label>
+          </li>
+        </ul>
+      </div>
 
-<div class="container-row-nav-running">
-  <ul class="nested-unorder-list">
-    <li class="nested-list">
-      <input type="radio" name="Select-running" id="option-1-running" />
-      <label for="option-1-running" class="option-1-running">
-        <div class="dot"></div>
-        <div class="text">Sort KM <img src="workout-icons/running.png" class="workout-img"/></div>
-      </label>
-    </li>
-    <li class="nested-list">
-  <input type="radio" name="Select-running" id="option-2-running" />
-  <label for="option-2-running" class="option-2-running">
-    <div class="dot"></div>
-    <div class="text">Sort Min <img src="workout-icons/clock.png" class="workout-img"/></div>
-  </label>
-    </li>
-    <li class="nested-list">
-      <input type="radio" name="Select-running" id="option-3-running" />
-      <label for="option-3-running" class="option-3-running">
-        <div class="dot"></div>
-        <div class="text">Sort KM/H <img src="workout-icons/speed.png" class="workout-img"/></div>
-      </label>
-    </li>
-    <li class="nested-list">
-      <input type="radio" name="Select-running" id="option-4-running" />
-      <label for="option-4-running" class="option-4-running">
-        <div class="dot"></div>
-        <div class="text">Sort SPM <img src="workout-icons/foot.png" class="workout-img"/></div>
-      </label>
-    </li>
-  </ul>
-</div>
+      <div class="container-row-nav-running">
+        <ul class="nested-unorder-list">
+          <li class="nested-list">
+            <input type="radio" name="Select-running" id="option-1-running" />
+            <label for="option-1-running" class="option-1-running">
+              <div class="dot"></div>
+              <div class="text">
+                Sort KM
+                <img src="workout-icons/running.png" class="workout-img" />
+              </div>
+            </label>
+          </li>
+          <li class="nested-list">
+            <input type="radio" name="Select-running" id="option-2-running" />
+            <label for="option-2-running" class="option-2-running">
+              <div class="dot"></div>
+              <div class="text">
+                Sort Min
+                <img src="workout-icons/clock.png" class="workout-img" />
+              </div>
+            </label>
+          </li>
+          <li class="nested-list">
+            <input type="radio" name="Select-running" id="option-3-running" />
+            <label for="option-3-running" class="option-3-running">
+              <div class="dot"></div>
+              <div class="text">
+                Sort KM/H
+                <img src="workout-icons/speed.png" class="workout-img" />
+              </div>
+            </label>
+          </li>
+          <li class="nested-list">
+            <input type="radio" name="Select-running" id="option-4-running" />
+            <label for="option-4-running" class="option-4-running">
+              <div class="dot"></div>
+              <div class="text">
+                Sort SPM
+                <img src="workout-icons/foot.png" class="workout-img" />
+              </div>
+            </label>
+          </li>
+        </ul>
+      </div>
 
-<div class="container-row-nav-cycling">
-  <ul class="nested-unorder-list">
-    <li class="nested-list">
-      <input type="radio" name="Select-clycling" id="option-1-cycling" />
-      <label for="option-1-cycling" class="option-1-cycling">
-        <div class="dot"></div>
-        <div class="text">Sort KM <img src="workout-icons/cycling.png" class="workout-img"/></div>
-      </label>
-    </li>
-    <li class="nested-list">
-  <input type="radio" name="Select-clycling" id="option-2-cycling" />
-  <label for="option-2-cycling" class="option-2-cycling">
-    <div class="dot"></div>
-    <div class="text">Sort Min <img src="workout-icons/clock.png" class="workout-img"/></div>
-  </label>
-    </li>
-    <li class="nested-list">
-      <input type="radio" name="Select-clycling" id="option-3-cycling" />
-      <label for="option-3-cycling" class="option-3-cycling">
-        <div class="dot"></div>
-        <div class="text">Sort MIN/KM <img src="workout-icons/speed.png" class="workout-img"/></div>
-      </label>
-    </li>
-    <li class="nested-list">
-      <input type="radio" name="Select-clycling" id="option-4-cycling" />
-      <label for="option-4-cycling" class="option-4-cycling">
-        <div class="dot"></div>
-        <div class="text">Sort M <img src="workout-icons/route.png" class="workout-img"/></div>
-      </label>
-    </li>
-  </ul>
-</div>
+      <div class="container-row-nav-cycling">
+        <ul class="nested-unorder-list">
+          <li class="nested-list">
+            <input type="radio" name="Select-clycling" id="option-1-cycling" />
+            <label for="option-1-cycling" class="option-1-cycling">
+              <div class="dot"></div>
+              <div class="text">
+                Sort KM
+                <img src="workout-icons/cycling.png" class="workout-img" />
+              </div>
+            </label>
+          </li>
+          <li class="nested-list">
+            <input type="radio" name="Select-clycling" id="option-2-cycling" />
+            <label for="option-2-cycling" class="option-2-cycling">
+              <div class="dot"></div>
+              <div class="text">
+                Sort Min
+                <img src="workout-icons/clock.png" class="workout-img" />
+              </div>
+            </label>
+          </li>
+          <li class="nested-list">
+            <input type="radio" name="Select-clycling" id="option-3-cycling" />
+            <label for="option-3-cycling" class="option-3-cycling">
+              <div class="dot"></div>
+              <div class="text">
+                Sort MIN/KM
+                <img src="workout-icons/speed.png" class="workout-img" />
+              </div>
+            </label>
+          </li>
+          <li class="nested-list">
+            <input type="radio" name="Select-clycling" id="option-4-cycling" />
+            <label for="option-4-cycling" class="option-4-cycling">
+              <div class="dot"></div>
+              <div class="text">
+                Sort M <img src="workout-icons/route.png" class="workout-img" />
+              </div>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-</div>
-
-<!-- For Debugging Purposes -->
-<div class="buttons-container">
-  <a href="#" class="btn blue workouts">Get workouts Data</a>
-  <a href="#" class="btn green specificEvents">Get specificEvents Data</a>
-  <a href="#" class="btn red timestamp">Get timestamp Data</a>
-  <a href="#" class="btn purple overlayState">Get overlay State</a>
-  <a href="#" class="btn pink markers">Get markers Data</a>
-  <a href="#" class="btn yellow">Get local storage workout Data</a>
-  <a href="#" class="btn cyan">Get local storage style Data</a>
-  <a href="#" class="btn khaki delete-all-exercise">Delte all exercise</a>
-  <a href="#" class="btn orange resetWorkouts">Reset all Data</a>
-</div>
-
+    <!-- For Debugging Purposes -->
+    <div class="buttons-container">
+      <a href="#" class="btn blue workouts">Get workouts Data</a>
+      <a href="#" class="btn green specificEvents">Get specificEvents Data</a>
+      <a href="#" class="btn red timestamp">Get timestamp Data</a>
+      <a href="#" class="btn purple overlayState">Get overlay State</a>
+      <a href="#" class="btn pink markers">Get markers Data</a>
+      <a href="#" class="btn yellow">Get local storage workout Data</a>
+      <a href="#" class="btn cyan">Get local storage style Data</a>
+      <a href="#" class="btn khaki delete-all-exercise">Delte all exercise</a>
+      <a href="#" class="btn orange resetWorkouts">Reset all Data</a>
+    </div>
 
     <div id="map"></div>
   </body>

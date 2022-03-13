@@ -26,7 +26,7 @@ const timestampSetText = function (
     ).textContent = `${data.month} \\ ${data.day} \\ ${data.year} | ${data.hour}:${data.minutes} ${data.meridiem}`;
     alert(box_message);
 
-    document.querySelector(target_timestamp).style.width = '60%';
+    document.querySelector(target_timestamp).style.width = 'auto';
   }
 };
 

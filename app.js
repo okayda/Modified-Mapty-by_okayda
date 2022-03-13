@@ -64,7 +64,6 @@ class Excercise_Details extends Workout {
   }
 
   getExerciseDetails() {
-    // this.ExerciseDetails = [this.distance, this.duration, this.cadence];
     this.ExerciseDetails = [
       this.distance,
       this.duration,
@@ -81,29 +80,29 @@ class App {
   constructor() {
     this._get_user_position();
 
-    event_handlers_init();
-
-    web_page_theme();
-
-    side_bar_init();
-
-    timestamp_init();
-
-    overlay_init();
-
     this._getLocalStorage();
+
+    this._workouts_container_event_delegation();
 
     document_element_forms.form.addEventListener(
       'submit',
       this._check_and_add_workout.bind(this)
     );
 
-    this._workouts_container_event_delegation();
-
     document_element_forms.inputType.addEventListener(
       'change',
       this._toggleElevationField
     );
+
+    event_handlers_init();
+
+    timestamp_init();
+
+    overlay_init();
+
+    side_bar_init();
+
+    web_page_theme();
 
     debug_handler(app_data);
   }

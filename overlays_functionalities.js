@@ -6,6 +6,8 @@ import { document_selector_name as queryName } from './query_name.js';
 
 import { document_element_forms } from './document_element.js';
 
+import { reset_input_obj } from './reset_inputs.js';
+
 const overlays_data = {
   overlay_state: {
     isRunning: false,
@@ -108,6 +110,7 @@ const overlay_init = function () {
       if (overlays_data.overlay_state.editForm_enabled) {
         overlays_data.hide_edit_form();
         overlays_data.overlay_state.editForm_timestamp_enabled = false;
+        reset_input_obj.edit_form();
         return;
       }
 

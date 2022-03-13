@@ -2,34 +2,18 @@
 
 import { app_data } from '../app_data.js';
 
-const date = new Date();
+import { utilities } from '../utilities.js';
 
-const months_name = [
-  '',
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+const current_month = utilities.date.getMonth() + 1;
+const current_day = utilities.date.getDate();
+const current_year = utilities.date.getFullYear();
 
-const current_month = date.getMonth() + 1;
-const current_day = date.getDate();
-const current_year = date.getFullYear();
-
-let month = date.getMonth() + 1;
-let year = date.getFullYear();
+let month = utilities.date.getMonth();
+let year = utilities.date.getFullYear();
 
 const user_Date_clicked = {
   day: current_day,
-  month: month,
+  month: month + 1,
   year: year,
 };
 
@@ -38,14 +22,18 @@ const back_arrow = document.querySelector('.arrow-back');
 const fore_arrow = document.querySelector('.arrow-fore');
 
 const calendar_text = document.querySelector('.selected-date');
-calendar_text.textContent = `${month} / ${current_day} / ${year}`;
+calendar_text.textContent = `${month + 1} / ${current_day} / ${year}`;
 
 const month_text = document.querySelector('.mth');
-month_text.textContent = `${months_name[month]} ${year}`;
+month_text.textContent = `${utilities.months[month]} ${year}`;
+
+document.querySelector('.prev-mth').style.visibility = 'hidden';
 
 const get_days_month = (year, month) => new Date(year, month, 0).getDate();
 
 const create_days_element = function (year, month) {
+  month += 1;
+
   for (let i = 1; i <= get_days_month(year, month); i++) {
     if (i < current_day && month === current_month && year === current_year) {
       days_container.insertAdjacentHTML(
@@ -70,7 +58,7 @@ const create_days_element = function (year, month) {
 const remove_and_create_days = function (year, month) {
   document.querySelectorAll('.day').forEach(el => el.remove());
   create_days_element(year, month);
-  month_text.textContent = `${months_name[month]} ${year}`;
+  month_text.textContent = `${utilities.months[month]} ${year}`;
 };
 
 const event_delegation = function (e) {
@@ -84,17 +72,20 @@ const event_delegation = function (e) {
 
     target.className = 'day selected';
     data.day = user_Date_clicked.day = day_selected;
-    data.month = user_Date_clicked.month = month;
+    data.month = user_Date_clicked.month = month + 1;
     data.year = user_Date_clicked.year = year;
 
-    calendar_text.textContent = `${month} / ${day_selected} / ${year}`;
+    calendar_text.textContent = `${month + 1} / ${day_selected} / ${year}`;
   }
 };
 
 const back_handler_arrow = function () {
+  if (current_month === month && current_year === year)
+    document.querySelector('.prev-mth').style.visibility = 'hidden';
+
   month -= 1;
-  if (month === 0) {
-    month = 12;
+  if (month === -1) {
+    month = 11;
     year -= 1;
   }
 
@@ -102,9 +93,11 @@ const back_handler_arrow = function () {
 };
 
 const fore_handler_arrow = function () {
+  document.querySelector('.prev-mth').style.visibility = 'visible';
+
   month += 1;
-  if (month === 13) {
-    month = 1;
+  if (month === 12) {
+    month = 0;
     year += 1;
   }
 
