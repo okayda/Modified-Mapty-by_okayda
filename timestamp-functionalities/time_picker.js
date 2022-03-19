@@ -5,6 +5,9 @@ export const init_time = function () {
   const minutes_set = document.querySelector('.minutes-set');
   const merediem_set = document.querySelector('.meridiem-set');
 
+  const morning_btn = document.querySelector('.morning');
+  const afternoon_btn = document.querySelector('.afternoon');
+
   const select_hours_drop = document.querySelector('.selected-hours-drop');
   const options_hours_container = document.querySelector(
     '.options-hours-container'
@@ -14,9 +17,6 @@ export const init_time = function () {
   const options_minutes_container = document.querySelector(
     '.options-minutes-container'
   );
-
-  const morning_btn = document.querySelector('.morning');
-  const afternoon_btn = document.querySelector('.afternoon');
 
   const meridiem_btn_text = function (this_obj) {
     merediem_set.textContent = this_obj.textContent;
@@ -63,7 +63,8 @@ export const init_time = function () {
     select_minutes_drop.textContent = get_text(e);
     const minutes_text = get_text(e).split(' ')[0];
 
-    minutes_set.textContent = minutes_text;
+    minutes_set.textContent =
+      minutes_text <= 9 ? 0 + minutes_text : minutes_text;
 
     this.classList.toggle('active');
   });

@@ -8,6 +8,7 @@ export const reset_input_obj = {
       document.querySelector(`.cDistance`).value =
       document.querySelector(`.cDuration`).value =
       document.querySelector(queryName.edit_rCadence).value =
+      document.querySelector(queryName.edit_cElevation).value =
         '';
 
     const stamp_text = `TIMESTAMP
@@ -21,5 +22,12 @@ export const reset_input_obj = {
 
   set_form() {},
 
-  timestamp_form() {},
+  timestamp_form() {
+    document.querySelector(queryName.timeH).textContent = '00';
+    document.querySelector(queryName.timeM).textContent = '00';
+    document.querySelector('.meridiem-set').textContent = 'NN';
+    document.querySelector('.selected-hours-drop').textContent = 'Select Hours';
+    document.querySelector('.selected-minutes-drop').textContent =
+      'Select Minutes';
+  },
 };

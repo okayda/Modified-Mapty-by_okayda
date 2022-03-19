@@ -8,6 +8,8 @@ import { overlays_data } from './overlays_functionalities.js';
 
 import { edit_workout_info_including_data_workout } from './edit_form_functionalities.js';
 
+import { activate_skeleton } from './skeleton_animation.js';
+
 export default function event_handlers_init() {
   document
     .querySelector(queryName.timestamp_edit_run)
@@ -81,11 +83,13 @@ export default function event_handlers_init() {
   document.querySelector('#map').addEventListener('click', function (e) {
     const target = e.target;
     if (target.className !== 'remove') return;
+
     let a;
     const target_id = Number(target.id);
     const target_workout = document.querySelectorAll('.exercise-container');
-
+    console.log(target_workout);
     app_data.markers.forEach((el, i) => {
+      console.log(el.id, target_id, i);
       if (el.id == target_id) {
         app_data._remove_marker_and_info_data(el, i);
         app_data.setLocalStorage();
@@ -100,5 +104,7 @@ export default function event_handlers_init() {
     });
 
     target_workout[a].classList.add('active-delete');
+
+    if (app_data.workouts.length === 0) activate_skeleton('add');
   });
 }

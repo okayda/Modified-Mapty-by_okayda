@@ -118,6 +118,7 @@ const overlay_init = function () {
         overlays_data.reset_exercise_timestamp_type();
         overlays_data.timestamp_remove_for_edit_form();
         app_data.timestamp_data.reset_date_and_properties();
+        reset_input_obj.timestamp_form();
 
         overlays_data.overlay_state.editForm_timestamp_enabled = false;
         return;
@@ -125,6 +126,8 @@ const overlay_init = function () {
 
       if (overlays_data.overlay_state.timestamp_set_form_enabled) {
         overlays_data.timestamp_remove_for_set_form();
+        reset_input_obj.timestamp_form();
+
         return;
       }
 

@@ -1,5 +1,4 @@
 'use strict';
-'use strict';
 
 import { app_data } from '../app_data.js';
 
@@ -8,6 +7,8 @@ import { document_selector_name as queryName } from '../query_name.js';
 import { timestamp_utilities_method } from './timestamp_share_methods.js';
 
 import { overlays_data } from '../overlays_functionalities.js';
+
+import { reset_input_obj } from '../reset_inputs.js';
 
 import { init_calendar } from './date_picker.js';
 
@@ -79,15 +80,18 @@ const add_timestamp_data = function () {
   }
 };
 
-const remove_timestamp_data = function () {
+const reset_timestamp = function () {
   const data = app_data.timestamp_data;
 
   data.reset_date_and_properties();
 
-  document.querySelector(queryName.timeH).textContent = '00';
-  document.querySelector(queryName.timeM).textContent = '00';
+  reset_input_obj.timestamp_form();
 
-  timestamp_utilities_method.setMeridiem();
+  // timestamp_utilities_method.setMeridiem();
+  const morning_btn = document.querySelector('.morning');
+  const afternoon_btn = document.querySelector('.afternoon');
+  morning_btn.classList.remove('active');
+  afternoon_btn.classList.remove('active');
 
   document.querySelector(queryName.dateText).textContent =
     timestamp_utilities_method.formatDate(new Date());
@@ -112,7 +116,10 @@ export default function timestamp_init() {
   document
     .querySelector('.submit')
     .addEventListener('click', add_timestamp_data);
+
+  document.querySelector('.cancel').addEventListener('click', reset_timestamp);
+
   document
-    .querySelector('.cancel')
-    .addEventListener('click', remove_timestamp_data);
+    .querySelector('.timestamp-remove')
+    .addEventListener('click', reset_timestamp);
 }

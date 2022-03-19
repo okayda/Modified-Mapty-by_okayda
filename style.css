@@ -878,13 +878,13 @@ a:visited {
 }
 
 .date-picker .dates .days .day:hover {
-  background-color: orange;
+  background-color: rgb(151, 151, 151);
   border-radius: 5px;
   cursor: pointer;
 }
 
 .date-picker .dates .days .day.selected {
-  background-color: #27ae60;
+  background-color: var(--color-dark--2);
   border-radius: 5px;
   color: #fff;
   cursor: auto;
@@ -901,12 +901,12 @@ a:visited {
   margin-bottom: 8px;
 }
 
-/* .pass-date {
-  background-color: var(--color-dark--2);
+.pass-date {
+  background-color: #ff55526c;
   border-radius: 5px;
   pointer-events: none;
   color: #fff;
-} */
+}
 
 .selected {
   background-color: #27ae60;
@@ -1965,4 +1965,87 @@ input[type='radio'] {
 .select-box-hours .option .radio,
 .select-box-minutes .option .radio {
   display: none;
+}
+
+.timestamp-remove {
+  color: #ff726f;
+  position: absolute;
+  right: 18px;
+  top: 0;
+  font-size: 3rem;
+}
+
+.timestamp-remove:hover {
+  cursor: pointer;
+  color: #ff9593;
+}
+
+/* ************************************************* */
+/* ************************************************* */
+/* ************************************************* */
+/* ************************************************* */
+/* ************************************************* */
+/* ************************************************* */
+/* ************************************************* */
+/* ************************************************* */
+
+.skeleton-animation-dropdown,
+.skeleton-animation-not-dropdown {
+  margin: 0 1rem 1.75rem 1rem;
+  padding: 1rem 1.2rem;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  display: none;
+}
+
+.skeleton-animation-dropdown.active,
+.skeleton-animation-not-dropdown.active {
+  display: block;
+}
+
+.skeleton-box {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  background-color: #c7c7c7;
+}
+
+.blog-post__headline {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+.blog-post__meta {
+  font-size: 0.85em;
+  color: #6b6b6b;
+}
+
+.o-media__body {
+  flex-grow: 1;
+  margin-left: 1em;
+}
+
+.statement-one {
+  height: 25px;
+}
+
+.statement-two {
+  height: 35px;
+}
+
+.statement-three {
+  height: 18px;
+  margin-top: 8px;
+}
+
+.drop-statement-one {
+  height: 25px;
+}
+
+.drop-statement-two {
+  height: 190px;
+}
+
+.drop-statement-three {
+  height: 18px;
+  margin-top: 8px;
 }

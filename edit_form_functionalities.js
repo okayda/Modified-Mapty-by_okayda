@@ -8,27 +8,9 @@ import { overlays_data } from './overlays_functionalities.js';
 
 import { render_methods } from '/render_markup.js';
 
+import { reset_input_obj } from './reset_inputs.js';
+
 import { utilities } from './utilities.js';
-
-const clear_editForm_inputs = function ({
-  distance: distance,
-  duration: duration,
-  cadence_or_elevation: cadence_or_elevation,
-  exerciseType: exerciseType,
-}) {
-  const str = exerciseType ? 'r' : 'c';
-
-  if (distance <= 0)
-    document.querySelector(queryName[`edit_${str}Distance`]).value = '';
-
-  if (duration <= 0)
-    document.querySelector(queryName[`edit_${str}Duration`]).value = '';
-
-  if (cadence_or_elevation <= 0)
-    document.querySelector(
-      queryName[exerciseType ? 'edit_rCadence' : 'edit_cElevation']
-    ).value = '';
-};
 
 const show_error_editForm_altert = function (message) {
   overlays_data.overlay_state.editForm_enabled = false;
@@ -39,20 +21,7 @@ const show_error_editForm_altert = function (message) {
   document.querySelector(queryName.error_message).textContent = message;
 };
 
-const makeEmptyEditFormInputs = function (str) {
-  const distance = document.querySelector(`.${str}Distance`);
-  const duration = document.querySelector(`.${str}Duration`);
-
-  let cadence_or_elevation;
-
-  if (str === 'r')
-    cadence_or_elevation = document.querySelector(queryName.edit_rCadence);
-  else cadence_or_elevation = document.querySelector(queryName.edit_cElevation);
-
-  cadence_or_elevation.value = distance.value = duration.value = '';
-};
-
-const exerciseSimilarInputs_Value = function (exerciseType) {
+const get_edit_form_value = function (exerciseType) {
   const str = exerciseType ? 'r' : 'c';
   let cadence, elevationGain;
 
@@ -62,8 +31,6 @@ const exerciseSimilarInputs_Value = function (exerciseType) {
   if (exerciseType)
     cadence = +document.querySelector(queryName.edit_rCadence).value;
   else elevationGain = +document.querySelector(queryName.edit_cElevation).value;
-
-  makeEmptyEditFormInputs(str);
 
   return {
     distance: distance,
@@ -127,22 +94,24 @@ export const edit_workout_info_including_data_workout = function () {
   };
 
   const { distance, duration, cadence, elevationGain } =
-    exerciseSimilarInputs_Value(exerciseType);
+    get_edit_form_value(exerciseType);
+
+  reset_input_obj.edit_form();
+  reset_input_obj.timestamp_form();
 
   const obj_input_val = {
     distance: distance,
     duration: duration,
-    exerciseType: exerciseType ? cadence : elevationGain,
+    cadence_or_elevation: exerciseType ? cadence : elevationGain,
   };
 
   if (
     !allPositive(
       obj_input_val.distance,
       obj_input_val.duration,
-      obj_input_val.exerciseType
+      obj_input_val.cadence_or_elevation
     )
   ) {
-    clear_editForm_inputs(obj_input_val);
     show_error_editForm_altert('Make sure all inputs value is > 0');
     return;
   }
@@ -234,6 +203,8 @@ export const edit_workout_info_including_data_workout = function () {
           }" class="remove">X</p>`
         )
         .openPopup();
+
+      app_data.markers[index].id = itemWorkout.id;
 
       if (itemWorkout.longJourney === false) {
         add_style_to_arrow(itemWorkout.longJourney);

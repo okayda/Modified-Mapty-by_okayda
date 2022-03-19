@@ -20,6 +20,8 @@ import { render_methods } from './render_markup.js';
 
 import { utilities } from './utilities.js';
 
+import { activate_skeleton } from './skeleton_animation.js';
+
 import { debug_handler } from './debug_handler.js';
 
 class Workout {
@@ -168,6 +170,8 @@ class App {
 
     app_data.map.on('click', this._showForm.bind(this));
 
+    if (app_data.workouts.length === 0) activate_skeleton('add');
+
     app_data.workouts.forEach(work => this._renderWorkoutMarker(work));
   }
 
@@ -225,7 +229,7 @@ class App {
     if (!targetExerciseId) return;
 
     const workout = app_data.workouts.find(
-      work => work.id === targetExerciseId.dataset.id
+      work => work.id === +targetExerciseId.dataset.id
     );
 
     app_data.map.setView(workout.coords, this.#mapZoomLevel, {
@@ -359,6 +363,8 @@ class App {
       utilities.months[workout.timestamp.month]
     } ${workout.timestamp.day}`;
 
+    activate_skeleton('remove');
+
     app_data.timestamp_data.reset_date_and_properties();
 
     app_data.workouts.push(workout);
@@ -481,6 +487,8 @@ class App {
         return;
       }
     });
+
+    if (app_data.workouts.length === 0) activate_skeleton('add');
   }
 
   _workout_icons_init(e) {

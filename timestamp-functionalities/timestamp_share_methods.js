@@ -23,11 +23,4 @@ export const timestamp_utilities_method = {
       .toLocaleString('en-US', { hour: 'numeric', hour12: true })
       .split(' ')[1];
   },
-
-  setMeridiem() {
-    document.querySelector(queryName.meridiem).textContent = this.getMeridiem();
-    document
-      .querySelector(`.btn-${this.getMeridiem()}`)
-      .classList.add('active-meridiem');
-  },
 };
