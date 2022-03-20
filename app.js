@@ -269,7 +269,7 @@ class App {
       });
   }
 
-  _error_alert(msg) {
+  _show_error_setForm_alert(msg) {
     overlays_data.overlay_state.error_alert_setForm_enabled = true;
 
     document.querySelector(queryName.overlay).classList.add('active');
@@ -327,7 +327,9 @@ class App {
         exerciseTypeProp,
         type === 'running' ? 'cadence' : 'elevation'
       );
-      return this._error_alert('Inputs have to be positive numbers!');
+      return this._show_error_setForm_alert(
+        'Inputs have to be positive numbers!'
+      );
     }
 
     const isLongJourney =

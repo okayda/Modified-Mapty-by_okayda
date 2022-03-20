@@ -14,6 +14,15 @@ import { init_calendar } from './date_picker.js';
 
 import { init_time } from './time_picker.js';
 
+const show_error_timestamp_alert = function (message) {
+  overlays_data.overlay_state.timestamp_edit_form_enabled = false;
+  overlays_data.overlay_state.error_alert_timestamp_enabled = true;
+
+  document.querySelector(queryName.tidar_container).classList.remove('active');
+  document.querySelector(queryName.error_container).classList.add('active');
+  document.querySelector(queryName.error_message).textContent = message;
+};
+
 const timestampSetText = function (
   target_timestamp,
   box_message,
@@ -33,18 +42,14 @@ const timestampSetText = function (
 
 const add_timestamp_data = function () {
   const data = app_data.timestamp_data;
-
-  // data.date = document.querySelector(queryName.dateText).textContent;
   data.hour = document.querySelector(queryName.timeH).textContent;
   data.minutes = document.querySelector(queryName.timeM).textContent;
   data.meridiem = document.querySelector(queryName.meridiem).textContent;
 
-  console.log(data.hour);
-  console.log(data.minutes);
-  console.log(data.meridiem);
-
-  if (data.hour === '00')
-    return alert('Make sure your hour time is greater than 0');
+  if (data.hour == '00')
+    return show_error_timestamp_alert(
+      'Make sure your hour time is greater than 0'
+    );
 
   //for edit form functionalities
   if (overlays_data.overlay_state.timestamp_edit_form_enabled) {

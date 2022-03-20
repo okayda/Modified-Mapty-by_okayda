@@ -23,6 +23,7 @@ const overlays_data = {
 
     error_alert_editForm_enabled: false,
     error_alert_setForm_enabled: false,
+    error_alert_timestamp_enabled: false,
   },
 
   edit_form_hide_and_show(state) {
@@ -101,6 +102,17 @@ const overlays_data = {
 
     document.querySelector(queryName.editForm).classList.add('active');
   },
+
+  error_timestamp_modal_display() {
+    this.overlay_state.error_alert_timestamp_enabled = false;
+    this.overlay_state.timestamp_edit_form_enabled = true;
+
+    document
+      .querySelector(queryName.error_container)
+      .classList.remove('active');
+
+    document.querySelector(queryName.tidar_container).classList.add('active');
+  },
 };
 
 const overlay_init = function () {
@@ -137,6 +149,11 @@ const overlay_init = function () {
       }
 
       if (overlays_data.overlay_state.error_alert_editForm_enabled) {
+        overlays_data.error_edit_form_modal_display();
+        return;
+      }
+
+      if (overlays_data.overlay_state.error_alert_timestamp_enabled) {
         overlays_data.error_edit_form_modal_display();
         return;
       }
