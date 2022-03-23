@@ -10,7 +10,7 @@ import event_handlers_init from './handlers_functionalities.js';
 
 import web_page_theme from './theme.js';
 
-import side_bar_init from './sidebar.js';
+import side_bar_init from './side-bar-functionalities/sidebar.js';
 
 import timestamp_init from './timestamp-functionalities/timestamp_init.js';
 

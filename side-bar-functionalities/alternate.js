@@ -4,6 +4,8 @@ export const alternate_obj = {
   countOpen: 0,
   previousPanel: [],
   previousDrop: [],
+  previous_arrow_rotate: [],
+  dropdown_previous_arrow_rotate: [],
 
   alternateArrow(panel, targetDom) {
     this.countOpen += 1;

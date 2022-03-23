@@ -80,12 +80,13 @@ export const document_selector_name = {
   slideBar: '.side-bar',
   nestedLinkContainer: '.container-nested-option',
   overlaySide: '.overlay-side-bar',
+  dropdownList: '.nav-items',
 
   exerciseContainer: '.container-row-nav-exercise',
   runningContainer: '.container-row-nav-running',
   cyclingContainer: '.container-row-nav-cycling',
 
-  exerDrop: '.exercise-dropdown',
+  nestedExerciseList: '.exercise-dropdown',
   nestedIcon: '.nested-drop-icon',
 
   optionSelector: '.nested-unorder-list > .nested-list',
