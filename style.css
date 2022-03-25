@@ -1255,7 +1255,8 @@ input[type='radio'] {
   margin-top: 0.4rem;
 }
 
-.side-bar .nav-link-title {
+.side-bar .nav-link-title,
+.side-bar .no-drop {
   color: #fff;
 
   cursor: pointer;
@@ -1270,7 +1271,8 @@ input[type='radio'] {
   transition: 0.4s;
 }
 
-.side-bar .nav-link-title:hover {
+.side-bar .nav-link-title:hover,
+.side-bar .no-drop:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 

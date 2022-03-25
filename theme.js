@@ -31,10 +31,10 @@ export default function web_page_theme() {
      `;
     });
 
-    workoutFooter.style.cssText = `
-      color: ${color};
-      background-color: ${background};
-    `;
+    // workoutFooter.style.cssText = `
+    //   color: ${color};
+    //   background-color: ${background};
+    // `;
   };
 
   const darkTheme = function () {

@@ -28,51 +28,6 @@ const hide_all_exercise_nested = function () {
   displayingAnimation(...nested_alternate_obj.animationProp.cyclingNot);
 };
 
-// target
-//       .querySelector(queryName.nestedIcon)
-//       .classList.toggle('nested-drop-icon-animation');
-
-const nested_arrow_animation = function (e) {
-  const target = e.target;
-
-  if (target.classList.contains('nested-link-title')) {
-    alternate_obj.previous_arrow_rotate.push(
-      target.querySelector(queryName.nestedIcon)
-    );
-
-    target
-      .querySelector(queryName.nestedIcon)
-      .classList.add('nested-drop-icon-animation');
-
-    if (alternate_obj.previous_arrow_rotate.length === 2) {
-      const previous =
-        alternate_obj.previous_arrow_rotate[0].closest(
-          '.nested-link-title'
-        ).textContent;
-
-      const current =
-        alternate_obj.previous_arrow_rotate[1].closest(
-          '.nested-link-title'
-        ).textContent;
-
-      if (previous === current) {
-        target
-          .querySelector(queryName.nestedIcon)
-          .classList.remove('nested-drop-icon-animation');
-
-        alternate_obj.previous_arrow_rotate = [];
-        return;
-      }
-
-      alternate_obj.previous_arrow_rotate[0].classList.remove(
-        'nested-drop-icon-animation'
-      );
-      alternate_obj.previous_arrow_rotate.splice(0, 1);
-      console.log('remove');
-    }
-  }
-};
-
 const exercise_manage_zIndex = function (val1, val2, val3) {
   document.querySelector(queryName.exerciseContainer).style.zIndex = val1;
   document.querySelector(queryName.runningContainer).style.zIndex = val2;
@@ -170,19 +125,18 @@ const dropdown_side_bar = function (e) {
   const panel = target.nextElementSibling;
 
   if (target.classList.contains('nav-link-title')) {
-    target.querySelector('.drop-icon').classList.toggle('drop-icon-animation');
-
     if (panel.style.maxHeight) {
       panel.style.maxHeight = null;
       nested_alternate_obj.hideAllExerciseNested();
       alternate_obj.previousPanel.splice(0, 1);
       alternate_obj.countOpen = 0;
       alternate_obj.previousDrop = [];
-      return;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      alternate_obj.alternateArrow(panel, target);
     }
 
-    panel.style.maxHeight = panel.scrollHeight + 'px';
-    alternate_obj.alternateArrow(panel, target);
+    alternate_obj.dropdown_arrow_alternate(target);
   }
 };
 
@@ -190,7 +144,7 @@ const class_contain = (e, targetClass) =>
   e.target.classList.contains(targetClass);
 
 const nested_exercise_list = function (e) {
-  nested_arrow_animation(e);
+  alternate_obj.nested_arrow_alternate(e);
 
   if (class_contain(e, 'exercise-btn')) {
     display_exercise();
