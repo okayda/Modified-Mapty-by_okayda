@@ -127,13 +127,21 @@ const dropdown_side_bar = function (e) {
   if (target.classList.contains('nav-link-title')) {
     if (panel.style.maxHeight) {
       panel.style.maxHeight = null;
+
+      //for hidning nested elements or arrow if it's open
       nested_alternate_obj.hideAllExerciseNested();
+      alternate_obj.remove_open_arrow(
+        'previous_arrow_rotate',
+        'nested-drop-icon-animation'
+      );
+      // *************************************
+
       alternate_obj.previousPanel.splice(0, 1);
       alternate_obj.countOpen = 0;
       alternate_obj.previousDrop = [];
     } else {
       panel.style.maxHeight = panel.scrollHeight + 'px';
-      alternate_obj.alternateArrow(panel, target);
+      alternate_obj.dropdown_alternate(panel, target);
     }
 
     alternate_obj.dropdown_arrow_alternate(target);

@@ -305,6 +305,7 @@ a:visited {
   /* Light theme */
   /* background-color: #fff; */
   /* color: #000; */
+
   padding: 1rem 1.2rem;
   margin: 0 1rem 1.75rem 1rem;
   border-radius: 5px;
@@ -1256,7 +1257,7 @@ input[type='radio'] {
 }
 
 .side-bar .nav-link-title,
-.side-bar .no-drop {
+.side-bar .no-drop-link-title {
   color: #fff;
 
   cursor: pointer;
@@ -1272,7 +1273,7 @@ input[type='radio'] {
 }
 
 .side-bar .nav-link-title:hover,
-.side-bar .no-drop:hover {
+.side-bar .no-drop-link-title:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -1641,178 +1642,6 @@ input[type='radio'] {
 
 /* ************************************************* */
 
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/*
-*************************************
-          Copyright 2018
-               benn
-*************************************
-*/
-/* button div */
-.buttons-container {
-  background-color: #2f4353;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  border-radius: 5px;
-
-  z-index: 1000;
-}
-
-/* start da css for da buttons */
-.buttons-container .btn {
-  font-weight: bold;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 20px;
-  text-align: center;
-  text-decoration: none;
-  margin: 20px;
-  color: #fff;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.buttons-container .btn:active {
-  transform: translate(0px, 5px);
-  -webkit-transform: translate(0px, 5px);
-  box-shadow: 0px 1px 0px 0px;
-}
-
-.buttons-container .blue {
-  background-color: #55acee;
-  box-shadow: 0px 5px 0px 0px #3c93d5;
-}
-
-.buttons-container .blue:hover {
-  background-color: #6fc6ff;
-}
-
-.buttons-container .green {
-  background-color: #2ecc71;
-  box-shadow: 0px 5px 0px 0px #15b358;
-}
-
-.buttons-container .green:hover {
-  background-color: #48e68b;
-}
-
-.buttons-container .red {
-  background-color: #e74c3c;
-  box-shadow: 0px 5px 0px 0px #ce3323;
-}
-
-.buttons-container .red:hover {
-  background-color: #ff6656;
-}
-
-.buttons-container .purple {
-  background-color: #9b59b6;
-  box-shadow: 0px 5px 0px 0px #82409d;
-}
-
-.buttons-container .purple:hover {
-  background-color: #b573d0;
-}
-
-.buttons-container .orange {
-  background-color: #e67e22;
-  box-shadow: 0px 5px 0px 0px #cd6509;
-}
-
-.buttons-container .orange:hover {
-  background-color: #ff983c;
-}
-
-.buttons-container .yellow {
-  background-color: var(--color-dark--1);
-  box-shadow: 0px 5px 0px 0px #d8ab00;
-}
-
-.buttons-container .yellow:hover {
-  background-color: #ffde29;
-  background-color: var(--color-dark--2);
-}
-
-.buttons-container .cyan {
-  background-color: var(--color-dark--1);
-  box-shadow: 0px 5px 0px 0px rgb(11, 199, 199);
-}
-
-.buttons-container .cyan:hover {
-  background-color: cyan;
-  background-color: var(--color-dark--2);
-}
-
-.buttons-container .pink {
-  background-color: rgb(197, 159, 166);
-  box-shadow: 0px 5px 0px 0px var(--color-dark--1);
-}
-
-.buttons-container .pink:hover {
-  background-color: rgb(197, 159, 166);
-  background-color: var(--color-dark--2);
-}
-
-/* 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
 /* timestamp submit buttons style */
 .timestamp-btn-container {
   display: flex;
@@ -1981,16 +1810,9 @@ input[type='radio'] {
   cursor: pointer;
   color: #ff9593;
 }
-
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
-/* ************************************************* */
 /* ************************************************* */
 
+/* for skeleton U.I animation */
 .skeleton-animation-dropdown,
 .skeleton-animation-not-dropdown {
   margin: 0 1rem 1.75rem 1rem;
@@ -2050,4 +1872,112 @@ input[type='radio'] {
 .drop-statement-three {
   height: 18px;
   margin-top: 8px;
+}
+
+/* ************************************************* */
+
+/* for buttons debug  */
+.buttons-container {
+  background-color: #2f4353;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 5px;
+
+  z-index: 1000;
+}
+
+.buttons-container .btn {
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+  margin: 20px;
+  color: #fff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.buttons-container .btn:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+.buttons-container .blue {
+  background-color: #55acee;
+  box-shadow: 0px 5px 0px 0px #3c93d5;
+}
+
+.buttons-container .blue:hover {
+  background-color: #6fc6ff;
+}
+
+.buttons-container .green {
+  background-color: #2ecc71;
+  box-shadow: 0px 5px 0px 0px #15b358;
+}
+
+.buttons-container .green:hover {
+  background-color: #48e68b;
+}
+
+.buttons-container .red {
+  background-color: #e74c3c;
+  box-shadow: 0px 5px 0px 0px #ce3323;
+}
+
+.buttons-container .red:hover {
+  background-color: #ff6656;
+}
+
+.buttons-container .purple {
+  background-color: #9b59b6;
+  box-shadow: 0px 5px 0px 0px #82409d;
+}
+
+.buttons-container .purple:hover {
+  background-color: #b573d0;
+}
+
+.buttons-container .orange {
+  background-color: #e67e22;
+  box-shadow: 0px 5px 0px 0px #cd6509;
+}
+
+.buttons-container .orange:hover {
+  background-color: #ff983c;
+}
+
+.buttons-container .yellow {
+  background-color: var(--color-dark--1);
+  box-shadow: 0px 5px 0px 0px #d8ab00;
+}
+
+.buttons-container .yellow:hover {
+  background-color: #ffde29;
+  background-color: var(--color-dark--2);
+}
+
+.buttons-container .cyan {
+  background-color: var(--color-dark--1);
+  box-shadow: 0px 5px 0px 0px rgb(11, 199, 199);
+}
+
+.buttons-container .cyan:hover {
+  background-color: cyan;
+  background-color: var(--color-dark--2);
+}
+
+.buttons-container .pink {
+  background-color: rgb(197, 159, 166);
+  box-shadow: 0px 5px 0px 0px var(--color-dark--1);
+}
+
+.buttons-container .pink:hover {
+  background-color: rgb(197, 159, 166);
+  background-color: var(--color-dark--2);
 }

@@ -8,8 +8,6 @@ import { document_element_forms } from './document_element.js';
 
 import event_handlers_init from './handlers_functionalities.js';
 
-import web_page_theme from './theme.js';
-
 import side_bar_init from './side-bar-functionalities/sidebar.js';
 
 import timestamp_init from './timestamp-functionalities/timestamp_init.js';
@@ -103,8 +101,6 @@ class App {
     overlay_init();
 
     side_bar_init();
-
-    web_page_theme();
 
     debug_handler(app_data);
   }
@@ -421,7 +417,7 @@ class App {
           eachExercise.isDropDown = false;
 
           app_data.setLocalStorage();
-          console.log('lol');
+
           return;
         }
 
@@ -432,7 +428,6 @@ class App {
         eachExercise.isDropDown = true;
 
         app_data.setLocalStorage();
-        console.log('lol22');
 
         return;
       }
